@@ -1108,29 +1108,27 @@ a.hrow:hover .hrow-main b { color: var(--wine); text-decoration: underline; text
 }
 @media (max-width: 860px) { .umenu .um-head .avatar { display: inline-grid; } }
 
-/* верхняя шапка вместо левой колонки (22 ноября 2026) */
-.shell { display: block; min-height: 100%; }
-.appbar { position: sticky; top: 0; z-index: 35; background: color-mix(in srgb, var(--bg) 92%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
-.appbar-in { display: flex; align-items: center; gap: 1.2rem; max-width: 96rem; margin-inline: auto; padding: .65rem max(20px, 1.75vw); padding-top: max(.65rem, env(safe-area-inset-top, 0px)); }
-.appbar .logo { flex: none; color: var(--wine); }
-.topnav { display: flex; align-items: center; gap: 2px; flex: 1; min-width: 0; overflow-x: auto; scrollbar-width: none; }
-.topnav::-webkit-scrollbar { display: none; }
-.topnav-link { position: relative; display: inline-flex; align-items: center; gap: .5rem; flex: none; padding: .55rem .75rem; border-radius: 8px; color: var(--fg); font-weight: 500; font-size: .875rem; text-decoration: none; white-space: nowrap; transition: background-color .2s ease, color .2s ease; }
-.topnav-link .menu-ico { display: grid; width: 1.15rem; height: 1.15rem; color: var(--muted); }
-.topnav-link:hover { background: color-mix(in srgb, var(--wine) 7%, transparent); }
-.topnav-link.active { background: var(--accent); color: var(--on-accent); }
-.topnav-link.active .menu-ico { color: var(--on-accent); }
-.topnav-link .count { min-width: 1.25rem; height: 1.25rem; font-size: .7rem; }
-.appbar .topbar-right { flex: none; margin-left: auto; }
-.main { padding-top: 1rem; }
-.topbar { padding-bottom: .4rem; border-bottom: 0; }
-@media (max-width: 1640px) { .appbar .demo-pill { display: none; } }
-@media (max-width: 1280px) { .topnav-link .menu-label { display: none; } .topnav-link { padding: .6rem; } }
+/* колонка слева: свёрнута до значков, при наведении выезжает поверх страницы (22 ноября 2026) */
+.shell--rail { display: block; min-height: 100%; padding-left: 4.6rem; }
+.rail { position: fixed; z-index: 50; top: 0; bottom: 0; left: 0; display: flex; flex-direction: column; gap: 1rem; width: 4.6rem; padding: 1.1rem .7rem; overflow: hidden; background: var(--side); border-right: 1px solid var(--line); transition: width .3s var(--ease), box-shadow .3s ease; }
+.rail:hover, .rail:focus-within { width: 15.5rem; box-shadow: 18px 0 40px -24px rgba(24, 34, 48, .45); }
+.rail .logo { padding-left: .35rem; color: var(--wine); white-space: nowrap; }
+.rail .logo span, .rail .menu-label { opacity: 0; transition: opacity .2s ease; white-space: nowrap; }
+.rail:hover .logo span, .rail:hover .menu-label, .rail:focus-within .logo span, .rail:focus-within .menu-label { opacity: 1; transition-delay: .08s; }
+.rail .menu { display: grid; gap: 2px; }
+.rail .menu a, .rail-out { position: relative; display: flex; align-items: center; gap: .85rem; padding: .62rem .8rem; border-radius: 8px; color: var(--wine); font-weight: 500; font-size: .9375rem; text-decoration: none; white-space: nowrap; }
+.rail .menu-ico { display: grid; flex: none; width: 1.3rem; height: 1.3rem; }
+.rail .menu a:hover, .rail-out:hover { background: color-mix(in srgb, var(--wine) 8%, transparent); }
+.rail .menu a.active { background: var(--accent); color: #fff; font-weight: 600; }
+.rail .count { position: absolute; top: .2rem; left: 2rem; min-width: 1.15rem; height: 1.15rem; padding-inline: .3rem; font-size: .65rem; }
+.rail:hover .count, .rail:focus-within .count { position: static; margin-left: auto; min-width: 1.45rem; height: 1.45rem; font-size: .8125rem; }
+.rail-foot { margin-top: auto; padding-top: .7rem; border-top: 1px solid var(--emblem-line); }
+.rail-out { width: 100%; border: 0; background: none; font: 500 .9375rem/1.2 var(--font-body); cursor: pointer; }
+.rail-out .menu-ico svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 @media (max-width: 860px) {
-  .topnav { display: none; }
-  .appbar-in { padding-inline: 16px; gap: .6rem; }
-  .appbar .logo span { font-size: .75rem; }
+  .shell--rail { padding-left: 0; }
+  .rail { display: none; }
   .topbar-right .avatar-btn { display: inline-grid; }
 }
-@media (max-width: 350px) { .appbar .logo span { display: none; } }
-@media print { .appbar { display: none !important; } }
+@media print { .rail { display: none !important; } .shell--rail { padding-left: 0; } }
+.rail-out { justify-content: flex-start; text-align: left; }
