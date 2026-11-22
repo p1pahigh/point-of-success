@@ -1999,8 +1999,7 @@
 
   /* меню профиля по нажатию на кружок с инициалами (22 ноября 2026): разделы, тема, язык, сайт школы, выход */
   function userMenu(nav, ini) {
-    const pick = role === "teacher" ? ["dashboard", "content", "bank", "review", "settings"] : ["dashboard", "courses", "bank", "grades", "settings"];
-    const links = nav.filter(function (n) { return pick.indexOf(n[0]) >= 0; }).map(function (n) {
+    const links = nav.map(function (n) {
       return "<a class=\"um-row\" role=\"menuitem\" href=\"" + go(n[0]) + "\">" + icon(n[0]) + "<span>" + t(n[1]) + "</span></a>";
     }).join("");
     const plan = role === "student" && account && account.package ? CATALOG.pack(account.package.id) : null;
@@ -2035,10 +2034,11 @@
     const current = ACTIVE[page] || page;
     const nav = fresh ? NEW_NAV : NAV[role];
     const tabList = fresh ? ["dashboard"] : TABS[role];
-    const menu = nav.map(function (item) {
+    /* левая колонка убрана 22 ноября 2026 (просьба друга): разделы в верхней шапке и в меню профиля */
+    const menu = nav.filter(function (item) { return item[0] !== "dashboard" && item[0] !== "settings"; }).map(function (item) {
       const badgeN = item[0] === "review" ? queue().length : item[0] === "bank" && role === "teacher" ? openReports().length : 0;
       const badge = badgeN ? "<span class=\"count\">" + badgeN + "</span>" : "";
-      return "<a href=\"" + go(item[0]) + "\"" + (item[0] === current ? " class=\"active\" aria-current=\"page\"" : "") + "><span class=\"menu-ico\">" + icon(item[0]) + "</span><span class=\"menu-label\">" + t(item[1]) + "</span>" + badge + "</a>";
+      return "<a class=\"topnav-link" + (item[0] === current ? " active\" aria-current=\"page" : "") + "\" href=\"" + go(item[0]) + "\" title=\"" + t(item[1]) + "\"><span class=\"menu-ico\">" + icon(item[0]) + "</span><span class=\"menu-label\">" + t(item[1]) + "</span>" + badge + "</a>";
     }).join("");
     const badge = queue().length ? "<span class=\"count\">" + queue().length + "</span>" : "";
     const tabItems = tabList.map(function (id) {
@@ -2055,9 +2055,9 @@
     const themeBtn = "<button class=\"theme-btn\" type=\"button\" data-theme-toggle aria-label=\"" + t("theme") + "\"><svg class=\"i-moon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z\"/></svg><svg class=\"i-sun\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4\"/></svg></button>";
     const crumbs = "<nav class=\"crumbs\" aria-label=\"" + t("my_cabinet") + "\"><a href=\"" + go("dashboard") + "\">" + t("my_cabinet") + "</a><span aria-hidden=\"true\">/</span><span>" + t(here ? here[1] : "nav_home") + "</span></nav>";
     document.getElementById("app").innerHTML =
-      "<div class=\"shell\"><aside class=\"side\"><a class=\"logo\" href=\"" + go("dashboard") + "\">" + LOGO + "</a><p class=\"side-label\">" + t("workspace") + "</p><nav class=\"menu\" aria-label=\"" + t("nav_home") + "\">" + menu + "</nav>" +
-      "<div class=\"side-foot\"><span class=\"avatar\">" + ini + "</span><span class=\"me-text\"><b class=\"who\">" + esc(me().name) + "</b><span>" + t(role === "teacher" ? "role_teacher" : "role_student") + "</span></span><button class=\"icon-btn\" type=\"button\" data-act=\"logout\" aria-label=\"" + t("logout") + "\" title=\"" + t("logout") + "\">" + icon("logout") + "</button></div></aside>" +
-      "<main class=\"main\"><div class=\"page\"><div class=\"topbar no-print\">" + crumbs + "<div class=\"topbar-right\"><span class=\"demo-pill\" title=\"" + t("demo") + "\">" + t("demo_short") + "</span>" + themeBtn + userMenu(nav, ini) + "</div></div>" + VIEWS[page]() + "</div></main></div>" + tabs;
+      "<div class=\"shell\"><header class=\"appbar no-print\"><div class=\"appbar-in\"><a class=\"logo\" href=\"" + go("dashboard") + "\">" + LOGO + "</a><nav class=\"topnav\" aria-label=\"" + t("nav_home") + "\">" + menu + "</nav>" +
+      "<div class=\"topbar-right\"><span class=\"demo-pill\" title=\"" + t("demo") + "\">" + t("demo_short") + "</span>" + themeBtn + userMenu(nav, ini) + "</div></div></header>" +
+      "<main class=\"main\"><div class=\"page\"><div class=\"topbar no-print\">" + crumbs + "</div>" + VIEWS[page]() + "</div></main></div>" + tabs;
     if (animate) document.querySelector(".page").classList.add("page-enter");
     if (page === "lesson") initBoard();
     document.querySelectorAll("textarea.ghost").forEach(fitArea);
