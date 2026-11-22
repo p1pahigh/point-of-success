@@ -474,7 +474,14 @@
     bank_check: ["Проверить", "Check", "Verifica"],
     bank_again: ["Ещё раз", "Try again", "Riprova"],
     bank_solved: ["Решено", "Solved", "Risolto"],
-    bank_show: ["Смотреть решение", "Show solution", "Mostra soluzione"],
+    bank_next: ["Следующее задание", "Next task", "Esercizio successivo"],
+    bank_prev: ["Предыдущее", "Previous", "Precedente"],
+    bank_finish: ["К списку заданий", "Back to the list", "Torna all'elenco"],
+    bank_pos: ["из", "of", "di"],
+    bank_seq_all: ["Все задания раздела подряд", "All tasks of the section in a row", "Tutti gli esercizi di seguito"],
+    bank_seq_wrong: ["Только ошибки", "Mistakes only", "Solo errori"],
+    bank_seq_fav: ["Только избранное", "Saved only", "Solo preferiti"],
+    bank_go_task: ["Перейти к заданию", "Go to task", "Vai all'esercizio"],
     bank_right_lc: ["верно", "correct", "giuste"],
     bank_accuracy: ["точность ответов", "accuracy", "precisione"],
     bank_to_fix: ["ошибок к разбору", "mistakes to review", "errori da rivedere"],
@@ -1656,7 +1663,7 @@
   function authorName(id) { return TEACHERS[id] ? TEACHERS[id].name : ""; }
 
   /* ученик */
-  const bankRetry = {}, bankShow = {}, bankThanks = {};
+  const bankRetry = {}, bankThanks = {};
   let bankReportOpen = "";
   function bankCard(q) {
     const p = state.bankProgress[q.id], set = bankSet(q.set);
@@ -1672,17 +1679,17 @@
     const locked = status === "right" || status === "wrong";
     const button = status === "wrong" ? "<button class=\"btn btn--red\" type=\"button\" data-act=\"bankRetry\" data-id=\"" + q.id + "\">" + t("bank_again") + "</button>" :
       status === "right" ? "<span class=\"bt-done\">" + icon("star") + t("bank_solved") + "</span>" : "<button class=\"btn btn--red\" type=\"submit\">" + t("bank_check") + "</button>";
-    const showSol = bankShow[q.id] || locked;
+    const showSol = locked; /* пояснение только после ответа (просьба друга заказчика 22 ноября) */
     const solution = showSol ? "<div class=\"bt-solution\"><b>" + t("bank_explain") + "</b>" + paragraphs(q.solution) + "<p class=\"bt-answer\">" + t("correct_answer") + ": <b>" + esc(String(q.answer).split(";")[0].trim()) + "</b></p></div>" : "";
     const report = bankReportOpen === q.id ? "<form class=\"form bt-report\" data-form=\"bankReport\" data-id=\"" + q.id + "\"><label class=\"small\" for=\"rep-" + q.id + "\">" + t("bank_report_what") + "</label><textarea id=\"rep-" + q.id + "\" name=\"text\" required></textarea><div class=\"row\"><button class=\"btn btn--red btn--sm\" type=\"submit\">" + t("send") + "</button><button class=\"btn btn--line btn--sm\" type=\"button\" data-act=\"bankReport\" data-id=\"" + q.id + "\">" + t("cancel_edit") + "</button></div></form>" :
       bankThanks[q.id] ? "<p class=\"bt-thanks small\">" + t("bank_report_thanks") + "</p>" : "";
     return "<article class=\"card bt bt--" + status + "\" id=\"bt-" + q.id + "\">" + tags + report + "<p class=\"bt-topic\">" + esc(q.topic) + "</p><p class=\"bt-label\">" + t("bank_enter") + "</p><div class=\"bt-text\">" + paragraphs(q.text) + "</div>" +
       (q.img ? "<img class=\"bt-img\" src=\"" + q.img + "\" alt=\"\">" : "") +
       "<form class=\"bt-form\" data-form=\"bankAnswer\" data-id=\"" + q.id + "\"><input class=\"bt-input\" type=\"text\" name=\"answer\" value=\"" + esc(value) + "\" placeholder=\"" + t("bank_answer_ph") + "\" aria-label=\"" + t("bank_answer_ph") + "\" autocomplete=\"off\"" + (locked ? " readonly" : "") + "><div class=\"bt-row\">" + button +
-      (showSol ? "" : "<button class=\"bt-link bt-link--sol\" type=\"button\" data-act=\"bankSolution\" data-id=\"" + q.id + "\">" + icon("eye") + t("bank_show") + "</button>") + "</div></form>" + solution + "</article>";
+"</div></form>" + solution + "</article>";
   }
   function viewSBank() {
-    const parts = String(param).split("_"), set = bankSet(parts[0]), g = parts.slice(1).join("_");
+    const parts = String(param).split("_"), set = bankSet(parts[0]), g = parts[1] || "", cur = parts[2] || "";
     if (!set) {
       const all = bankCount(state.bank);
       const cards = BANK_SETS.map(function (s) {
@@ -1706,22 +1713,40 @@
       const rows = bankGroups(set).map(function (gr) {
         const list = tasks.filter(function (q) { return bankGroup(q) === gr; }), c = bankCount(list);
         const topicsOf = list.map(function (q) { return q.topic; }).filter(function (x, i, a) { return a.indexOf(x) === i; }).join(", ");
-        return "<li><a class=\"prow bank-row\" href=\"" + go("bank", set.id + "_" + gr) + "\"><span class=\"bank-num\">" + esc(gr) + "</span><span class=\"prow-name\">" + esc(bankGroupName(set, gr)) + "<span class=\"muted small\">" + esc(topicsOf) + "</span></span>" + mini(t("bank_right_lc") + " " + c.right + "/" + c.total, pctOf(c.right, c.total)) + "</a></li>";
+        return "<li><a class=\"prow bank-row\" href=\"" + go("bank", set.id + "_all_" + (list[0] ? list[0].id : "")) + "\"><span class=\"bank-num\">" + esc(gr) + "</span><span class=\"prow-name\">" + esc(bankGroupName(set, gr)) + "<span class=\"muted small\">" + esc(topicsOf) + "</span></span>" + mini(t("bank_right_lc") + " " + c.right + "/" + c.total, pctOf(c.right, c.total)) + "</a></li>";
       }).join("");
       const c = bankCount(tasks);
       return "<a class=\"back\" href=\"" + go("bank") + "\">" + t("nav_bank") + "</a>" + head(t("bank_set_" + set.id), c.total + " " + t("tasks_n") + " · " + t("bank_right_lc") + " " + c.right + " · " + t("bank_errors").toLowerCase() + " " + c.wrong) +
         chips(Object.keys(special).map(function (k) { return [k, special[k], k === "all" ? c.total : k === "wrong" ? c.wrong : tasks.filter(function (q) { return state.bankFav.indexOf(q.id) >= 0; }).length, go("bank", set.id + "_" + k)]; }), "") +
         "<section class=\"card\">" + (rows ? "<ul class=\"prows\">" + rows + "</ul>" : "<p class=\"empty\">" + t("bank_empty") + "</p>") + "</section>";
     }
-    const shown = tasks.filter(function (q) {
-      if (g === "all") return true;
-      if (g === "wrong") { const p = state.bankProgress[q.id]; return p && p.status === "wrong"; }
-      if (g === "fav") return state.bankFav.indexOf(q.id) >= 0;
-      return bankGroup(q) === g;
+    /* решение подряд: последовательность — весь раздел по номерам, или только ошибки, или только избранное */
+    const order = bankGroups(set);
+    const sorted = tasks.slice().sort(function (x, y) { return order.indexOf(bankGroup(x)) - order.indexOf(bankGroup(y)); });
+    const scope = special[g] ? g : "all";
+    let seq = sorted.filter(function (q) {
+      if (scope === "wrong") { const p = state.bankProgress[q.id]; return (p && p.status === "wrong") || q.id === cur; }
+      if (scope === "fav") return state.bankFav.indexOf(q.id) >= 0 || q.id === cur;
+      return true;
     });
-    const title = special[g] || bankGroupName(set, g);
-    return "<a class=\"back\" href=\"" + go("bank", set.id) + "\">" + t("bank_set_" + set.id) + "</a>" + head(esc(title), t("bank_sub_list")) +
-      (shown.length ? "<div class=\"bt-list\">" + shown.map(bankCard).join("") + "</div>" : "<section class=\"card\"><p class=\"empty\">" + t(g === "wrong" ? "bank_no_errors" : g === "fav" ? "bank_no_favs" : "bank_empty") + "</p></section>");
+    if (!special[g] && g) { const first = seq.filter(function (q) { return bankGroup(q) === g; })[0]; if (first && !cur) param = set.id + "_all_" + first.id; }
+    const q = find(seq, String(param).split("_")[2]) || seq[0];
+    if (!q) return "<a class=\"back\" href=\"" + go("bank", set.id) + "\">" + t("bank_set_" + set.id) + "</a>" + head(esc(special[g] || ""), "") + "<section class=\"card\"><p class=\"empty\">" + t(scope === "wrong" ? "bank_no_errors" : scope === "fav" ? "bank_no_favs" : "bank_empty") + "</p></section>";
+    const i = seq.indexOf(q), prev = seq[i - 1], next = seq[i + 1];
+    const link = function (x) { return go("bank", set.id + "_" + scope + "_" + x.id); };
+    const steps = "<nav class=\"bt-steps\" aria-label=\"" + t("bank_task") + "\">" + seq.map(function (x, k) {
+      const p = state.bankProgress[x.id], st = p ? p.status : "new";
+      return "<a class=\"bt-step bt-step--" + st + (x === q ? " on" : "") + "\" href=\"" + link(x) + "\" title=\"" + esc(bankGroupName(set, bankGroup(x)) + " · " + x.topic) + "\"" + (x === q ? " aria-current=\"step\"" : "") + ">" + esc(x.num) + "</a>";
+    }).join("") + "</nav>";
+    const answered = state.bankProgress[q.id] && !bankRetry[q.id];
+    const nav = "<div class=\"bt-nav\">" + (prev ? "<a class=\"btn btn--line\" href=\"" + link(prev) + "\">← " + t("bank_prev") + "</a>" : "<span></span>") +
+      "<span class=\"bt-pos\">" + (i + 1) + " " + t("bank_pos") + " " + seq.length + "</span>" +
+      (next ? "<a class=\"btn " + (answered ? "btn--red" : "btn--line") + " bt-next\" href=\"" + link(next) + "\">" + t("bank_next") + " →</a>" : "<a class=\"btn " + (answered ? "btn--red" : "btn--line") + " bt-next\" href=\"" + go("bank", set.id) + "\">" + t("bank_finish") + "</a>") + "</div>";
+    const scopes = chips(["all", "wrong", "fav"].map(function (k) {
+      const list = k === "all" ? sorted : sorted.filter(function (x) { const p = state.bankProgress[x.id]; return k === "wrong" ? p && p.status === "wrong" : state.bankFav.indexOf(x.id) >= 0; });
+      return [k, t("bank_seq_" + k), list.length, list.length ? go("bank", set.id + "_" + k + "_" + list[0].id) : go("bank", set.id + "_" + k)];
+    }), scope);
+    return "<a class=\"back\" href=\"" + go("bank", set.id) + "\">" + t("bank_set_" + set.id) + "</a>" + head(esc(bankGroupName(set, bankGroup(q))), t("bank_sub_list")) + scopes + steps + bankCard(q) + nav;
   }
 
   /* преподаватель */
@@ -2072,8 +2097,7 @@
       if (i >= 0) state.bankFav.splice(i, 1); else state.bankFav.push(id);
       save(); render();
     },
-    bankRetry: function (id) { bankRetry[id] = true; bankShow[id] = false; render(); focusOn("#bt-" + id + " .bt-input"); },
-    bankSolution: function (id) { bankShow[id] = true; render(); },
+    bankRetry: function (id) { bankRetry[id] = true; render(); focusOn("#bt-" + id + " .bt-input"); },
     bankReport: function (id) { bankReportOpen = bankReportOpen === id ? "" : id; render(); if (bankReportOpen) focusOn("#rep-" + id); },
     bankNew: function () { bankEdit = "new"; bankImg = ""; render(); window.scrollTo(0, 0); focusOn("#bf-topic"); },
     bankEditTask: function (id) { const q = find(state.bank, id); bankEdit = id; bankImg = q.img || ""; render(); window.scrollTo(0, 0); },
@@ -2377,6 +2401,7 @@
       q.stats.tries++; if (ok) q.stats.right++;
       bankRetry[q.id] = false;
       save(); render();
+      focusOn(ok ? ".bt-next" : "#bt-" + q.id + " [data-act=bankRetry]");
     },
     bankReport: function (form, data) {
       const text = String(data.get("text") || "").trim();
