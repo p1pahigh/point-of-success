@@ -474,6 +474,10 @@
     bank_check: ["Проверить", "Check", "Verifica"],
     bank_again: ["Ещё раз", "Try again", "Riprova"],
     bank_solved: ["Решено", "Solved", "Risolto"],
+    um_menu: ["Меню профиля", "Profile menu", "Menu del profilo"],
+    um_dark: ["Тёмная тема", "Dark theme", "Tema scuro"],
+    um_lang: ["Язык", "Language", "Lingua"],
+    um_site: ["Сайт школы", "School website", "Sito della scuola"],
     bank_next: ["Следующее задание", "Next task", "Esercizio successivo"],
     bank_prev: ["Предыдущее", "Previous", "Precedente"],
     bank_finish: ["К списку заданий", "Back to the list", "Torna all'elenco"],
@@ -571,6 +575,9 @@
     clock: "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 7v5l3 2",
     alert: "M12 3.5l9 16H3zM12 10v4M12 17h.01",
     trash: "M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3",
+    external: "M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5",
+    moon: "M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z",
+    globe: "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z",
     bank: "M9 18h6M10 21h4M12 3a6 6 0 0 0-3.8 10.6c.7.6 1.3 1.4 1.3 2.4h5c0-1 .6-1.8 1.3-2.4A6 6 0 0 0 12 3z",
     heart: "M12 20s-7-4.4-9-8.6C1.6 8.3 3.4 5 6.6 5c2 0 3.4 1.2 4.1 2.4h.6C12 6.2 13.4 5 15.4 5c3.2 0 5 3.3 3.6 6.4C19 15.6 12 20 12 20z",
     eye: "M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z",
@@ -1589,6 +1596,8 @@
   function closeMenus() {
     document.querySelectorAll(".pmenu").forEach(function (m) { m.hidden = true; });
     document.querySelectorAll(".plus").forEach(function (b) { b.setAttribute("aria-expanded", "false"); b.classList.remove("plus--open"); });
+    const um = document.getElementById("user-menu");
+    if (um && !um.hidden) { um.hidden = true; const ub = document.querySelector(".avatar-btn"); if (ub) ub.setAttribute("aria-expanded", "false"); }
   }
   function focusOn(selector) {
     const node = document.querySelector(selector);
@@ -1987,6 +1996,23 @@
   const NEW_PAGES = ["dashboard", "diag", "plans", "pay", "settings"];
   const SETUP_PAGES = ["diag", "plans", "pay"];
 
+
+  /* меню профиля по нажатию на кружок с инициалами (22 ноября 2026): разделы, тема, язык, сайт школы, выход */
+  function userMenu(nav, ini) {
+    const pick = role === "teacher" ? ["dashboard", "content", "bank", "review", "settings"] : ["dashboard", "courses", "bank", "grades", "settings"];
+    const links = nav.filter(function (n) { return pick.indexOf(n[0]) >= 0; }).map(function (n) {
+      return "<a class=\"um-row\" role=\"menuitem\" href=\"" + go(n[0]) + "\">" + icon(n[0]) + "<span>" + t(n[1]) + "</span></a>";
+    }).join("");
+    const plan = role === "student" && account && account.package ? CATALOG.pack(account.package.id) : null;
+    const langs = "<span class=\"um-seg\">" + LANGS.map(function (l) { return "<button type=\"button\" data-act=\"setLang\" data-id=\"" + l + "\"" + (state.lang === l ? " class=\"on\" aria-pressed=\"true\"" : " aria-pressed=\"false\"") + ">" + l.toUpperCase() + "</button>"; }).join("") + "</span>";
+    return "<div class=\"user-wrap\"><button class=\"avatar avatar-btn\" type=\"button\" data-act=\"toggleUser\" aria-expanded=\"false\" aria-controls=\"user-menu\" aria-label=\"" + t("um_menu") + "\" title=\"" + t("um_menu") + "\">" + ini + "</button>" +
+      "<div class=\"umenu\" id=\"user-menu\" role=\"menu\" hidden><div class=\"um-head\"><span class=\"avatar\">" + ini + "</span><span class=\"um-who\"><b>" + esc(me().name) + "</b><span>" + t(role === "teacher" ? "role_teacher" : "role_student") + (me().email ? " · " + esc(me().email) : "") + "</span>" + (plan ? "<span>" + t("pkg_title") + ": " + esc(plan.name) + "</span>" : "") + "</span></div>" +
+      "<nav class=\"um-links\">" + links + "</nav><hr class=\"pm-sep\">" +
+      "<button class=\"um-row\" type=\"button\" role=\"menuitemcheckbox\" data-theme-toggle>" + icon("moon") + "<span>" + t("um_dark") + "</span><span class=\"um-switch\" aria-hidden=\"true\"></span></button>" +
+      "<div class=\"um-row um-row--static\">" + icon("globe") + "<span>" + t("um_lang") + "</span>" + langs + "</div><hr class=\"pm-sep\">" +
+      "<a class=\"um-row\" role=\"menuitem\" href=\"index.html\">" + icon("external") + "<span>" + t("um_site") + "</span></a>" +
+      "<button class=\"um-row um-out\" type=\"button\" role=\"menuitem\" data-act=\"logout\">" + icon("logout") + "<span>" + t("logout") + "</span></button></div></div>";
+  }
   function render(animate) {
     stopVideo();
     document.documentElement.lang = state.lang;
@@ -2031,7 +2057,7 @@
     document.getElementById("app").innerHTML =
       "<div class=\"shell\"><aside class=\"side\"><a class=\"logo\" href=\"" + go("dashboard") + "\">" + LOGO + "</a><p class=\"side-label\">" + t("workspace") + "</p><nav class=\"menu\" aria-label=\"" + t("nav_home") + "\">" + menu + "</nav>" +
       "<div class=\"side-foot\"><span class=\"avatar\">" + ini + "</span><span class=\"me-text\"><b class=\"who\">" + esc(me().name) + "</b><span>" + t(role === "teacher" ? "role_teacher" : "role_student") + "</span></span><button class=\"icon-btn\" type=\"button\" data-act=\"logout\" aria-label=\"" + t("logout") + "\" title=\"" + t("logout") + "\">" + icon("logout") + "</button></div></aside>" +
-      "<main class=\"main\"><div class=\"page\"><div class=\"topbar no-print\">" + crumbs + "<div class=\"topbar-right\"><span class=\"demo-pill\" title=\"" + t("demo") + "\">" + t("demo_short") + "</span>" + themeBtn + "<span class=\"avatar\" aria-hidden=\"true\">" + ini + "</span></div></div>" + VIEWS[page]() + "</div></main></div>" + tabs;
+      "<main class=\"main\"><div class=\"page\"><div class=\"topbar no-print\">" + crumbs + "<div class=\"topbar-right\"><span class=\"demo-pill\" title=\"" + t("demo") + "\">" + t("demo_short") + "</span>" + themeBtn + userMenu(nav, ini) + "</div></div>" + VIEWS[page]() + "</div></main></div>" + tabs;
     if (animate) document.querySelector(".page").classList.add("page-enter");
     if (page === "lesson") initBoard();
     document.querySelectorAll("textarea.ghost").forEach(fitArea);
@@ -2091,6 +2117,15 @@
       saveAccount();
       location.hash = go("dashboard");
     },
+    toggleUser: function (id, node) {
+      const menu = document.getElementById("user-menu"), open = menu.hidden;
+      closeMenus();
+      menu.hidden = !open;
+      node.setAttribute("aria-expanded", String(open));
+      const first = open && menu.querySelector && menu.querySelector(".um-row");
+      if (first && first.focus) first.focus({ preventScroll: true });
+    },
+    setLang: function (id) { state.lang = id; save(); render(); },
     /* банк заданий */
     bankFav: function (id) {
       const i = state.bankFav.indexOf(id);
@@ -2500,7 +2535,7 @@
   };
 
   document.addEventListener("click", function (event) {
-    if (!event.target.closest || !event.target.closest(".plus-wrap")) closeMenus();
+    if (!event.target.closest || !event.target.closest(".plus-wrap, .user-wrap")) closeMenus();
     const node = event.target.closest("[data-act]");
     if (node) ACT[node.dataset.act](node.dataset.id, node);
   });
