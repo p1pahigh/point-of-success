@@ -1,0 +1,5 @@
+# Настройки Netlify: выкладывается только сам сайт, без служебных файлов (CLAUDE.md, docs, tools).
+# Если появится новый файл сайта, добавить его в список ниже.
+[build]
+  publish = "public"
+  command = "rm -rf public && mkdir public && cp index.html start.html login.html app.html site.css app.css app.js catalog.js theme.js motion.js cursor-trail.js bee-cursor.js favicon.svg public/"

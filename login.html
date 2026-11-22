@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Вход в кабинет</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<script src="theme.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marck+Script&family=Montserrat:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap">
+<link rel="stylesheet" href="app.css?v=20261122-2">
+</head>
+<body>
+<main class="auth">
+  <button class="theme-btn" type="button" data-theme-toggle aria-label="Сменить тему"><svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+  <aside class="auth-panel" aria-hidden="true">
+    <svg class="crown crown-draw" viewBox="-3 -1 106 96" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M26.5 30 1.5 20.5 50 2.5 98.5 20.5 73.5 30"/><path pathLength="1" d="M34.5 41.5Q26.5 41.5 26.5 35V24Q50 12 73.5 24V35Q73.5 41.5 65.5 41.5"/><path pathLength="1" d="M50 36a24 24 0 1 1 0 48a24 24 0 1 1 0-48"/><path pathLength="1" d="M23 60H77"/><path pathLength="1" d="M94 21V40.5"/><circle cx="94" cy="44" r="3.2"/></g><path class="pop" fill="currentColor" d="M50 27C52 49 56 56 75 60C56 64 52 71 50 91C48 71 44 64 25 60C44 56 48 49 50 27Z"/><path class="pop" fill="currentColor" d="M91 48h6l1.8 15.5q.3 2.5-2.3 2.5h-5q-2.6 0-2.3-2.5z"/><circle fill="currentColor" cx="92" cy="17" r="3.6"/></svg>
+    <p class="auth-name">The Point of Success</p>
+    <p class="auth-tag">Education · Growth · Future</p>
+  </aside>
+  <div class="auth-box">
+    <form class="auth-card" id="login-form" novalidate>
+      <h1>Вход в кабинет</h1>
+      <div class="field"><label for="login-email">Почта</label><input id="login-email" type="email" autocomplete="username" required></div>
+      <div class="field"><label for="login-password">Пароль</label><input id="login-password" type="password" autocomplete="current-password" required></div>
+      <p class="auth-error" id="login-error" role="alert" hidden></p>
+      <button class="btn btn--red" type="submit">Войти</button>
+      <div class="demo-box">
+        <p>Это прототип. Не вводите настоящие данные, используйте демо-доступ:</p>
+        <div class="row">
+          <button class="btn btn--sm" type="button" data-demo="student@demo.ru">Я ученик</button>
+          <button class="btn btn--sm" type="button" data-demo="teacher@demo.ru">Я преподаватель</button>
+        </div>
+      </div>
+    </form>
+    <a class="small muted" href="start.html">Нет аккаунта? Записаться на обучение</a>
+    <a class="small muted" href="index.html">Вернуться на сайт школы</a>
+  </div>
+</main>
+<script src="motion.js"></script>
+<script>
+  var ACCOUNTS = {
+    "student@demo.ru": { role: "student", password: "demo123" },
+    "teacher@demo.ru": { role: "teacher", password: "demo123" }
+  };
+  var email = document.getElementById("login-email");
+  var password = document.getElementById("login-password");
+  var error = document.getElementById("login-error");
+  document.querySelectorAll("[data-demo]").forEach(function (button) {
+    button.addEventListener("click", function () {
+      email.value = button.dataset.demo;
+      password.value = "demo123";
+      error.hidden = true;
+    });
+  });
+  document.getElementById("login-form").addEventListener("submit", function (event) {
+    event.preventDefault();
+    var key = email.value.trim().toLowerCase();
+    var registered = null;
+    try { registered = (JSON.parse(localStorage.getItem("tpos.accounts")) || {})[key]; } catch (e) {}
+    var account = ACCOUNTS[key] || (registered && { role: "student", password: registered.password, email: key });
+    if (!account || account.password !== password.value) {
+      error.textContent = "Неверная почта или пароль. Проверьте данные или нажмите кнопку демо-доступа.";
+      error.hidden = false;
+      return;
+    }
+    var session = account.email ? { role: account.role, email: account.email } : { role: account.role };
+    try { localStorage.setItem("tpos.session", JSON.stringify(session)); } catch (e) {}
+    location.href = "app.html#" + account.role + "/dashboard";
+  });
+</script>
+</body>
+</html>
