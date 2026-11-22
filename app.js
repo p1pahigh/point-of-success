@@ -426,7 +426,66 @@
     w_today: ["Сегодня", "Today", "Oggi"],
     w_past: ["Занятие прошло", "The class is over", "La lezione è terminata"],
     w_record: ["Запись занятия", "Recording", "Registrazione"],
-    w_untitled: ["Онлайн-занятие", "Online class", "Lezione online"]
+    w_untitled: ["Онлайн-занятие", "Online class", "Lezione online"],
+    /* банк заданий */
+    nav_bank: ["Банк заданий", "Task bank", "Banca esercizi"],
+    bank_sub: ["Решайте задания в своём темпе: без сроков и оценок, после ответа сразу видно пояснение", "Practise at your own pace: no deadlines or grades, with an explanation after each answer", "Esercitatevi con calma: niente scadenze né voti, spiegazione dopo ogni risposta"],
+    bank_sub_list: ["Впишите краткий ответ и нажмите «Проверить»", "Type a short answer and press Check", "Scrivete la risposta breve e premete Verifica"],
+    bank_sub_t: ["Общий банк школы: задания видят все преподаватели предмета и ученики. Изменять можно только свои.", "The school's shared bank: all subject teachers and students see the tasks. You can edit only your own.", "Banca comune della scuola: tutti vedono gli esercizi, si modificano solo i propri."],
+    "bank_set_math-pro": ["Математика · профиль", "Maths · advanced", "Matematica · avanzata"],
+    "bank_set_math-base": ["Математика · база", "Maths · basic", "Matematica · base"],
+    bank_set_eng: ["Английский · ЕГЭ", "English · exam", "Inglese · esame"],
+    bank_set_it: ["Итальянский", "Italian", "Italiano"],
+    bank_task: ["Задание", "Task", "Esercizio"],
+    bank_task_num: ["Номер задания", "Task number", "Numero"],
+    bank_level: ["Уровень", "Level", "Livello"],
+    bank_part: ["Часть", "Part", "Parte"],
+    bank_topic: ["Тема", "Topic", "Argomento"],
+    bank_section: ["Раздел", "Section", "Sezione"],
+    bank_condition: ["Условие", "Problem", "Testo"],
+    bank_correct: ["Верный ответ", "Correct answer", "Risposta corretta"],
+    bank_correct_hint: ["Если подходят несколько записей, через точку с запятой: 0,6; 3/5. Регистр и пробелы не важны, запятая и точка равны.", "Several accepted forms: separate with ;. Case and spaces do not matter.", "Più forme accettate separate da ;. Maiuscole e spazi non contano."],
+    bank_explain: ["Пояснение", "Explanation", "Spiegazione"],
+    bank_explain_hint: ["Ученик увидит его после ответа, верного или нет.", "Students see it after answering, right or wrong.", "Lo studente la vede dopo la risposta."],
+    bank_new_task: ["Новое задание", "New task", "Nuovo esercizio"],
+    bank_edit_task: ["Изменить задание", "Edit task", "Modifica esercizio"],
+    bank_add: ["Добавить в банк", "Add to bank", "Aggiungi"],
+    bank_author: ["автор", "author", "autore"],
+    bank_you: ["вы", "you", "voi"],
+    bank_tries_n: ["решений", "attempts", "tentativi"],
+    bank_in_section: ["заданий в разделе", "tasks in section", "esercizi"],
+    bank_mine: ["ваших заданий", "your tasks", "vostri esercizi"],
+    bank_tries_total: ["решений учеников", "student attempts", "tentativi"],
+    bank_avg_right: ["верных в среднем", "correct on average", "corrette in media"],
+    bank_hard: ["Самые сложные задания", "Hardest tasks", "Esercizi più difficili"],
+    bank_hard_sub: ["Где ученики чаще всего ошибаются. Цифры демо, ответы ученицы в этом браузере тоже учитываются.", "Where students fail most. Demo numbers plus answers given in this browser.", "Dove si sbaglia di più. Dati demo più le risposte in questo browser."],
+    bank_reports: ["Сообщения об ошибках", "Error reports", "Segnalazioni"],
+    bank_resolved: ["Исправлено", "Resolved", "Risolto"],
+    bank_new: ["Не выполнено", "Not done", "Da fare"],
+    bank_right: ["Верно", "Correct", "Giusto"],
+    bank_wrong: ["Неверно", "Wrong", "Sbagliato"],
+    bank_fav: ["В избранное", "Save", "Preferiti"],
+    bank_faved: ["В избранном", "Saved", "Nei preferiti"],
+    bank_report: ["Сообщить об ошибке", "Report a mistake", "Segnala un errore"],
+    bank_report_what: ["Что не так с заданием?", "What is wrong with the task?", "Cosa non va?"],
+    bank_report_thanks: ["Спасибо! Сообщение отправлено автору задания.", "Thanks! The author has been notified.", "Grazie! L'autore è stato avvisato."],
+    bank_enter: ["Введите ответ", "Enter the answer", "Inserite la risposta"],
+    bank_answer_ph: ["Ваш ответ", "Your answer", "La vostra risposta"],
+    bank_check: ["Проверить", "Check", "Verifica"],
+    bank_again: ["Ещё раз", "Try again", "Riprova"],
+    bank_solved: ["Решено", "Solved", "Risolto"],
+    bank_show: ["Смотреть решение", "Show solution", "Mostra soluzione"],
+    bank_right_lc: ["верно", "correct", "giuste"],
+    bank_accuracy: ["точность ответов", "accuracy", "precisione"],
+    bank_to_fix: ["ошибок к разбору", "mistakes to review", "errori da rivedere"],
+    bank_favs: ["Избранное", "Saved", "Preferiti"],
+    bank_weak: ["Где вы чаще ошибаетесь", "Where you make mistakes", "Dove sbagliate di più"],
+    bank_errors: ["Ошибки", "Mistakes", "Errori"],
+    bank_errors_n: ["ошиб.", "mistakes", "errori"],
+    bank_all: ["Все задания", "All tasks", "Tutti"],
+    bank_empty: ["Заданий пока нет.", "No tasks yet.", "Ancora nessun esercizio."],
+    bank_no_errors: ["Ошибок нет. Так держать!", "No mistakes. Keep it up!", "Nessun errore!"],
+    bank_no_favs: ["В избранном пока пусто. Нажмите «В избранное» на задании.", "Nothing saved yet.", "Nessun preferito."]
   };
 
   const COURSES = {
@@ -474,8 +533,8 @@
     teacher: { name: "Мария Иванова", email: "teacher@demo.ru" }
   };
   const NAV = {
-    student: [["dashboard", "nav_home"], ["schedule", "nav_schedule"], ["lesson", "nav_lesson"], ["courses", "nav_courses"], ["homework", "nav_hw"], ["grades", "nav_grades"], ["settings", "nav_settings"]],
-    teacher: [["dashboard", "nav_home"], ["schedule", "nav_schedule"], ["lesson", "nav_lesson"], ["content", "nav_content"], ["review", "nav_review"], ["progress", "nav_grades"], ["settings", "nav_settings"]]
+    student: [["dashboard", "nav_home"], ["schedule", "nav_schedule"], ["lesson", "nav_lesson"], ["courses", "nav_courses"], ["homework", "nav_hw"], ["bank", "nav_bank"], ["grades", "nav_grades"], ["settings", "nav_settings"]],
+    teacher: [["dashboard", "nav_home"], ["schedule", "nav_schedule"], ["lesson", "nav_lesson"], ["content", "nav_content"], ["bank", "nav_bank"], ["review", "nav_review"], ["progress", "nav_grades"], ["settings", "nav_settings"]]
   };
 
   const TABS = { student: ["dashboard", "schedule", "courses", "homework"], teacher: ["dashboard", "schedule", "review", "content"] };
@@ -505,6 +564,10 @@
     clock: "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 7v5l3 2",
     alert: "M12 3.5l9 16H3zM12 10v4M12 17h.01",
     trash: "M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3",
+    bank: "M9 18h6M10 21h4M12 3a6 6 0 0 0-3.8 10.6c.7.6 1.3 1.4 1.3 2.4h5c0-1 .6-1.8 1.3-2.4A6 6 0 0 0 12 3z",
+    heart: "M12 20s-7-4.4-9-8.6C1.6 8.3 3.4 5 6.6 5c2 0 3.4 1.2 4.1 2.4h.6C12 6.2 13.4 5 15.4 5c3.2 0 5 3.3 3.6 6.4C19 15.6 12 20 12 20z",
+    eye: "M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z",
+    pen: "M4 20l1-4L16 5l3 3L8 19zM14 7l3 3",
     folder: "M3 6.5A1.5 1.5 0 0 1 4.5 5H9l2 2.5h8.5A1.5 1.5 0 0 1 21 9v9.5a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 18.5z",
     module: "M12 3l9 4.5-9 4.5-9-4.5zM3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5",
     lesson_ico: "M3 5h7a2 2 0 0 1 2 2v13a2 2 0 0 0-2-2H3zM21 5h-7a2 2 0 0 0-2 2v13a2 2 0 0 1 2-2h7z",
@@ -528,7 +591,8 @@
   const TEACHERS = {
     teacher: { name: "Мария Иванова", subjects: ["math"] },
     "t-eng": { name: "Ольга Петрова", subjects: ["eng"] },
-    "t-it": { name: "Джулия Росси", subjects: ["it"] }
+    "t-it": { name: "Джулия Росси", subjects: ["it"] },
+    "t-math2": { name: "Павел Орлов", subjects: ["math"] }
   };
   const STUDENT_GROUPS = { math: "g1", eng: "e1", it: "i1" }; // группы демо-ученицы по предметам
   const BLOCK_TYPES = { info: ["text", "tip", "video", "image", "file"], tasks: ["test", "input", "open"] };
@@ -726,6 +790,10 @@
       ],
       courses: seedCourses(),
       folders: [],
+      bank: seedBank(),
+      bankProgress: { q1: { status: "right", answer: "0,6", tries: 1, date: iso(day(-3)) }, q2: { status: "wrong", answer: "1", tries: 1, date: iso(day(-3)) }, q14: { status: "right", answer: "went", tries: 1, date: iso(day(-2)) }, q24: { status: "wrong", answer: "siamo andato", tries: 2, date: iso(day(-1)) } },
+      bankFav: ["q6"],
+      bankReports: [{ id: "r1", task: "q2", from: "Дмитрий К.", text: "В условии не сказано, что выстрелы независимы.", date: iso(day(-1)), done: false }],
       homework: [
         { id: "hw1", student: "me", name: PEOPLE.student.name, course: "math", title: "Логарифмические уравнения", due: iso(day(1)), status: "todo" },
         { id: "hw2", student: "me", name: PEOPLE.student.name, course: "it", title: "Lettera a un amico: расскажите о выходных", due: iso(day(3)), status: "todo" },
@@ -751,6 +819,7 @@
   /* данные, сохранённые до конструктора курсов: материалы и тесты заменены демо-курсами, пройденное сохраняется (те же id) */
   if (!state.courses) { state.courses = seedCourses(); delete state.materials; delete state.tests; }
   if (!state.folders) state.folders = [];
+  if (!state.bank) { state.bank = seedBank(); state.bankProgress = {}; state.bankFav = []; state.bankReports = []; }
   let role = "student";
   let page = "dashboard";
   let param = "";
@@ -1521,6 +1590,194 @@
     if (node.scrollIntoView) node.scrollIntoView({ block: "center", behavior: "smooth" });
   }
 
+  /* ---------- банк заданий (22 ноября 2026) ----------
+     Общий банк школы: задания предмета видят все его преподаватели и ученики, изменять и удалять можно только свои.
+     Только краткий ответ: верные ответы через «;», проверка без регистра и пробелов, запятая = точка. После ответа показывается пояснение. */
+  const BANK_SETS = [
+    { id: "math-pro", subject: "math", num: 19, parts: true },
+    { id: "math-base", subject: "math", num: 21 },
+    { id: "eng", subject: "eng", num: 38 },
+    { id: "it", subject: "it", levels: ["A1", "A2", "B1", "B2"] }
+  ];
+  function bankSet(id) { return BANK_SETS.filter(function (s) { return s.id === id; })[0]; }
+  function bankGroup(task) { return bankSet(task.set).levels ? task.num : String(task.num); }
+  function bankGroupName(set, g) { return set.levels ? t("bank_level") + " " + g : t("bank_task") + " " + g; }
+  function seedBank() {
+    let n = 0;
+    const T = function (set, num, part, topic, text, answer, solution, author, tries, right) {
+      n++;
+      return { id: "q" + n, set: set, num: num, part: part, topic: topic, text: text, img: "", answer: answer, solution: solution, author: author, stats: { tries: tries, right: right } };
+    };
+    return [
+      T("math-pro", 4, 1, "Вероятность", "В классе 25 учащихся, из них 10 мальчиков. Учитель случайным образом вызывает одного ученика к доске. Найдите вероятность того, что это будет девочка.", "0,6; 3/5", "Девочек 25 − 10 = 15. Вероятность равна 15 : 25 = 0,6.", "teacher", 41, 33),
+      T("math-pro", 5, 1, "Вероятность", "Стрелок в тире стреляет по мишени до тех пор, пока не поразит её. Он попадает в цель с вероятностью 0,5 при каждом отдельном выстреле. Какое наименьшее количество патронов нужно дать стрелку, чтобы он поразил цель с вероятностью не меньше 0,7?", "2", "Вероятность промахнуться n раз подряд равна 0,5ⁿ, значит, попасть хотя бы раз — 1 − 0,5ⁿ. При n = 1 это 0,5 < 0,7, при n = 2 это 0,75 ≥ 0,7. Нужно 2 патрона.", "teacher", 36, 14),
+      T("math-pro", 6, 1, "Уравнения", "Найдите корень уравнения log₂(x + 3) = 4.", "13", "По определению логарифма x + 3 = 2⁴ = 16, откуда x = 13. Проверка: аргумент 16 > 0.", "t-math2", 52, 40),
+      T("math-pro", 6, 1, "Уравнения", "Найдите корень уравнения 3^(x − 5) = 81.", "9", "81 = 3⁴, значит, x − 5 = 4 и x = 9.", "t-math2", 48, 42),
+      T("math-pro", 7, 1, "Вычисления", "Найдите значение выражения log₃ 54 − log₃ 2.", "3", "Разность логарифмов с одинаковым основанием: log₃ (54 : 2) = log₃ 27 = 3.", "teacher", 39, 28),
+      T("math-pro", 12, 1, "Производная", "Найдите точку минимума функции y = x³ − 12x + 7.", "2", "y′ = 3x² − 12 = 0 при x = ±2. Производная меняет знак с минуса на плюс в точке x = 2 — это точка минимума.", "t-math2", 33, 17),
+      T("math-pro", 13, 2, "Тригонометрия", "Решите уравнение 2sin²x − sin x = 0. В ответе укажите наименьший положительный корень в градусах.", "30", "sin x (2sin x − 1) = 0, значит, sin x = 0 или sin x = 1/2. Наименьший положительный корень: x = 30°.", "teacher", 21, 9),
+      T("math-base", 1, 1, "Практические задачи", "Билет на автобус стоит 45 рублей. Какое наибольшее число билетов можно купить на 500 рублей?", "11", "500 : 45 = 11,1… Целых билетов можно купить 11.", "t-math2", 44, 39),
+      T("math-base", 5, 1, "Проценты", "Товар стоит 1200 рублей. Во время распродажи на него сделали скидку 15%. Сколько рублей стоит товар со скидкой?", "1020", "15% от 1200 — это 180 рублей. 1200 − 180 = 1020.", "teacher", 38, 31),
+      T("math-base", 6, 1, "Вычисления", "Найдите значение выражения 3,5 · 1,2 + 0,8.", "5", "3,5 · 1,2 = 4,2; 4,2 + 0,8 = 5.", "teacher", 50, 46),
+      T("math-base", 9, 1, "Дроби", "Найдите значение выражения (2/5 + 3/10) · 20.", "14", "2/5 = 4/10, сумма 7/10. 7/10 · 20 = 14.", "t-math2", 35, 27),
+      T("math-base", 12, 1, "Геометрия", "Сторона квадрата равна 7. Найдите его площадь.", "49", "Площадь квадрата равна квадрату стороны: 7² = 49.", "teacher", 47, 45),
+      T("math-base", 15, 1, "Уравнения", "Найдите корень уравнения 5x − 7 = 18.", "5", "5x = 25, x = 5.", "t-math2", 42, 38),
+      T("eng", 19, 1, "Грамматика", "Преобразуйте слово GO так, чтобы оно грамматически соответствовало предложению: Last summer we ___ to the seaside.", "went", "Last summer — законченный период в прошлом, нужен Past Simple: go → went.", "t-eng", 40, 31),
+      T("eng", 20, 1, "Грамматика", "Преобразуйте слово OLD: My sister is two years ___ than me.", "older", "Сравнение двух людей (than) — сравнительная степень: old → older.", "t-eng", 37, 33),
+      T("eng", 21, 1, "Грамматика", "Преобразуйте слово WRITE: The letter ___ yesterday by our teacher.", "was written", "Письмо написали (страдательный залог), yesterday — прошедшее время: was written.", "t-eng", 33, 18),
+      T("eng", 22, 1, "Грамматика", "Преобразуйте слово BE: If I ___ you, I would apologise.", "were", "Условное предложение второго типа: If I were you — устойчивая форма.", "t-eng", 31, 20),
+      T("eng", 26, 1, "Словообразование", "Образуйте слово от INTEREST: The film was really ___.", "interesting", "Нужно прилагательное, описывающее фильм: interesting («интересный»).", "t-eng", 29, 22),
+      T("eng", 27, 1, "Словообразование", "Образуйте слово от CORRECT: He answered all the questions ___.", "correctly", "Как ответил? Нужно наречие: correct → correctly.", "t-eng", 28, 21),
+      T("eng", 28, 1, "Словообразование", "Образуйте слово от POSSIBLE: It was ___ to get tickets — they were sold out.", "impossible", "По смыслу билеты достать нельзя: приставка im- даёт impossible.", "t-eng", 27, 19),
+      T("it", "A1", 0, "Presentarsi", "Вставьте форму глагола essere: Io ___ di Mosca.", "sono", "Essere в настоящем времени: io sono, tu sei, lui/lei è.", "t-it", 30, 27),
+      T("it", "A1", 0, "Articoli", "Вставьте определённый артикль: ___ libro.", "il", "Libro — мужской род, начинается с согласной: il libro.", "t-it", 28, 24),
+      T("it", "A1", 0, "Lessico", "Переведите на итальянский: «спасибо».", "grazie", "Grazie — «спасибо», grazie mille — «большое спасибо».", "t-it", 33, 32),
+      T("it", "A2", 0, "Passato prossimo", "Поставьте глагол в passato prossimo: Ieri noi ___ (andare) al cinema.", "siamo andati; siamo andate", "Andare спрягается с essere, причастие согласуется с подлежащим: noi siamo andati (andate).", "t-it", 26, 12),
+      T("it", "A2", 0, "Passato prossimo", "Вставьте причастие: Ho ___ (mangiare) una pizza.", "mangiato", "Mangiare спрягается с avere, причастие на -ato: ho mangiato.", "t-it", 25, 20),
+      T("it", "B1", 0, "Futuro semplice", "Поставьте глагол в futuro semplice: Domani io ___ (partire) per Roma.", "partirò; partiro", "Futuro от partire: partirò, partirai, partirà.", "t-it", 19, 11),
+      T("it", "B1", 0, "Congiuntivo", "Вставьте congiuntivo: Penso che lui ___ (avere) ragione.", "abbia", "После penso che нужен congiuntivo presente: che lui abbia.", "t-it", 17, 7)
+    ];
+  }
+  function bankAccepts(task, value) { return String(task.answer || "").split(";").map(norm).filter(Boolean).indexOf(norm(value)) >= 0; }
+  function bankTasks(setId) { return state.bank.filter(function (q) { return q.set === setId; }); }
+  function bankGroups(set) {
+    const out = [];
+    bankTasks(set.id).forEach(function (q) { const g = bankGroup(q); if (out.indexOf(g) < 0) out.push(g); });
+    return out.sort(function (a, b) { return set.levels ? set.levels.indexOf(a) - set.levels.indexOf(b) : Number(a) - Number(b); });
+  }
+  function bankCount(list) {
+    const c = { total: list.length, tried: 0, right: 0, wrong: 0 };
+    list.forEach(function (q) { const p = state.bankProgress[q.id]; if (p) { c.tried++; if (p.status === "right") c.right++; else c.wrong++; } });
+    return c;
+  }
+  function pctOf(a, b) { return b ? Math.round(a / b * 100) : 0; }
+  function teacherSets() { return BANK_SETS.filter(function (s) { return TEACHERS.teacher.subjects.indexOf(s.subject) >= 0; }); }
+  function openReports() { return state.bankReports.filter(function (r) { const q = find(state.bank, r.task); return !r.done && q && q.author === "teacher"; }); }
+  function authorName(id) { return TEACHERS[id] ? TEACHERS[id].name : ""; }
+
+  /* ученик */
+  const bankRetry = {}, bankShow = {}, bankThanks = {};
+  let bankReportOpen = "";
+  function bankCard(q) {
+    const p = state.bankProgress[q.id], set = bankSet(q.set);
+    const retry = bankRetry[q.id];
+    const status = p && !retry ? p.status : p && retry ? "again" : "new";
+    const tag = function (text, cls) { return "<span class=\"bt-tag" + (cls ? " " + cls : "") + "\">" + text + "</span>"; };
+    const statusTag = { right: tag(t("bank_right"), "bt-tag--right"), wrong: tag(t("bank_wrong"), "bt-tag--wrong"), again: tag(t("bank_wrong"), "bt-tag--wrong"), "new": tag(t("bank_new")) }[status];
+    const fav = state.bankFav.indexOf(q.id) >= 0;
+    const tags = "<div class=\"bt-tags\">" + tag(t("bank_task")) + statusTag + tag(esc(q.num)) + (set.parts ? tag(t("bank_part") + " " + q.part) : "") +
+      "<span class=\"bt-actions\"><button class=\"bt-link" + (fav ? " on" : "") + "\" type=\"button\" data-act=\"bankFav\" data-id=\"" + q.id + "\" aria-pressed=\"" + fav + "\">" + icon("heart") + t(fav ? "bank_faved" : "bank_fav") + "</button>" +
+      "<button class=\"bt-link\" type=\"button\" data-act=\"bankReport\" data-id=\"" + q.id + "\">" + t("bank_report") + "</button></span></div>";
+    const value = p && !retry ? p.answer : "";
+    const locked = status === "right" || status === "wrong";
+    const button = status === "wrong" ? "<button class=\"btn btn--red\" type=\"button\" data-act=\"bankRetry\" data-id=\"" + q.id + "\">" + t("bank_again") + "</button>" :
+      status === "right" ? "<span class=\"bt-done\">" + icon("star") + t("bank_solved") + "</span>" : "<button class=\"btn btn--red\" type=\"submit\">" + t("bank_check") + "</button>";
+    const showSol = bankShow[q.id] || locked;
+    const solution = showSol ? "<div class=\"bt-solution\"><b>" + t("bank_explain") + "</b>" + paragraphs(q.solution) + "<p class=\"bt-answer\">" + t("correct_answer") + ": <b>" + esc(String(q.answer).split(";")[0].trim()) + "</b></p></div>" : "";
+    const report = bankReportOpen === q.id ? "<form class=\"form bt-report\" data-form=\"bankReport\" data-id=\"" + q.id + "\"><label class=\"small\" for=\"rep-" + q.id + "\">" + t("bank_report_what") + "</label><textarea id=\"rep-" + q.id + "\" name=\"text\" required></textarea><div class=\"row\"><button class=\"btn btn--red btn--sm\" type=\"submit\">" + t("send") + "</button><button class=\"btn btn--line btn--sm\" type=\"button\" data-act=\"bankReport\" data-id=\"" + q.id + "\">" + t("cancel_edit") + "</button></div></form>" :
+      bankThanks[q.id] ? "<p class=\"bt-thanks small\">" + t("bank_report_thanks") + "</p>" : "";
+    return "<article class=\"card bt bt--" + status + "\" id=\"bt-" + q.id + "\">" + tags + report + "<p class=\"bt-topic\">" + esc(q.topic) + "</p><p class=\"bt-label\">" + t("bank_enter") + "</p><div class=\"bt-text\">" + paragraphs(q.text) + "</div>" +
+      (q.img ? "<img class=\"bt-img\" src=\"" + q.img + "\" alt=\"\">" : "") +
+      "<form class=\"bt-form\" data-form=\"bankAnswer\" data-id=\"" + q.id + "\"><input class=\"bt-input\" type=\"text\" name=\"answer\" value=\"" + esc(value) + "\" placeholder=\"" + t("bank_answer_ph") + "\" aria-label=\"" + t("bank_answer_ph") + "\" autocomplete=\"off\"" + (locked ? " readonly" : "") + "><div class=\"bt-row\">" + button +
+      (showSol ? "" : "<button class=\"bt-link bt-link--sol\" type=\"button\" data-act=\"bankSolution\" data-id=\"" + q.id + "\">" + icon("eye") + t("bank_show") + "</button>") + "</div></form>" + solution + "</article>";
+  }
+  function viewSBank() {
+    const parts = String(param).split("_"), set = bankSet(parts[0]), g = parts.slice(1).join("_");
+    if (!set) {
+      const all = bankCount(state.bank);
+      const cards = BANK_SETS.map(function (s) {
+        const c = bankCount(bankTasks(s.id));
+        return "<a class=\"ccard bank-set\" href=\"" + go("bank", s.id) + "\"><span class=\"ccard-body\"><span class=\"tag\">" + esc(COURSES[s.subject].short) + "</span><b>" + t("bank_set_" + s.id) + "</b><span class=\"muted small\">" + c.total + " " + t("tasks_n") + "</span>" +
+          "<span class=\"ccard-progress\"><span>" + t("bank_right_lc") + ": " + c.right + " " + t("of") + " " + c.total + "</span><b>" + pctOf(c.right, c.total) + "%</b></span>" + bar(pctOf(c.right, c.total)) + "</span></a>";
+      }).join("");
+      const topics = {};
+      state.bank.forEach(function (q) { const p = state.bankProgress[q.id]; if (p && p.status === "wrong") { const k = q.set + "|" + q.topic; topics[k] = (topics[k] || 0) + 1; } });
+      const weak = Object.keys(topics).sort(function (a, b) { return topics[b] - topics[a]; }).slice(0, 5).map(function (k) {
+        const s = k.split("|");
+        return "<li><a class=\"mrow\" href=\"" + go("bank", s[0] + "_wrong") + "\"><span class=\"mrow-ico\">" + icon("alert") + "</span><span class=\"mrow-main\"><b>" + esc(s[1]) + "</b><span>" + t("bank_set_" + s[0]) + "</span></span><span class=\"tag tag--todo\">" + topics[k] + " " + t("bank_errors_n") + "</span><span class=\"mrow-go\">" + icon("chevron") + "</span></a></li>";
+      }).join("");
+      return head(t("nav_bank"), t("bank_sub")) +
+        stats([stat("star", "good", all.right, t("bank_right_lc")), stat("progress", "wine", pctOf(all.right, all.tried) + "%", t("bank_accuracy")), stat("alert", "accent", all.wrong, t("bank_to_fix")), stat("heart", "gold", state.bankFav.length, t("bank_favs"))]) +
+        "<div class=\"cgrid\">" + cards + "</div>" + (weak ? "<section class=\"card\">" + cardHead(t("bank_weak")) + "<ul class=\"mlist\">" + weak + "</ul></section>" : "");
+    }
+    const special = { all: t("bank_all"), wrong: t("bank_errors"), fav: t("bank_favs") };
+    const tasks = bankTasks(set.id);
+    if (!g) {
+      const rows = bankGroups(set).map(function (gr) {
+        const list = tasks.filter(function (q) { return bankGroup(q) === gr; }), c = bankCount(list);
+        const topicsOf = list.map(function (q) { return q.topic; }).filter(function (x, i, a) { return a.indexOf(x) === i; }).join(", ");
+        return "<li><a class=\"prow bank-row\" href=\"" + go("bank", set.id + "_" + gr) + "\"><span class=\"bank-num\">" + esc(gr) + "</span><span class=\"prow-name\">" + esc(bankGroupName(set, gr)) + "<span class=\"muted small\">" + esc(topicsOf) + "</span></span>" + mini(t("bank_right_lc") + " " + c.right + "/" + c.total, pctOf(c.right, c.total)) + "</a></li>";
+      }).join("");
+      const c = bankCount(tasks);
+      return "<a class=\"back\" href=\"" + go("bank") + "\">" + t("nav_bank") + "</a>" + head(t("bank_set_" + set.id), c.total + " " + t("tasks_n") + " · " + t("bank_right_lc") + " " + c.right + " · " + t("bank_errors").toLowerCase() + " " + c.wrong) +
+        chips(Object.keys(special).map(function (k) { return [k, special[k], k === "all" ? c.total : k === "wrong" ? c.wrong : tasks.filter(function (q) { return state.bankFav.indexOf(q.id) >= 0; }).length, go("bank", set.id + "_" + k)]; }), "") +
+        "<section class=\"card\">" + (rows ? "<ul class=\"prows\">" + rows + "</ul>" : "<p class=\"empty\">" + t("bank_empty") + "</p>") + "</section>";
+    }
+    const shown = tasks.filter(function (q) {
+      if (g === "all") return true;
+      if (g === "wrong") { const p = state.bankProgress[q.id]; return p && p.status === "wrong"; }
+      if (g === "fav") return state.bankFav.indexOf(q.id) >= 0;
+      return bankGroup(q) === g;
+    });
+    const title = special[g] || bankGroupName(set, g);
+    return "<a class=\"back\" href=\"" + go("bank", set.id) + "\">" + t("bank_set_" + set.id) + "</a>" + head(esc(title), t("bank_sub_list")) +
+      (shown.length ? "<div class=\"bt-list\">" + shown.map(bankCard).join("") + "</div>" : "<section class=\"card\"><p class=\"empty\">" + t(g === "wrong" ? "bank_no_errors" : g === "fav" ? "bank_no_favs" : "bank_empty") + "</p></section>");
+  }
+
+  /* преподаватель */
+  let bankEdit = "", bankImg = "";
+  function bankForm(set) {
+    const q = bankEdit === "new" ? null : find(state.bank, bankEdit);
+    const v = q || { set: set.id, num: set.levels ? set.levels[0] : "", part: 1, topic: "", text: "", answer: "", solution: "" };
+    const cur = bankSet(v.set) || set;
+    const sets = teacherSets().map(function (s) { return "<option value=\"" + s.id + "\"" + (s.id === v.set ? " selected" : "") + ">" + t("bank_set_" + s.id) + "</option>"; }).join("");
+    const topics = state.bank.filter(function (x) { return x.set === cur.id; }).map(function (x) { return x.topic; }).filter(function (x, i, a) { return a.indexOf(x) === i; }).map(function (x) { return "<option value=\"" + esc(x) + "\">"; }).join("");
+    const num = cur.levels ? "<select id=\"bf-num\" name=\"num\">" + cur.levels.map(function (l) { return "<option" + (l === v.num ? " selected" : "") + ">" + l + "</option>"; }).join("") + "</select>" :
+      "<input id=\"bf-num\" name=\"num\" type=\"number\" min=\"1\" max=\"" + cur.num + "\" value=\"" + esc(v.num) + "\" required>";
+    return "<section class=\"card create bank-form\"><div class=\"card-head\"><h2>" + t(q ? "bank_edit_task" : "bank_new_task") + "</h2><button class=\"icon-btn\" type=\"button\" data-act=\"bankCancel\" aria-label=\"" + t("close") + "\" title=\"" + t("close") + "\">×</button></div>" +
+      "<form class=\"form\" data-form=\"bankSave\" data-id=\"" + (q ? q.id : "") + "\"><div class=\"bank-form-top\"><div class=\"field\"><label for=\"bf-set\">" + t("bank_section") + "</label><select id=\"bf-set\" name=\"set\" data-change=\"bankFormSet\">" + sets + "</select></div>" +
+      "<div class=\"field\"><label for=\"bf-num\">" + t(cur.levels ? "bank_level" : "bank_task_num") + "</label>" + num + "</div>" +
+      (cur.parts ? "<div class=\"field\"><label for=\"bf-part\">" + t("bank_part") + "</label><select id=\"bf-part\" name=\"part\"><option value=\"1\"" + (Number(v.part) === 1 ? " selected" : "") + ">1</option><option value=\"2\"" + (Number(v.part) === 2 ? " selected" : "") + ">2</option></select></div>" : "") +
+      "<div class=\"field\"><label for=\"bf-topic\">" + t("bank_topic") + "</label><input id=\"bf-topic\" name=\"topic\" type=\"text\" list=\"bf-topics\" value=\"" + esc(v.topic) + "\" required><datalist id=\"bf-topics\">" + topics + "</datalist></div></div>" +
+      "<div class=\"field\"><label for=\"bf-text\">" + t("bank_condition") + "</label><textarea id=\"bf-text\" name=\"text\" rows=\"4\" required>" + esc(v.text) + "</textarea></div>" +
+      "<div class=\"field\"><span>" + t("b_image") + "</span><div class=\"row\"><img class=\"bimg bf-img\" src=\"" + (bankImg || "data:,") + "\" alt=\"\"" + (bankImg ? "" : " hidden") + "><label class=\"btn btn--line btn--sm bpick\">" + t("pick_image") + "<input type=\"file\" accept=\"image/*\" data-change=\"bankImage\" hidden></label><button class=\"btn btn--line btn--sm bf-noimg\" type=\"button\" data-act=\"bankNoImage\"" + (bankImg ? "" : " hidden") + ">" + t("del") + "</button></div><p class=\"auth-error\" id=\"bf-img-error\" role=\"alert\" hidden>" + t("cover_big") + "</p></div>" +
+      "<div class=\"field\"><label for=\"bf-answer\">" + t("bank_correct") + "</label><input id=\"bf-answer\" name=\"answer\" type=\"text\" value=\"" + esc(v.answer) + "\" required><p class=\"muted small\">" + t("bank_correct_hint") + "</p></div>" +
+      "<div class=\"field\"><label for=\"bf-sol\">" + t("bank_explain") + "</label><textarea id=\"bf-sol\" name=\"solution\" rows=\"3\" required>" + esc(v.solution) + "</textarea><p class=\"muted small\">" + t("bank_explain_hint") + "</p></div>" +
+      "<div class=\"row\"><button class=\"btn btn--red\" type=\"submit\">" + t(q ? "save_changes" : "bank_add") + "</button><button class=\"btn btn--line\" type=\"button\" data-act=\"bankCancel\">" + t("cancel_edit") + "</button></div></form></section>";
+  }
+  function bankRowT(q) {
+    const set = bankSet(q.set), s = q.stats || { tries: 0, right: 0 }, mine = q.author === "teacher";
+    const tools = mine ? "<span class=\"otools\"><button class=\"icon-btn\" type=\"button\" data-act=\"bankEditTask\" data-id=\"" + q.id + "\" aria-label=\"" + t("edit") + "\" title=\"" + t("edit") + "\">" + icon("pen") + "</button><button class=\"icon-btn\" type=\"button\" data-act=\"bankDel\" data-id=\"" + q.id + "\" aria-label=\"" + t("del") + "\" title=\"" + t("del") + "\">" + icon("trash") + "</button></span>" : "<span class=\"otools otools--ghost\" aria-hidden=\"true\"></span>";
+    return "<li class=\"bank-trow\"><span class=\"bank-num\">" + esc(q.num) + "</span><span class=\"bank-tmain\"><span class=\"bank-tmeta\">" + esc(q.topic) + (set.parts ? " · " + t("bank_part") + " " + q.part : "") + " · " + t("bank_author") + ": " + esc(mine ? t("bank_you") : authorName(q.author)) + "</span><span class=\"bank-ttext\">" + esc(q.text) + "</span><span class=\"bank-tmeta\">" + t("correct_answer") + ": <b>" + esc(q.answer) + "</b></span></span>" +
+      "<span class=\"bank-tstat\"><b>" + pctOf(s.right, s.tries) + "%</b><span>" + t("bank_right_lc") + " · " + s.tries + " " + t("bank_tries_n") + "</span></span>" + tools + "</li>";
+  }
+  function viewTBank() {
+    const sets = teacherSets();
+    const parts = String(param).split("_");
+    const set = sets.filter(function (s) { return s.id === parts[0]; })[0] || sets[0];
+    const g = parts[1] || "";
+    const tasks = bankTasks(set.id);
+    const shown = tasks.filter(function (q) { return !g || bankGroup(q) === g; });
+    const tries = tasks.reduce(function (a, q) { return a + (q.stats ? q.stats.tries : 0); }, 0), right = tasks.reduce(function (a, q) { return a + (q.stats ? q.stats.right : 0); }, 0);
+    const reports = openReports();
+    const hard = tasks.filter(function (q) { return q.stats && q.stats.tries >= 5; }).sort(function (a, b) { return a.stats.right / a.stats.tries - b.stats.right / b.stats.tries; }).slice(0, 5).map(function (q) {
+      return "<li class=\"hard-row\"><span class=\"bank-num\">" + esc(q.num) + "</span><span class=\"mrow-main\"><b>" + esc(q.topic) + "</b><span>" + esc(q.text.slice(0, 90)) + (q.text.length > 90 ? "…" : "") + "</span></span>" + mini(t("bank_right_lc"), pctOf(q.stats.right, q.stats.tries)) + "</li>";
+    }).join("");
+    const reportRows = reports.map(function (r) {
+      const q = find(state.bank, r.task);
+      return "<li class=\"rep-row\"><span class=\"avatar avatar--sm\">" + initials(r.from) + "</span><span class=\"mrow-main\"><b>" + esc(r.from) + " · " + t("bank_task") + " " + esc(q.num) + ", " + esc(q.topic) + "</b><span class=\"rep-text\">«" + esc(r.text) + "»</span></span><button class=\"btn btn--line btn--sm\" type=\"button\" data-act=\"bankEditTask\" data-id=\"" + q.id + "\">" + t("edit") + "</button><button class=\"btn btn--line btn--sm\" type=\"button\" data-act=\"bankResolve\" data-id=\"" + r.id + "\">" + t("bank_resolved") + "</button></li>";
+    }).join("");
+    const plus = "<button class=\"plus\" type=\"button\" data-act=\"bankNew\" aria-label=\"" + t("bank_new_task") + "\" title=\"" + t("bank_new_task") + "\"><span class=\"plus-x\" aria-hidden=\"true\"></span></button>";
+    return head(t("nav_bank"), t("bank_sub_t"), plus) + (bankEdit ? bankForm(set) : "") +
+      stats([stat("note", "wine", tasks.length, t("bank_in_section")), stat("users", "accent", tasks.filter(function (q) { return q.author === "teacher"; }).length, t("bank_mine")), stat("progress", "good", tries, t("bank_tries_total")), stat("star", "gold", pctOf(right, tries) + "%", t("bank_avg_right"))]) +
+      (reportRows ? "<section class=\"card reports\">" + cardHead(t("bank_reports") + " <span class=\"dl-count\">" + reports.length + "</span>") + "<ul class=\"mlist\">" + reportRows + "</ul></section>" : "") +
+      (sets.length > 1 ? chips(sets.map(function (s) { return [s.id, t("bank_set_" + s.id), bankTasks(s.id).length, go("bank", s.id)]; }), set.id) : "") +
+      "<div class=\"grid main-side bank-grid\"><section class=\"card\"><div class=\"card-head\"><h2>" + t("bank_set_" + set.id) + "</h2></div>" +
+      chips([["", t("all"), tasks.length, go("bank", set.id)]].concat(bankGroups(set).map(function (gr) { return [gr, gr, tasks.filter(function (q) { return bankGroup(q) === gr; }).length, go("bank", set.id + "_" + gr)]; })), g) +
+      (shown.length ? "<ul class=\"mlist bank-tlist\">" + shown.map(bankRowT).join("") + "</ul>" : "<p class=\"empty\">" + t("bank_empty") + "</p>") + "</section>" +
+      "<section class=\"card\">" + cardHead(t("bank_hard")) + "<p class=\"muted small\">" + t("bank_hard_sub") + "</p>" + (hard ? "<ul class=\"mlist\">" + hard + "</ul>" : "<p class=\"empty\">" + t("bank_empty") + "</p>") + "</section></div>";
+  }
+
   /* ---------- общие экраны ---------- */
   const today0 = day(0);
   let weekShift = 0;
@@ -1696,7 +1953,7 @@
     courses: viewCourses, course: viewCourse, learn: viewLearn,
     homework: viewHomework, grades: viewGrades, report: viewReport,
     diag: viewDiag, plans: viewPlans, pay: viewPay,
-    content: viewContent, review: viewReview, progress: viewProgress, tcourse: viewTCourse, build: viewBuild, preview: viewPreview
+    content: viewContent, bank: function () { return role === "teacher" ? viewTBank() : viewSBank(); }, review: viewReview, progress: viewProgress, tcourse: viewTCourse, build: viewBuild, preview: viewPreview
   };
   const ROLE_PAGES = { student: ["courses", "course", "learn", "homework", "grades", "report", "diag", "plans", "pay"], teacher: ["content", "review", "progress", "tcourse", "build", "preview"] };
   const ACTIVE = { course: "courses", learn: "courses", tcourse: "content", build: "content", preview: "content", report: "grades", diag: "dashboard", plans: "dashboard", pay: "dashboard" };
@@ -1728,7 +1985,8 @@
     const nav = fresh ? NEW_NAV : NAV[role];
     const tabList = fresh ? ["dashboard"] : TABS[role];
     const menu = nav.map(function (item) {
-      const badge = item[0] === "review" && queue().length ? "<span class=\"count\">" + queue().length + "</span>" : "";
+      const badgeN = item[0] === "review" ? queue().length : item[0] === "bank" && role === "teacher" ? openReports().length : 0;
+      const badge = badgeN ? "<span class=\"count\">" + badgeN + "</span>" : "";
       return "<a href=\"" + go(item[0]) + "\"" + (item[0] === current ? " class=\"active\" aria-current=\"page\"" : "") + "><span class=\"menu-ico\">" + icon(item[0]) + "</span><span class=\"menu-label\">" + t(item[1]) + "</span>" + badge + "</a>";
     }).join("");
     const badge = queue().length ? "<span class=\"count\">" + queue().length + "</span>" : "";
@@ -1807,6 +2065,30 @@
       account.package = { id: id, date: iso(day(0)) };
       saveAccount();
       location.hash = go("dashboard");
+    },
+    /* банк заданий */
+    bankFav: function (id) {
+      const i = state.bankFav.indexOf(id);
+      if (i >= 0) state.bankFav.splice(i, 1); else state.bankFav.push(id);
+      save(); render();
+    },
+    bankRetry: function (id) { bankRetry[id] = true; bankShow[id] = false; render(); focusOn("#bt-" + id + " .bt-input"); },
+    bankSolution: function (id) { bankShow[id] = true; render(); },
+    bankReport: function (id) { bankReportOpen = bankReportOpen === id ? "" : id; render(); if (bankReportOpen) focusOn("#rep-" + id); },
+    bankNew: function () { bankEdit = "new"; bankImg = ""; render(); window.scrollTo(0, 0); focusOn("#bf-topic"); },
+    bankEditTask: function (id) { const q = find(state.bank, id); bankEdit = id; bankImg = q.img || ""; render(); window.scrollTo(0, 0); },
+    bankCancel: function () { bankEdit = ""; bankImg = ""; render(); },
+    bankDel: function (id) {
+      if (!ask(t("del") + "?")) return;
+      state.bank = state.bank.filter(function (q) { return q.id !== id; });
+      save(); render();
+    },
+    bankResolve: function (id) { find(state.bankReports, id).done = true; save(); render(); },
+    bankNoImage: function () {
+      bankImg = "";
+      const img = document.querySelector(".bf-img"), del = document.querySelector(".bf-noimg");
+      if (img) img.hidden = true;
+      if (del) del.hidden = true;
     },
     /* конструктор курсов */
     togglePlus: function (id, node) {
@@ -1957,6 +2239,25 @@
     lang: function (node) { state.lang = node.value; save(); render(); },
     tg: function (node) { state.tg[node.dataset.id] = node.checked; save(); },
     reportDays: function (node) { reportDays = Number(node.value); render(); },
+    bankImage: function (node) {
+      readFile(node.files[0], function (result) {
+        const err = document.getElementById("bf-img-error");
+        if (!result) { err.hidden = false; return; }
+        err.hidden = true;
+        bankImg = result;
+        const img = document.querySelector(".bf-img"), del = document.querySelector(".bf-noimg");
+        img.src = result; img.hidden = false; del.hidden = false;
+      });
+    },
+    bankFormSet: function (node) {
+      /* при смене раздела меняются поля «номер / уровень» и «часть»: сохраняем введённое и перерисовываем форму */
+      const form = node.closest("form");
+      const keep = { text: form.querySelector("#bf-text").value, topic: form.querySelector("#bf-topic").value, answer: form.querySelector("#bf-answer").value, solution: form.querySelector("#bf-sol").value };
+      param = node.value;
+      render();
+      ["text", "topic", "answer"].forEach(function (k) { document.getElementById("bf-" + k).value = keep[k]; });
+      document.getElementById("bf-sol").value = keep.solution;
+    },
     /* конструктор курсов: поля сохраняются сразу, без перерисовки (чтобы не сбивать курсор) */
     folderName: function (node) { find(state.folders, node.dataset.id).name = node.value.trim(); save(); },
     courseField: function (node) {
@@ -2066,6 +2367,34 @@
       const text = data.get("text").trim();
       if (text) pushChat(text);
       form.reset();
+    },
+    bankAnswer: function (form, data) {
+      const q = find(state.bank, form.dataset.id), value = String(data.get("answer") || "").trim();
+      if (!value) { focusOn("#bt-" + q.id + " .bt-input"); return; }
+      const prev = state.bankProgress[q.id], ok = bankAccepts(q, value);
+      state.bankProgress[q.id] = { status: ok ? "right" : "wrong", answer: value, tries: (prev ? prev.tries : 0) + 1, date: iso(day(0)) };
+      q.stats = q.stats || { tries: 0, right: 0 };
+      q.stats.tries++; if (ok) q.stats.right++;
+      bankRetry[q.id] = false;
+      save(); render();
+    },
+    bankReport: function (form, data) {
+      const text = String(data.get("text") || "").trim();
+      if (!text) return;
+      state.bankReports.push({ id: uid("r"), task: form.dataset.id, from: me().name, text: text, date: iso(day(0)), done: false });
+      bankReportOpen = ""; bankThanks[form.dataset.id] = true;
+      save(); render();
+    },
+    bankSave: function (form, data) {
+      const set = bankSet(data.get("set"));
+      const fields = { set: set.id, num: set.levels ? data.get("num") : Number(data.get("num")), part: set.parts ? Number(data.get("part")) : set.levels ? 0 : 1, topic: data.get("topic").trim(), text: data.get("text").trim(), answer: data.get("answer").trim(), solution: data.get("solution").trim(), img: bankImg };
+      const q = form.dataset.id && find(state.bank, form.dataset.id);
+      if (q) Object.assign(q, fields);
+      else state.bank.push(Object.assign({ id: uid("q"), author: "teacher", stats: { tries: 0, right: 0 } }, fields));
+      bankEdit = ""; bankImg = "";
+      if (!save() && typeof alert === "function") { alert(t("storage_full")); return; }
+      param = set.id;
+      if (location.hash === go("bank", set.id)) render(); else location.hash = go("bank", set.id);
     },
     /* урок: проверка ответов. Пустые ответы не принимаются; у преподавателя в просмотре ничего не сохраняется */
     lesson: function (form, data) {
@@ -2206,6 +2535,6 @@
   document.addEventListener("input", function (event) { if (event.target.matches && event.target.matches("textarea.ghost")) fitArea(event.target); });
   document.addEventListener("keydown", function (event) { if (event.key === "Enter" && event.target.matches && event.target.matches("[data-oneline]")) { event.preventDefault(); event.target.blur(); } });
   document.addEventListener("pointerdown", pickPage);
-  window.addEventListener("hashchange", function () { editingEvent = ""; picker = ""; previewResult = null; retakeId = null; coursePanel = ""; render(true); window.scrollTo(0, 0); });
+  window.addEventListener("hashchange", function () { bankReportOpen = ""; if (!/\/bank/.test(location.hash)) bankEdit = ""; editingEvent = ""; picker = ""; previewResult = null; retakeId = null; coursePanel = ""; render(true); window.scrollTo(0, 0); });
   render(true);
 })();
