@@ -300,4 +300,23 @@ ok(tl.html().indexOf("data-field=\"explain\"") >= 0, "в редакторе у �
 tl.change("blk", "t1|t1p1|" + JSON.parse(lb["tpos.demo.v3"]).courses[0].items[4].pages[0].blocks[0].id, "Восемь — это два в кубе.", "explain");
 ok(JSON.parse(lb["tpos.demo.v3"]).courses[0].items[4].pages[0].blocks[0].explain === "Восемь — это два в кубе.", "пояснение сохраняется");
 
+// 23 ноября 2026: карточка ученика во всплывающем окне
+var cs = { "tpos.session": JSON.stringify({ role: "teacher" }) };
+var tc = boot(cs, "#teacher/progress");
+ok(tc.html().indexOf("data-act=\"studentCard\"") >= 0, "в успеваемости ученик открывает карточку");
+tc.click("studentCard", "s4");
+var ch = tc.html();
+ok(ch.indexOf("role=\"dialog\"") >= 0 && ch.indexOf("Артём В.") >= 0, "окно карточки открылось");
+ok(ch.indexOf("Контакты") >= 0 && ch.indexOf("Родитель") >= 0 && ch.indexOf("t.me/") >= 0, "контакты ученика и родителя");
+ok(ch.indexOf("Пакет и оплата") >= 0 && ch.indexOf("Диагностика") >= 0 && ch.indexOf("Посещаемость") >= 0 && ch.indexOf("gchart") >= 0, "оплата, диагностика, посещаемость, график оценок");
+ok(ch.indexOf("Отчёт для родителей") >= 0 && ch.indexOf("Банк заданий</h2>") < 0, "кнопка отчёта, банка заданий в карточке нет");
+tc.submit({ dataset: { form: "studentNote", id: "s4" }, data: { text: "Путает знаки в неравенствах" } });
+ok(JSON.parse(cs["tpos.demo.v3"]).studentNotes.s4[0].text === "Путает знаки в неравенствах" && tc.html().indexOf("Путает знаки") >= 0, "заметка преподавателя сохранена");
+tc.click("closeCard", "");
+ok(tc.html().indexOf("role=\"dialog\"") < 0, "окно закрывается");
+tc.go("#teacher/dashboard");
+ok(tc.html().indexOf("data-act=\"studentCard\" data-id=\"s4\"") >= 0, "карточка открывается из «Требуют внимания»");
+tc.go("#teacher/review/hw6");
+ok(tc.html().indexOf("data-act=\"studentCard\" data-id=\"s2\"") >= 0, "карточка открывается из проверки работ");
+
 print(fails ? fails + " FAILED" : "ALL PASSED");

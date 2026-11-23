@@ -429,6 +429,44 @@
     w_untitled: ["Онлайн-занятие", "Online class", "Lezione online"],
     /* банк заданий */
     nav_bank: ["Банк заданий", "Task bank", "Banca esercizi"],
+    /* карточка ученика во всплывающем окне (23 ноября 2026) */
+    sc_open: ["Открыть карточку ученика", "Open student card", "Apri la scheda dello studente"],
+    sc_name: ["Имя", "Name", "Nome"],
+    sc_last: ["последняя оценка", "last grade", "ultimo voto"],
+    sc_contacts: ["Контакты", "Contacts", "Contatti"],
+    sc_phone: ["Телефон", "Phone", "Telefono"],
+    sc_email: ["Почта", "Email", "Email"],
+    sc_parent: ["Родитель", "Parent", "Genitore"],
+    sc_write: ["Написать в Telegram", "Message on Telegram", "Scrivi su Telegram"],
+    sc_write_parent: ["Написать родителю", "Message the parent", "Scrivi al genitore"],
+    sc_call: ["Позвонить", "Call", "Chiama"],
+    sc_report: ["Отчёт для родителей (PDF)", "Parent report (PDF)", "Report per i genitori (PDF)"],
+    sc_report_title: ["Отчёт для родителей", "Report for parents", "Report per i genitori"],
+    sc_package: ["Пакет и оплата", "Package and payments", "Pacchetto e pagamenti"],
+    sc_paid: ["Оплачено", "Paid", "Pagato"],
+    sc_waiting: ["Ожидает оплаты", "Awaiting payment", "In attesa di pagamento"],
+    sc_month: ["Месяц", "Month", "Mese"],
+    sc_sum: ["Сумма", "Amount", "Importo"],
+    sc_progress: ["Прогресс", "Progress", "Progressi"],
+    sc_trend: ["Оценки по времени", "Grades over time", "Voti nel tempo"],
+    sc_trend_note: ["Последние 8 работ, от старых к новым. Наведите на точку, чтобы увидеть работу.", "Last 8 assignments, oldest to newest. Hover a point to see the assignment.", "Ultimi 8 lavori, dal più vecchio al più recente. Passate sul punto per vedere il lavoro."],
+    sc_all_grades: ["Все оценки", "All grades", "Tutti i voti"],
+    sc_work: ["Работа", "Assignment", "Lavoro"],
+    sc_date: ["Дата", "Date", "Data"],
+    sc_grade: ["Оценка", "Grade", "Voto"],
+    sc_hw: ["Домашние работы", "Homework", "Compiti"],
+    sc_hw_none: ["Работ на проверке и со сроком нет.", "No pending homework.", "Nessun compito in sospeso."],
+    sc_courses: ["Курсы", "Courses", "Corsi"],
+    sc_diag: ["Диагностика", "Diagnostic", "Test d'ingresso"],
+    sc_level: ["Уровень", "Level", "Livello"],
+    sc_attendance: ["Посещаемость", "Attendance", "Frequenza"],
+    sc_missed: ["пропущено {n} из 16 занятий", "missed {n} of 16 classes", "assenze: {n} su 16 lezioni"],
+    sc_notes: ["Заметки преподавателя", "Teacher notes", "Note dell'insegnante"],
+    sc_notes_sub: ["Видны только вам, в отчёт для родителей не попадают.", "Only you see these; they are not in the parent report.", "Visibili solo a voi, non entrano nel report per i genitori."],
+    sc_note_ph: ["Например: путает знаки в логарифмических неравенствах", "E.g.: mixes up signs in log inequalities", "Ad es.: confonde i segni nelle disequazioni"],
+    sc_note_add: ["Добавить заметку", "Add note", "Aggiungi nota"],
+    sc_notes_none: ["Заметок пока нет.", "No notes yet.", "Ancora nessuna nota."],
+    sc_demo: ["Контакты, оплаты и диагностика — пример для демо.", "Contacts, payments and diagnostic are demo examples.", "Contatti, pagamenti e test sono esempi demo."],
     /* база уроков и календарик (23 ноября 2026) */
     nav_library: ["База уроков", "Lesson library", "Archivio lezioni"],
     lib_sub: ["Общая база уроков школы по вашим предметам. Перетащите урок на день в календаре или нажмите на урок, а потом на день.", "The school's shared lessons for your subjects. Drag a lesson onto a day in the calendar, or click a lesson and then a day.", "Le lezioni condivise della scuola per le vostre materie. Trascinate una lezione su un giorno del calendario, oppure cliccate la lezione e poi il giorno."],
@@ -1447,7 +1485,7 @@
     const attention = q.map(function (h) {
       return "<li><a class=\"attn\" href=\"" + go("review", h.id) + "\"><span class=\"avatar avatar--sm\">" + initials(h.name) + "</span><span class=\"attn-main\"><b>" + esc(h.name) + "</b><span>" + t("check_work") + ": " + esc(h.title) + "</span></span><span class=\"tag tag--todo\">" + t("hw_review") + "</span></a></li>";
     }).concat(ROSTER.filter(function (st) { return st.lag; }).map(function (st) {
-      return "<li><a class=\"attn\" href=\"" + go("progress", st.group) + "\"><span class=\"avatar avatar--sm\">" + initials(st.name) + "</span><span class=\"attn-main\"><b>" + esc(st.name) + "</b><span>" + esc(groupShort(st.group)) + " · " + t("attendance").toLowerCase() + " " + st.att + "%, " + t("hw_short") + " " + st.hwDone + "/" + st.hwTotal + "</span></span><span class=\"tag tag--missed\">" + t("lagging") + "</span></a></li>";
+      return "<li><button class=\"attn\" type=\"button\" data-act=\"studentCard\" data-id=\"" + st.id + "\" title=\"" + t("sc_open") + "\"><span class=\"avatar avatar--sm\">" + initials(st.name) + "</span><span class=\"attn-main\"><b>" + esc(st.name) + "</b><span>" + esc(groupShort(st.group)) + " · " + t("attendance").toLowerCase() + " " + st.att + "%, " + t("hw_short") + " " + st.hwDone + "/" + st.hwTotal + "</span></span><span class=\"tag tag--missed\">" + t("lagging") + "</span></button></li>";
     })).slice(0, 6).join("");
     const groups = Object.keys(GROUPS).map(function (id) {
       const list = ROSTER.filter(function (st) { return st.group === id; });
@@ -1477,16 +1515,94 @@
     })), g);
     const rows = list.map(function (st) {
       const hwPct = Math.round(st.hwDone / st.hwTotal * 100);
-      const recent = st.recent.map(function (r) { return "<li><span class=\"muted small\">" + shortDate(day(-r[0])) + "</span><span>" + esc(r[1]) + "</span><span class=\"cell\">" + r[2] + "</span></li>"; }).join("");
-      return "<details class=\"srow\"><summary><span class=\"srow-who\"><span class=\"avatar avatar--sm\">" + initials(st.name) + "</span><span><b>" + esc(st.name) + "</b><span>" + esc(groupShort(st.group)) + "</span></span></span>" +
+      return "<div class=\"srow\"><button class=\"srow-sum\" type=\"button\" data-act=\"studentCard\" data-id=\"" + st.id + "\" title=\"" + t("sc_open") + "\"><span class=\"srow-who\"><span class=\"avatar avatar--sm\">" + initials(st.name) + "</span><span><b>" + esc(st.name) + "</b><span>" + esc(groupShort(st.group)) + "</span></span></span>" +
         "<span class=\"srow-att\">" + st.att + "%</span><span class=\"srow-hw\">" + mini(st.hwDone + "/" + st.hwTotal, hwPct) + "</span><span class=\"srow-avg\">" + num1(st.avg) + "</span><span class=\"srow-last\"><span class=\"cell\">" + st.last + "</span></span>" +
-        "<span class=\"tag " + (st.lag ? "tag--missed" : "tag--good") + "\">" + t(st.lag ? "lagging" : "on_track") + "</span></summary>" +
-        "<div class=\"srow-more\"><div><h3>" + t("recent_grades") + "</h3><ul class=\"recent\">" + recent + "</ul></div><div class=\"srow-facts\"><p><span class=\"muted\">" + t("missed_n") + "</span><b>" + Math.round((100 - st.att) / 100 * 16) + "</b></p><p><span class=\"muted\">" + t("hw_col") + "</span><b>" + st.hwDone + " " + t("of") + " " + st.hwTotal + "</b></p></div></div></details>";
+        "<span class=\"tag " + (st.lag ? "tag--missed" : "tag--good") + "\">" + t(st.lag ? "lagging" : "on_track") + "</span></button></div>";
     }).join("");
     return head(t("nav_grades"), t("progress_sub")) + tabs +
       stats([stat("star", "wine", num1(mean(function (st) { return st.avg; })), t("avg_lc")), stat("schedule", "accent", Math.round(mean(function (st) { return st.att; })) + "%", t("avg_att")),
         stat("homework", "gold", Math.round(mean(function (st) { return st.hwDone / st.hwTotal; }) * 100) + "%", t("hw_handed")), stat("alert", "red", list.filter(function (st) { return st.lag; }).length, t("lagging_n"))]) +
       "<section class=\"card\"><div class=\"srows\"><div class=\"srow-head\"><span>" + t("student_col") + "</span><span>" + t("attendance") + "</span><span>" + t("hw_col") + "</span><span>" + t("avg_col") + "</span><span>" + t("last_col") + "</span><span>" + t("status_col") + "</span></div>" + rows + "</div></section>";
+  }
+
+  /* ---------- карточка ученика во всплывающем окне (23 ноября 2026, ТЗ друга заказчика, пункт 4) ----------
+     Открывается отовсюду, где есть имя ученика: успеваемость, «Требуют внимания», проверка работ, прогресс курса.
+     Контакты, пакет, оплаты и диагностика — пример, собран из номера ученика. Банк заданий в карточку не входит (просьба). */
+  let cardStudent = "";
+  const TRANSLIT = { а: "a", б: "b", в: "v", г: "g", д: "d", е: "e", ё: "e", ж: "zh", з: "z", и: "i", й: "y", к: "k", л: "l", м: "m", н: "n", о: "o", п: "p", р: "r", с: "s", т: "t", у: "u", ф: "f", х: "h", ц: "ts", ч: "ch", ш: "sh", щ: "sch", ы: "y", э: "e", ю: "yu", я: "ya", ь: "", ъ: "" };
+  function latin(text) { return String(text).toLowerCase().split("").map(function (ch) { return ch in TRANSLIT ? TRANSLIT[ch] : /[a-z0-9]/.test(ch) ? ch : ""; }).join(""); }
+  function rosterBy(name) { return ROSTER.filter(function (st) { return st.name === name; })[0]; }
+  function studentBtn(st, label) { return st ? "<button class=\"link-btn\" type=\"button\" data-act=\"studentCard\" data-id=\"" + st.id + "\" title=\"" + t("sc_open") + "\">" + esc(label || st.name) + "</button>" : esc(label || ""); }
+  function courseRosterPct(c, st) {
+    const i = ROSTER.indexOf(st), total = lessonsOf(c).length;
+    if (st.name === PEOPLE.student.name && c.groups.indexOf(STUDENT_GROUPS[c.subject]) >= 0) return courseProgress(c).pct;
+    return total ? Math.min(100, Math.round((st.att + st.hwDone * 4 + i * 7) % 101)) : 0;
+  }
+  function studentProfile(st) {
+    const i = ROSTER.indexOf(st), parts = st.name.split(" ");
+    const nick = latin(parts[0]) + (parts[1] ? "_" + latin(parts[1]) : "");
+    const phone = function (k) { const n = String(9000000 + (i * 7919 + k * 104729) % 999999).padStart(7, "0"); return "+7 9" + (10 + (i * 3 + k) % 89) + " " + n.slice(0, 3) + "-" + n.slice(3, 5) + "-" + n.slice(5, 7); };
+    const parentNames = ["Ольга", "Елена", "Наталья", "Ирина", "Сергей", "Андрей", "Татьяна"];
+    const pack = CATALOG.packages[(i + 1) % CATALOG.packages.length];
+    const amount = { base: 4000, practice: 7500, mentor: 11000 }[pack.id] || 0;
+    const now = day(0), pays = [];
+    for (let k = 2; k >= 0; k--) {
+      const m = new Date(now.getFullYear(), now.getMonth() - k, 1);
+      pays.push({ month: date(m, { month: "long", year: "numeric" }), sum: amount, paid: k > 0 || i % 4 !== 3 });
+    }
+    const g = function (x) { return Math.max(2, Math.min(5, Math.round(x))); };
+    const history = st.recent.concat([[31, "Стереометрия: самостоятельная работа", g(st.avg - 0.2)], [38, "Параметры: подборка задач", g(st.avg + 0.1)], [45, "Вероятность: тест", g(st.avg + 0.4)], [52, "Входная контрольная", g(st.avg - 0.6)]]);
+    const level = st.avg >= 4.5 ? "Высокий" : st.avg >= 3.9 ? "Средний" : "Начальный";
+    return { phone: phone(1), email: latin(parts[0]) + (i + 1) + "@demo.ru", tg: "@" + nick, parent: { name: parentNames[i % parentNames.length] + " " + (parts[1] || ""), phone: phone(2), tg: "@" + latin(parentNames[i % parentNames.length]) + "_" + (i + 11) }, pack: pack, pays: pays, history: history,
+      diag: { level: level, score: Math.max(1, Math.min(4, Math.round(st.avg - 1))), total: 4, date: day(-70 - i) } };
+  }
+  /* оценки по времени: одна линия, ось 2–5, подписи текстом, подсказка у каждой точки */
+  function gradeChart(history) {
+    const pts = history.slice().reverse(), W = 560, H = 170, L = 34, R = 14, T = 14, B = 26;
+    const x = function (k) { return L + (pts.length > 1 ? k * (W - L - R) / (pts.length - 1) : 0); };
+    const y = function (v) { return T + (5 - v) * (H - T - B) / 3; };
+    let grid = "";
+    [2, 3, 4, 5].forEach(function (v) { grid += "<line x1=\"" + L + "\" x2=\"" + (W - R) + "\" y1=\"" + y(v) + "\" y2=\"" + y(v) + "\" class=\"gc-grid\"/><text x=\"" + (L - 10) + "\" y=\"" + (y(v) + 4) + "\" class=\"gc-axis\" text-anchor=\"end\">" + v + "</text>"; });
+    const line = pts.map(function (p, k) { return (k ? "L" : "M") + x(k).toFixed(1) + " " + y(p[2]).toFixed(1); }).join(" ");
+    const dots = pts.map(function (p, k) { return "<g class=\"gc-pt\"><circle cx=\"" + x(k) + "\" cy=\"" + y(p[2]) + "\" r=\"14\" class=\"gc-hit\"/><circle cx=\"" + x(k) + "\" cy=\"" + y(p[2]) + "\" r=\"4.5\" class=\"gc-dot\"/><title>" + esc(shortDate(day(-p[0])) + " · " + p[1] + ": " + p[2]) + "</title></g>"; }).join("");
+    const labels = [0, pts.length - 1].map(function (k) { return "<text x=\"" + x(k) + "\" y=\"" + (H - 6) + "\" class=\"gc-axis\" text-anchor=\"" + (k ? "end" : "start") + "\">" + shortDate(day(-pts[k][0])) + "</text>"; }).join("");
+    return "<svg class=\"gchart\" viewBox=\"0 0 " + W + " " + H + "\" role=\"img\" aria-label=\"" + esc(t("sc_trend")) + "\">" + grid + "<path d=\"" + line + "\" class=\"gc-line\"/>" + dots + labels + "</svg>";
+  }
+  function studentCard() {
+    const st = find(ROSTER, cardStudent);
+    if (!st) return "";
+    const pr = studentProfile(st), notes = (state.studentNotes || {})[st.id] || [];
+    const missed = Math.round((100 - st.att) / 100 * 16);
+    const row = function (label, value) { return "<p class=\"sc-row\"><span class=\"muted\">" + label + "</span><span>" + value + "</span></p>"; };
+    const tgLink = function (tg) { return "<a href=\"https://t.me/" + esc(tg.slice(1)) + "\" target=\"_blank\" rel=\"noopener\">" + esc(tg) + "</a>"; };
+    const courses = state.courses.filter(function (c) { return c.owner === "teacher" && c.groups.indexOf(st.group) >= 0; }).map(function (c) {
+      const pct = courseRosterPct(c, st);
+      return "<li class=\"sc-course\"><span>" + esc(c.title || t("untitled")) + "</span><span class=\"prog-bar\">" + bar(pct) + "</span><b>" + pct + "%</b></li>";
+    }).join("");
+    const works = state.homework.filter(function (h) { return h.name === st.name; }).map(function (h) {
+      return "<li class=\"sc-work\"><span>" + esc(h.title) + "</span><span class=\"tag" + (h.status === "graded" ? " tag--good" : h.status === "review" ? " tag--todo" : "") + "\">" + (h.status === "graded" ? h.grade : h.status === "review" ? t("hw_review") : t("due") + ": " + dueLabel(h.due)) + "</span></li>";
+    }).join("");
+    const grades = pr.history.map(function (r) { return "<tr><td class=\"nowrap\">" + shortDate(day(-r[0])) + "</td><td>" + esc(r[1]) + "</td><td><span class=\"cell\">" + r[2] + "</span></td></tr>"; }).join("");
+    const pays = pr.pays.map(function (p) { return "<tr><td>" + esc(p.month) + "</td><td class=\"nowrap\">" + p.sum.toLocaleString("ru-RU") + " ₽</td><td><span class=\"tag" + (p.paid ? " tag--good" : " tag--todo") + "\">" + t(p.paid ? "sc_paid" : "sc_waiting") + "</span></td></tr>"; }).join("");
+    const noteList = notes.length ? "<ul class=\"sc-notes\">" + notes.map(function (n) { return "<li><span class=\"muted small\">" + shortDate(parse(n.date)) + "</span><p>" + esc(n.text) + "</p><button class=\"icon-btn\" type=\"button\" data-act=\"delNote\" data-id=\"" + st.id + "|" + n.id + "\" aria-label=\"" + t("del") + "\" title=\"" + t("del") + "\">×</button></li>"; }).join("") + "</ul>" : "<p class=\"muted small\">" + t("sc_notes_none") + "</p>";
+    return "<div class=\"scard-back\" data-act=\"closeCard\"></div><div class=\"scard\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"sc-name\">" +
+      "<div class=\"scard-head\"><span class=\"avatar\">" + initials(st.name) + "</span><div class=\"scard-who\"><p class=\"print-only sc-doc-title\">" + t("sc_report_title") + "</p><h1 class=\"title\" id=\"sc-name\">" + esc(st.name) + "</h1><p class=\"muted\">" + esc(GROUPS[st.group].name) + " · <span class=\"tag " + (st.lag ? "tag--missed" : "tag--good") + "\">" + t(st.lag ? "lagging" : "on_track") + "</span></p></div>" +
+      "<button class=\"picker-close no-print\" type=\"button\" data-act=\"closeCard\"><span>" + t("close") + "</span><span class=\"plus-x plus-x--open\" aria-hidden=\"true\"></span></button></div>" +
+      "<div class=\"row scard-actions no-print\"><a class=\"btn btn--red btn--sm\" href=\"https://t.me/" + esc(pr.tg.slice(1)) + "\" target=\"_blank\" rel=\"noopener\">" + t("sc_write") + "</a><a class=\"btn btn--line btn--sm\" href=\"tel:" + pr.phone.replace(/[^+\d]/g, "") + "\">" + t("sc_call") + "</a><a class=\"btn btn--line btn--sm\" href=\"https://t.me/" + esc(pr.parent.tg.slice(1)) + "\" target=\"_blank\" rel=\"noopener\">" + t("sc_write_parent") + "</a><button class=\"btn btn--line btn--sm\" type=\"button\" data-act=\"printCard\">" + t("sc_report") + "</button></div>" +
+      stats([stat("schedule", "accent", st.att + "%", t("attendance").toLowerCase()), stat("homework", "gold", st.hwDone + "/" + st.hwTotal, t("hw_handed")), stat("star", "wine", num1(st.avg), t("avg_lc")), stat("grades", "good", st.last, t("sc_last"))]) +
+      "<div class=\"scard-grid\">" +
+      "<section class=\"card sc-trend\"><h2>" + t("sc_trend") + "</h2>" + gradeChart(pr.history) + "<p class=\"muted small no-print\">" + t("sc_trend_note") + "</p></section>" +
+      "<section class=\"card\"><h2>" + t("sc_contacts") + "</h2>" + row(t("sc_phone"), esc(pr.phone)) + row(t("sc_email"), "<a href=\"mailto:" + esc(pr.email) + "\">" + esc(pr.email) + "</a>") + row("Telegram", tgLink(pr.tg)) +
+        "<h3>" + t("sc_parent") + "</h3>" + row(t("sc_name"), esc(pr.parent.name)) + row(t("sc_phone"), esc(pr.parent.phone)) + row("Telegram", tgLink(pr.parent.tg)) + "</section>" +
+      "<section class=\"card\"><h2>" + t("sc_progress") + "</h2><h3>" + t("sc_courses") + "</h3>" + (courses ? "<ul class=\"sc-list\">" + courses + "</ul>" : "<p class=\"muted small\">–</p>") +
+        "<h3>" + t("sc_attendance") + "</h3><p>" + st.att + "% · " + t("sc_missed").replace("{n}", missed) + "</p>" +
+        "<h3>" + t("sc_diag") + "</h3>" + row(t("sc_level"), esc(pr.diag.level)) + row(t("result"), pr.diag.score + " " + t("of") + " " + pr.diag.total) + row(t("sc_date"), shortDate(pr.diag.date)) + "</section>" +
+      "<section class=\"card no-print\"><h2>" + t("sc_package") + "</h2>" + row(t("pkg_title"), esc(pr.pack.name) + " · " + esc(pr.pack.price)) + "<div class=\"tbl-wrap\"><table class=\"tbl\"><thead><tr><th>" + t("sc_month") + "</th><th>" + t("sc_sum") + "</th><th></th></tr></thead><tbody>" + pays + "</tbody></table></div></section>" +
+      "<section class=\"card\"><h2>" + t("sc_all_grades") + "</h2><div class=\"tbl-wrap\"><table class=\"tbl\"><thead><tr><th>" + t("sc_date") + "</th><th>" + t("sc_work") + "</th><th>" + t("sc_grade") + "</th></tr></thead><tbody>" + grades + "</tbody></table></div></section>" +
+      "<section class=\"card\"><h2>" + t("sc_hw") + "</h2><p>" + t("hw_col") + ": " + st.hwDone + " " + t("of") + " " + st.hwTotal + "</p>" + (works ? "<ul class=\"sc-list\">" + works + "</ul>" : "<p class=\"muted small\">" + t("sc_hw_none") + "</p>") + "</section>" +
+      "<section class=\"card sc-notes-card no-print\"><h2>" + t("sc_notes") + "</h2><p class=\"muted small\">" + t("sc_notes_sub") + "</p>" + noteList +
+        "<form class=\"form\" data-form=\"studentNote\" data-id=\"" + st.id + "\"><textarea name=\"text\" rows=\"2\" required placeholder=\"" + esc(t("sc_note_ph")) + "\" aria-label=\"" + esc(t("sc_notes")) + "\"></textarea><div><button class=\"btn btn--red btn--sm\" type=\"submit\">" + t("sc_note_add") + "</button></div></form></section>" +
+      "</div><p class=\"muted small no-print\">" + t("sc_demo") + "</p></div>";
   }
 
   function viewReview() {
@@ -1506,7 +1622,7 @@
           blocksOf(hit.lesson).filter(function (bl) { return bl.type === "open"; }).map(function (bl) { return "<div class=\"q\"><h3>" + esc(bl.q || t("ph_q")) + "</h3><p class=\"open-answer\">" + esc(r.answers[bl.id] || t("no_answer")) + "</p></div>"; }).join("") + "</div>";
       }
       const preview = f && f.data ? "<img src=\"" + f.data + "\" alt=\"" + esc(f.name) + "\">" : f && f.fresh ? esc(f.name) : "<span>" + esc(f ? f.name : "") + "<br>" + t("no_file") + "</span>";
-      detail = "<div class=\"review-who\"><span class=\"avatar\">" + initials(current.name) + "</span><div><h2>" + esc(current.title) + "</h2><p class=\"muted small\">" + esc(current.name) + " · " + esc(COURSES[current.course].name) + " · " + t("due") + ": " + dueLabel(current.due) + "</p></div></div>" + (box || "<div class=\"preview\">" + preview + "</div>") +
+      detail = "<div class=\"review-who\"><span class=\"avatar\">" + initials(current.name) + "</span><div><h2>" + esc(current.title) + "</h2><p class=\"muted small\">" + studentBtn(rosterBy(current.name), current.name) + " · " + esc(COURSES[current.course].name) + " · " + t("due") + ": " + dueLabel(current.due) + "</p></div></div>" + (box || "<div class=\"preview\">" + preview + "</div>") +
         "<form class=\"form\" data-form=\"grade\" data-id=\"" + current.id + "\"><div class=\"field\"><span>" + t("grade") + "</span><div class=\"grades-pick\">" + [2, 3, 4, 5].map(function (g) {
           return "<label><input type=\"radio\" name=\"grade\" value=\"" + g + "\" required" + (g === 5 ? " checked" : "") + "><span class=\"cell\">" + g + "</span></label>";
         }).join("") + "</div></div><div class=\"field\"><label for=\"review-comment\">" + t("comment") + "</label><textarea id=\"review-comment\" name=\"comment\" required></textarea></div><div><button class=\"btn btn--red\" type=\"submit\">" + t("save_grade") + "</button></div></form>";
@@ -1558,9 +1674,8 @@
     if (coursePanel === "progress") {
       const total = lessonsOf(c).length;
       const rows = ROSTER.filter(function (s) { return c.groups.indexOf(s.group) >= 0; }).map(function (s, i) {
-        const real = s.name === PEOPLE.student.name && c.groups.indexOf(STUDENT_GROUPS[c.subject]) >= 0;
-        const pct = real ? courseProgress(c).pct : total ? Math.min(100, Math.round((s.att + s.hwDone * 4 + i * 7) % 101)) : 0;
-        return "<li class=\"prog-row\"><span class=\"avatar avatar--sm\">" + initials(s.name) + "</span><span class=\"mrow-main\"><b>" + esc(s.name) + "</b><span>" + esc(GROUPS[s.group].name.split("· ")[1]) + "</span></span><span class=\"prog-bar\">" + bar(pct) + "</span><b class=\"prog-pct\">" + pct + "%</b></li>";
+        const pct = courseRosterPct(c, s);
+        return "<li class=\"prog-row\"><span class=\"avatar avatar--sm\">" + initials(s.name) + "</span><span class=\"mrow-main\"><b>" + studentBtn(s) + "</b><span>" + esc(GROUPS[s.group].name.split("· ")[1]) + "</span></span><span class=\"prog-bar\">" + bar(pct) + "</span><b class=\"prog-pct\">" + pct + "%</b></li>";
       }).join("");
       return "<section class=\"card cpanel\"><div class=\"card-head\"><h2>" + t("p_progress") + "</h2>" + closePanel() + "</div><p class=\"muted small\">" + t("p_progress_sub") + " " + t("p_progress_demo") + "</p>" + (rows ? "<ul class=\"mlist\">" + rows + "</ul>" : "<p class=\"empty\">" + t("p_no_groups") + "</p>") + "</section>";
     }
@@ -2235,7 +2350,7 @@
     document.getElementById("app").innerHTML =
       "<div class=\"shell shell--rail\"><aside class=\"rail no-print\"><a class=\"logo\" href=\"" + go("dashboard") + "\" aria-label=\"" + t("nav_home") + "\">" + LOGO + "</a><nav class=\"menu\" aria-label=\"" + t("nav_home") + "\">" + menu + "</nav>" +
       "<div class=\"rail-foot\"><button class=\"rail-out\" type=\"button\" data-act=\"logout\" aria-label=\"" + t("logout") + "\"><span class=\"menu-ico\">" + icon("logout") + "</span><span class=\"menu-label\">" + t("logout") + "</span></button></div></aside>" +
-      "<main class=\"main\"><div class=\"page\"><div class=\"topbar no-print\">" + crumbs + "<div class=\"topbar-right\"><span class=\"demo-pill\" title=\"" + t("demo") + "\">" + t("demo_short") + "</span>" + themeBtn + userMenu(nav, ini) + "</div></div>" + VIEWS[page]() + "</div></main></div>" + tabs;
+      "<main class=\"main\"><div class=\"page\"><div class=\"topbar no-print\">" + crumbs + "<div class=\"topbar-right\"><span class=\"demo-pill\" title=\"" + t("demo") + "\">" + t("demo_short") + "</span>" + themeBtn + userMenu(nav, ini) + "</div></div>" + VIEWS[page]() + "</div></main></div>" + tabs + (role === "teacher" && cardStudent ? studentCard() : "");
     if (animate) document.querySelector(".page").classList.add("page-enter");
     if (page === "lesson") initBoard();
     document.querySelectorAll("textarea.ghost").forEach(fitArea);
@@ -2284,6 +2399,18 @@
       if (card) { card.scrollIntoView({ block: "center", behavior: "smooth" }); document.getElementById("ev-title").focus({ preventScroll: true }); }
     },
     cancelEdit: function () { editingEvent = ""; render(); },
+    studentCard: function (id) { cardStudent = id; render(); const c = document.querySelector(".scard .picker-close"); if (c && c.focus) c.focus({ preventScroll: true }); },
+    closeCard: function () { cardStudent = ""; render(); },
+    printCard: function () {
+      document.documentElement.classList.add("print-card");
+      window.print();
+      setTimeout(function () { document.documentElement.classList.remove("print-card"); }, 500);
+    },
+    delNote: function (id) {
+      const p = id.split("|"), list = (state.studentNotes || {})[p[0]] || [];
+      state.studentNotes[p[0]] = list.filter(function (n) { return n.id !== p[1]; });
+      save(); render();
+    },
     libPick: function (id) { libPick = id && libPick !== id ? id : ""; render(); },
     calDay: function (id) {
       if (libPick) { placePlan(libPick, libGroup(), id); libPick = ""; } else libDay = id;
@@ -2682,6 +2809,13 @@
       retakeId = null;
       save(); render(); window.scrollTo(0, 0);
     },
+    studentNote: function (form, data) {
+      const text = String(data.get("text") || "").trim();
+      if (!text) return;
+      if (!state.studentNotes) state.studentNotes = {};
+      (state.studentNotes[form.dataset.id] = state.studentNotes[form.dataset.id] || []).unshift({ id: uid("n"), text: text, date: iso(day(0)) });
+      save(); render();
+    },
     libPlace: function (form, data) {
       const key = String(data.get("date") || "");
       if (!/^\d{4}-\d{2}-\d{2}$/.test(key)) return;
@@ -2743,7 +2877,7 @@
   });
   document.addEventListener("keydown", function (event) {
     if ((event.key === "Enter" || event.key === " ") && event.target.matches("[role=button][data-act]")) { event.preventDefault(); event.target.click(); }
-    if (event.key === "Escape") { closeMenus(); if (picker) { picker = ""; render(); } }
+    if (event.key === "Escape") { closeMenus(); if (picker) { picker = ""; render(); } if (cardStudent) { cardStudent = ""; render(); } }
   });
   /* свои дела в расписании: перетаскивание на другой день */
   document.addEventListener("dragstart", function (event) {
@@ -2814,6 +2948,6 @@
   document.addEventListener("input", function (event) { if (event.target.matches && event.target.matches("textarea.ghost")) fitArea(event.target); });
   document.addEventListener("keydown", function (event) { if (event.key === "Enter" && event.target.matches && event.target.matches("[data-oneline]")) { event.preventDefault(); event.target.blur(); } });
   document.addEventListener("pointerdown", pickPage);
-  window.addEventListener("hashchange", function () { libPick = ""; bankReportOpen = ""; if (!/\/bank/.test(location.hash)) bankEdit = ""; editingEvent = ""; picker = ""; previewResult = null; retakeId = null; coursePanel = ""; render(true); window.scrollTo(0, 0); });
+  window.addEventListener("hashchange", function () { libPick = ""; cardStudent = ""; bankReportOpen = ""; if (!/\/bank/.test(location.hash)) bankEdit = ""; editingEvent = ""; picker = ""; previewResult = null; retakeId = null; coursePanel = ""; render(true); window.scrollTo(0, 0); });
   render(true);
 })();
