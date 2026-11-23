@@ -1483,7 +1483,9 @@
     const m = monthStats();
     const cell = function (value, label) { return "<div class=\"month-cell\"><b>" + value + "</b><span>" + label + "</span></div>"; };
     const attention = q.map(function (h) {
-      return "<li><a class=\"attn\" href=\"" + go("review", h.id) + "\"><span class=\"avatar avatar--sm\">" + initials(h.name) + "</span><span class=\"attn-main\"><b>" + esc(h.name) + "</b><span>" + t("check_work") + ": " + esc(h.title) + "</span></span><span class=\"tag tag--todo\">" + t("hw_review") + "</span></a></li>";
+      /* имя и кружок открывают карточку ученика, текст работы и метка ведут в проверку */
+      const who = rosterBy(h.name);
+      return "<li><div class=\"attn\">" + avatarBtn(who, h.name) + "<span class=\"attn-main\"><b>" + studentBtn(who, h.name) + "</b><a class=\"attn-task\" href=\"" + go("review", h.id) + "\">" + t("check_work") + ": " + esc(h.title) + "</a></span><a class=\"tag tag--todo\" href=\"" + go("review", h.id) + "\">" + t("hw_review") + "</a></div></li>";
     }).concat(ROSTER.filter(function (st) { return st.lag; }).map(function (st) {
       return "<li><button class=\"attn\" type=\"button\" data-act=\"studentCard\" data-id=\"" + st.id + "\" title=\"" + t("sc_open") + "\"><span class=\"avatar avatar--sm\">" + initials(st.name) + "</span><span class=\"attn-main\"><b>" + esc(st.name) + "</b><span>" + esc(groupShort(st.group)) + " · " + t("attendance").toLowerCase() + " " + st.att + "%, " + t("hw_short") + " " + st.hwDone + "/" + st.hwTotal + "</span></span><span class=\"tag tag--missed\">" + t("lagging") + "</span></button></li>";
     })).slice(0, 6).join("");
@@ -1533,6 +1535,9 @@
   function latin(text) { return String(text).toLowerCase().split("").map(function (ch) { return ch in TRANSLIT ? TRANSLIT[ch] : /[a-z0-9]/.test(ch) ? ch : ""; }).join(""); }
   function rosterBy(name) { return ROSTER.filter(function (st) { return st.name === name; })[0]; }
   function studentBtn(st, label) { return st ? "<button class=\"link-btn\" type=\"button\" data-act=\"studentCard\" data-id=\"" + st.id + "\" title=\"" + t("sc_open") + "\">" + esc(label || st.name) + "</button>" : esc(label || ""); }
+  function avatarBtn(st, name) {
+    return st ? "<button class=\"avatar avatar--sm avatar-card\" type=\"button\" data-act=\"studentCard\" data-id=\"" + st.id + "\" aria-label=\"" + esc(t("sc_open") + ": " + st.name) + "\" title=\"" + t("sc_open") + "\">" + initials(st.name) + "</button>" : "<span class=\"avatar avatar--sm\">" + initials(name) + "</span>";
+  }
   function courseRosterPct(c, st) {
     const i = ROSTER.indexOf(st), total = lessonsOf(c).length;
     if (st.name === PEOPLE.student.name && c.groups.indexOf(STUDENT_GROUPS[c.subject]) >= 0) return courseProgress(c).pct;
@@ -1609,7 +1614,7 @@
     const items = queue();
     const current = find(items, param) || items[0];
     const rows = items.map(function (h) {
-      return "<li><a class=\"qrow\" href=\"" + go("review", h.id) + "\"" + (current && current.id === h.id ? " aria-current=\"true\"" : "") + "><span class=\"avatar avatar--sm\">" + initials(h.name) + "</span><span class=\"qrow-main\"><b>" + esc(h.name) + "</b><span>" + esc(h.title) + "</span><span>" + esc(COURSES[h.course].short) + " · " + dueLabel(h.due) + "</span></span></a></li>";
+      return "<li class=\"qrow-li\">" + avatarBtn(rosterBy(h.name), h.name) + "<a class=\"qrow\" href=\"" + go("review", h.id) + "\"" + (current && current.id === h.id ? " aria-current=\"true\"" : "") + "><span class=\"qrow-main\"><b>" + esc(h.name) + "</b><span>" + esc(h.title) + "</span><span>" + esc(COURSES[h.course].short) + " · " + dueLabel(h.due) + "</span></span></a></li>";
     }).join("");
     let detail = "<p class=\"empty\">" + t("queue_empty") + "</p>";
     if (current) {

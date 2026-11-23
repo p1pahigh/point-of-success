@@ -1192,7 +1192,7 @@ a.wl--plan:hover { border-left-width: 5px; }
 /* ---------- карточка ученика во всплывающем окне (23 ноября 2026) ---------- */
 .link-btn { padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px; cursor: pointer; }
 .link-btn:hover { color: var(--wine); text-decoration-color: currentColor; }
-button.attn { width: 100%; border: 0; background: none; font: inherit; text-align: left; cursor: pointer; }
+button.attn { width: 100%; padding-inline: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
 .srow > .srow-sum { display: grid; grid-template-columns: minmax(12rem, 2fr) 6rem minmax(8rem, 1.4fr) 5rem 6rem 7rem; align-items: center; gap: 1rem; width: 100%; padding: .7rem 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
 .srow > .srow-sum:hover .srow-who b { color: var(--wine); text-decoration: underline; text-underline-offset: 3px; }
 .scard-back { position: fixed; inset: 0; z-index: 70; background: rgba(24, 34, 48, .45); animation: picker-in .2s var(--ease); }
@@ -1246,3 +1246,13 @@ button.attn { width: 100%; border: 0; background: none; font: inherit; text-alig
   .print-card .scard-grid { grid-template-columns: 1fr 1fr; }
   .print-card .card { break-inside: avoid; box-shadow: none; }
 }
+/* кружок с инициалами открывает карточку ученика */
+.avatar-card { padding: 0; cursor: pointer; transition: border-color .2s ease, background .2s ease; }
+.avatar-card:hover { border-color: var(--wine); background: var(--band); }
+.attn-main a.attn-task { font-size: .8125rem; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-decoration: none; }
+.attn-main a.attn-task:hover { color: var(--wine); text-decoration: underline; }
+.attn-main .link-btn { font-weight: 600; text-decoration: none; }
+.attn-main .link-btn:hover { text-decoration: underline; }
+a.tag { text-decoration: none; }
+.qrow-li { display: flex; align-items: center; gap: .35rem; }
+.qrow-li > .qrow { flex: 1; min-width: 0; }
