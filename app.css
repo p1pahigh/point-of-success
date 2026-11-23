@@ -1256,3 +1256,5 @@ button.attn { width: 100%; padding-inline: 0; border: 0; background: none; color
 a.tag { text-decoration: none; }
 .qrow-li { display: flex; align-items: center; gap: .35rem; }
 .qrow-li > .qrow { flex: 1; min-width: 0; }
+.scard { overscroll-behavior: contain; }
+.ltile-tags { gap: .4rem; }

@@ -1543,6 +1543,12 @@
     if (st.name === PEOPLE.student.name && c.groups.indexOf(STUDENT_GROUPS[c.subject]) >= 0) return courseProgress(c).pct;
     return total ? Math.min(100, Math.round((st.att + st.hwDone * 4 + i * 7) % 101)) : 0;
   }
+  function keepCardScroll(fn) {
+    const box = document.querySelector(".scard"), top = box ? box.scrollTop : 0;
+    fn();
+    const again = document.querySelector(".scard");
+    if (again) again.scrollTop = top;
+  }
   function studentProfile(st) {
     const i = ROSTER.indexOf(st), parts = st.name.split(" ");
     const nick = latin(parts[0]) + (parts[1] ? "_" + latin(parts[1]) : "");
@@ -1557,9 +1563,10 @@
     }
     const g = function (x) { return Math.max(2, Math.min(5, Math.round(x))); };
     const history = st.recent.concat([[31, "Стереометрия: самостоятельная работа", g(st.avg - 0.2)], [38, "Параметры: подборка задач", g(st.avg + 0.1)], [45, "Вероятность: тест", g(st.avg + 0.4)], [52, "Входная контрольная", g(st.avg - 0.6)]]);
-    const level = st.avg >= 4.5 ? "Высокий" : st.avg >= 3.9 ? "Средний" : "Начальный";
+    const score = st.avg >= 4.5 ? 4 : st.avg >= 3.9 ? 3 : 2;
+    const level = score === 4 ? "Высокий" : score === 3 ? "Средний" : "Начальный";
     return { phone: phone(1), email: latin(parts[0]) + (i + 1) + "@demo.ru", tg: "@" + nick, parent: { name: parentNames[i % parentNames.length] + " " + (parts[1] || ""), phone: phone(2), tg: "@" + latin(parentNames[i % parentNames.length]) + "_" + (i + 11) }, pack: pack, pays: pays, history: history,
-      diag: { level: level, score: Math.max(1, Math.min(4, Math.round(st.avg - 1))), total: 4, date: day(-70 - i) } };
+      diag: { level: level, score: score, total: 4, date: day(-70 - i) } };
   }
   /* оценки по времени: одна линия, ось 2–5, подписи текстом, подсказка у каждой точки */
   function gradeChart(history) {
@@ -1850,7 +1857,7 @@
       const l = x.lesson, c = x.course;
       const dates = plansOf(l.id, g).map(function (p) { return shortDate(parse(p.date)); });
       return "<div class=\"ltile" + (libPick === l.id ? " ltile--picked" : "") + "\" draggable=\"true\" data-libdrag=\"lesson:" + l.id + "\" data-act=\"libPick\" data-id=\"" + l.id + "\" role=\"button\" tabindex=\"0\" aria-pressed=\"" + (libPick === l.id) + "\">" + lessonPic(x) +
-        "<span class=\"ltile-body\"><span class=\"kind-badge kind-badge--" + l.kind + "\">" + esc(kindLabel(l)) + "</span><b>" + esc(l.title || t("untitled")) + "</b>" +
+        "<span class=\"ltile-body\"><span class=\"row ltile-tags\"><span class=\"kind-badge kind-badge--" + l.kind + "\">" + esc(kindLabel(l)) + "</span>" + (c.status !== "live" ? "<span class=\"tag\">" + t("st_draft") + "</span>" : "") + "</span><b>" + esc(l.title || t("untitled")) + "</b>" +
         "<span class=\"muted small\">" + (x.module ? esc(x.module) + " · " : "") + esc(c.title || t("untitled")) + "</span>" +
         "<span class=\"muted small\">" + t("lib_author") + ": " + esc(TEACHERS[c.owner] ? TEACHERS[c.owner].name : "") + "</span>" +
         (dates.length ? "<span class=\"tag tag--good ltile-on\">" + t("lib_on") + ": " + dates.join(", ") + "</span>" : "") + "</span></div>";
@@ -2405,16 +2412,17 @@
     },
     cancelEdit: function () { editingEvent = ""; render(); },
     studentCard: function (id) { cardStudent = id; render(); const c = document.querySelector(".scard .picker-close"); if (c && c.focus) c.focus({ preventScroll: true }); },
-    closeCard: function () { cardStudent = ""; render(); },
+    closeCard: function () { cardStudent = ""; if (document.documentElement.classList) document.documentElement.classList.remove("print-card"); render(); },
     printCard: function () {
-      document.documentElement.classList.add("print-card");
+      const root = document.documentElement;
+      root.classList.add("print-card");
+      if (window.addEventListener) window.addEventListener("afterprint", function () { root.classList.remove("print-card"); }, { once: true });
       window.print();
-      setTimeout(function () { document.documentElement.classList.remove("print-card"); }, 500);
     },
     delNote: function (id) {
       const p = id.split("|"), list = (state.studentNotes || {})[p[0]] || [];
       state.studentNotes[p[0]] = list.filter(function (n) { return n.id !== p[1]; });
-      save(); render();
+      save(); keepCardScroll(render);
     },
     libPick: function (id) { libPick = id && libPick !== id ? id : ""; render(); },
     calDay: function (id) {
@@ -2819,7 +2827,7 @@
       if (!text) return;
       if (!state.studentNotes) state.studentNotes = {};
       (state.studentNotes[form.dataset.id] = state.studentNotes[form.dataset.id] || []).unshift({ id: uid("n"), text: text, date: iso(day(0)) });
-      save(); render();
+      save(); keepCardScroll(render);
     },
     libPlace: function (form, data) {
       const key = String(data.get("date") || "");
