@@ -429,6 +429,28 @@
     w_untitled: ["Онлайн-занятие", "Online class", "Lezione online"],
     /* банк заданий */
     nav_bank: ["Банк заданий", "Task bank", "Banca esercizi"],
+    /* база уроков и календарик (23 ноября 2026) */
+    nav_library: ["База уроков", "Lesson library", "Archivio lezioni"],
+    lib_sub: ["Общая база уроков школы по вашим предметам. Перетащите урок на день в календаре или нажмите на урок, а потом на день.", "The school's shared lessons for your subjects. Drag a lesson onto a day in the calendar, or click a lesson and then a day.", "Le lezioni condivise della scuola per le vostre materie. Trascinate una lezione su un giorno del calendario, oppure cliccate la lezione e poi il giorno."],
+    lib_for_group: ["Для группы", "For group", "Per il gruppo"],
+    lib_empty: ["В базе пока нет уроков по вашим предметам. Создайте урок в «Материалах».", "No lessons for your subjects yet. Create one in Materials.", "Ancora nessuna lezione per le vostre materie. Createne una in Materiali."],
+    lib_pick_hint: ["Выбран урок «{t}». Нажмите на день в календаре или укажите дату:", "Lesson “{t}” selected. Click a day in the calendar or enter a date:", "Lezione «{t}» selezionata. Cliccate un giorno del calendario o inserite una data:"],
+    lib_place: ["Поставить", "Schedule", "Programma"],
+    lib_cancel: ["Отменить выбор", "Cancel", "Annulla"],
+    lib_on: ["Поставлен", "Scheduled", "In programma"],
+    lib_day_empty: ["На этот день уроков нет.", "No lessons on this day.", "Nessuna lezione in questo giorno."],
+    lib_unplan: ["Убрать с этого дня", "Remove from this day", "Togli da questo giorno"],
+    lib_drag: ["Перетащите на другой день, чтобы перенести", "Drag to another day to move it", "Trascinate su un altro giorno per spostarla"],
+    lib_rule: ["В этот день урок откроется у учеников группы и появится в их расписании. У контрольной и ДЗ этот день станет сроком сдачи.", "On this day the lesson opens for the group and appears in their schedule. For tests and homework this day becomes the deadline.", "In questo giorno la lezione si apre per il gruppo e compare nel loro orario. Per verifiche e compiti diventa la scadenza."],
+    lib_author: ["Автор", "Author", "Autore"],
+    lib_locked: ["Откроется", "Opens", "Si apre"],
+    lib_locked_t: ["Урок пока закрыт", "This lesson is not open yet", "Lezione non ancora aperta"],
+    lib_locked_s: ["Преподаватель поставил его на {d}. В этот день урок откроется здесь и в расписании.", "Your teacher scheduled it for {d}. It opens here and in your schedule on that day.", "L'insegnante l'ha programmata per il {d}. Si aprirà qui e nell'orario quel giorno."],
+    lib_due: ["Срок", "Due", "Scadenza"],
+    groups_one: ["группа", "group", "gruppo"],
+    groups_few: ["группы", "groups", "gruppi"],
+    groups_many: ["групп", "groups", "gruppi"],
+    explain_ph: ["Пояснение для ученика: ученик увидит его после ответа (необязательно)", "Explanation for the student, shown after they answer (optional)", "Spiegazione per lo studente, visibile dopo la risposta (facoltativa)"],
     bank_sub: ["Решайте задания в своём темпе: без сроков и оценок, после ответа сразу видно пояснение", "Practise at your own pace: no deadlines or grades, with an explanation after each answer", "Esercitatevi con calma: niente scadenze né voti, spiegazione dopo ogni risposta"],
     bank_sub_list: ["Впишите краткий ответ и нажмите «Проверить»", "Type a short answer and press Check", "Scrivete la risposta breve e premete Verifica"],
     bank_sub_t: ["Общий банк школы: задания видят все преподаватели предмета и ученики. Изменять можно только свои.", "The school's shared bank: all subject teachers and students see the tasks. You can edit only your own.", "Banca comune della scuola: tutti vedono gli esercizi, si modificano solo i propri."],
@@ -545,7 +567,7 @@
   };
   const NAV = {
     student: [["dashboard", "nav_home"], ["schedule", "nav_schedule"], ["lesson", "nav_lesson"], ["courses", "nav_courses"], ["homework", "nav_hw"], ["bank", "nav_bank"], ["grades", "nav_grades"], ["settings", "nav_settings"]],
-    teacher: [["dashboard", "nav_home"], ["schedule", "nav_schedule"], ["lesson", "nav_lesson"], ["content", "nav_content"], ["bank", "nav_bank"], ["review", "nav_review"], ["progress", "nav_grades"], ["settings", "nav_settings"]]
+    teacher: [["dashboard", "nav_home"], ["schedule", "nav_schedule"], ["lesson", "nav_lesson"], ["content", "nav_content"], ["library", "nav_library"], ["bank", "nav_bank"], ["review", "nav_review"], ["progress", "nav_grades"], ["settings", "nav_settings"]]
   };
 
   const TABS = { student: ["dashboard", "schedule", "courses", "homework"], teacher: ["dashboard", "schedule", "review", "content"] };
@@ -558,6 +580,7 @@
     homework: "M6 3h9l4 4v14H6zM14 3v5h5M9 14l2 2 4-4",
     review: "M4 4h16v16H4zM8 12l3 3 5-6",
     content: "M12 16V4M7 9l5-5 5 5M4 20h16",
+    library: "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z",
     more: "M5 12h.01M12 12h.01M19 12h.01",
     lesson: "M3 7h12v10H3zM15 10.5l6-3.5v10l-6-3.5",
     grades: "M4 20V11M10 20V5M16 20v-6M3 20h18",
@@ -626,7 +649,7 @@
           lesson("v1", "Логарифмы: основные свойства", [b("video", { url: "", dur: 1450, title: "Логарифмы: основные свойства" })]),
           lesson("n1", "Конспект: логарифмы", [b("text", { text: "log_a(xy) = log_a x + log_a y. log_a(x/y) = log_a x − log_a y. log_a x^n = n · log_a x." }), b("tip", { text: "Основание положительно и не равно единице, аргумент положителен." })]),
           lesson("v2", "Логарифмические уравнения", [b("video", { url: "", dur: 1980, title: "Логарифмические уравнения" })]),
-          lesson("t1", "Логарифмы: проверочный тест", quiz([["Чему равен log₂ 8?", ["2", "3", "4", "8"], 1], ["Чему равен log₃ 1?", ["0", "1", "3", "не определён"], 0], ["Чему равен log₅ 25?", ["5", "1", "2", "25"], 2]]).concat([b("input", { q: "Вычислите lg 1000.", answer: "3" })])),
+          lesson("t1", "Логарифмы: проверочный тест", quiz([["Чему равен log₂ 8?", ["2", "3", "4", "8"], 1], ["Чему равен log₃ 1?", ["0", "1", "3", "не определён"], 0], ["Чему равен log₅ 25?", ["5", "1", "2", "25"], 2]]).concat([b("input", { q: "Вычислите lg 1000.", answer: "3", explain: "lg — десятичный логарифм. 10³ = 1000, поэтому lg 1000 = 3." })])),
           { id: "md-m2", type: "module", title: "Тригонометрия" },
           lesson("v3", "Тригонометрия: формулы приведения", [b("video", { url: "", dur: 1620, title: "Тригонометрия: формулы приведения" })]),
           lesson("n3", "Конспект: тригонометрия", [b("text", { text: "sin²x + cos²x = 1. Формулы приведения меняют функцию на кофункцию для углов π/2 и 3π/2. Знак определяется по четверти исходной функции." })]),
@@ -650,6 +673,30 @@
           lesson("n8", "Конспект: passato prossimo", [b("text", { text: "Passato prossimo = avere или essere в настоящем времени + причастие (participio passato).\n\nБольшинство глаголов спрягаются с avere: ho mangiato. Глаголы движения и состояния — с essere, причастие согласуется с подлежащим: sono andato, sono andata." })]),
           lesson("v9", "Al ristorante: полезные фразы", [b("video", { url: "", dur: 1390, title: "Al ristorante: полезные фразы" })])
         ] }
+    ];
+  }
+
+  /* курс второго преподавателя математики: его уроки видны в общей базе уроков, группам он не назначен */
+  function seedCourse2() {
+    return { id: "c-math2", owner: "t-math2", subject: "math", folder: "", status: "live", groups: [], cover: "",
+      title: "Вероятность: подборка", desc: "Классическая вероятность и задачи на монеты и кубики.",
+      items: [
+        { id: "md-p1", type: "module", title: "Вероятность" },
+        { id: "pv1", type: "lesson", kind: "lesson", title: "Классическая вероятность", desc: "", pages: [{ id: "pv1p1", title: "", blocks: [
+          { id: "pvb1", type: "text", text: "Вероятность события = число благоприятных исходов / число всех равновозможных исходов." },
+          { id: "pvb2", type: "input", q: "Монету бросают дважды. Найдите вероятность того, что оба раза выпадет орёл.", answer: "0,25; 1/4", explain: "Исходов четыре: ОО, ОР, РО, РР. Благоприятный один, 1/4 = 0,25." }] }] },
+        { id: "pv2", type: "lesson", kind: "lesson", title: "Конспект: вероятность", desc: "", pages: [{ id: "pv2p1", title: "", blocks: [
+          { id: "pvb3", type: "text", text: "Несовместные события: P(A или B) = P(A) + P(B). Независимые события: P(A и B) = P(A) · P(B)." }] }] }
+      ] };
+  }
+  /* база уроков: урок поставлен группе на день (23 ноября 2026) */
+  function seedPlan() {
+    return [
+      { id: "pl1", lesson: "v3", group: "g1", date: iso(day(2)) },
+      { id: "pl2", lesson: "n3", group: "g1", date: iso(day(2)) },
+      { id: "pl3", lesson: "x1", group: "g1", date: iso(day(5)) },
+      { id: "pl4", lesson: "v3", group: "g2", date: iso(day(3)) },
+      { id: "pl5", lesson: "pv1", group: "g1", date: iso(day(6)) }
     ];
   }
 
@@ -698,7 +745,7 @@
   /* контрольная превращается в запись «домашней работы»: дедлайны, «Домашние работы», «Проверка работ», оценки */
   function examEntry(c, l) {
     const r = state.results[l.id];
-    const e = { id: "x-" + l.id, lesson: l.id, student: "me", name: PEOPLE.student.name, course: c.subject, kind: KINDS.indexOf(l.hwKind) >= 0 ? l.hwKind : "hw", title: l.title || t("untitled"), due: l.due || iso(day(0)), status: "todo" };
+    const e = { id: "x-" + l.id, lesson: l.id, student: "me", name: PEOPLE.student.name, course: c.subject, kind: KINDS.indexOf(l.hwKind) >= 0 ? l.hwKind : "hw", title: l.title || t("untitled"), due: examDue(l), status: "todo" };
     if (!r) return e;
     const pct = r.total ? Math.round(r.score / r.total * 100) : 100;
     e.status = r.open && !r.teacherGrade ? "review" : "graded";
@@ -731,6 +778,47 @@
         const st = webinarState(l);
         out.push({ date: key, day: d, time: l.time || "00:00", course: c.subject, name: l.title || t("w_untitled"), short: l.title || t("w_untitled"), topic: t("c_webinar"), status: st === "past" ? "done" : key === iso(day(0)) ? "today" : "upcoming", webinar: l.id });
       });
+    });
+    return out;
+  }
+  /* ---------- база уроков: даты по группам (23 ноября 2026) ----------
+     Урок без даты доступен как раньше. Поставленный урок открывается у группы в свой день; у контрольной день — срок сдачи. */
+  function plansOf(lessonId, group) {
+    return state.plan.filter(function (p) { return p.lesson === lessonId && (!group || p.group === group); }).sort(function (a, b) { return a.date.localeCompare(b.date); });
+  }
+  function myPlanDate(c, l) { const p = plansOf(l.id, STUDENT_GROUPS[c.subject])[0]; return p ? p.date : ""; }
+  function lockedUntil(c, l) {
+    if (role !== "student" || l.kind !== "lesson") return "";
+    const d = myPlanDate(c, l);
+    return d && d > iso(day(0)) ? d : "";
+  }
+  function examDue(l) {
+    const hit = role === "student" && findLesson(l.id);
+    return (hit && myPlanDate(hit.course, l)) || l.due || iso(day(0));
+  }
+  function canOpen(hit) { return studentCourses().indexOf(hit.course) >= 0 || plansOf(hit.lesson.id, STUDENT_GROUPS[hit.course.subject]).length > 0; }
+  /* уроки чужих курсов, поставленные группе ученика: их контрольные тоже попадают в «Домашние работы» */
+  function plannedExams() {
+    const mine = studentCourses(), out = [], seen = {};
+    state.plan.forEach(function (p) {
+      const hit = findLesson(p.lesson);
+      if (!hit || seen[p.lesson] || hit.lesson.kind !== "exam" || mine.indexOf(hit.course) >= 0 || p.group !== STUDENT_GROUPS[hit.course.subject]) return;
+      seen[p.lesson] = true;
+      out.push(examEntry(hit.course, hit.lesson));
+    });
+    return out;
+  }
+  function kindLabel(l) { return t(l.kind === "exam" ? "kind_" + (KINDS.indexOf(l.hwKind) >= 0 ? l.hwKind : "hw") : KIND_ICON[l.kind] || "c_lesson"); }
+  function planItemsOn(d) {
+    const key = iso(d), out = [];
+    state.plan.forEach(function (p) {
+      if (p.date !== key) return;
+      const hit = findLesson(p.lesson);
+      if (!hit) return;
+      const c = hit.course, l = hit.lesson;
+      if (role === "student" ? p.group !== STUDENT_GROUPS[c.subject] : !GROUPS[p.group] || TEACHERS.teacher.subjects.indexOf(c.subject) < 0) return;
+      const href = role === "student" ? go("learn", l.id) : c.owner === "teacher" ? go("build", l.id) : "";
+      out.push({ plan: p.id, date: key, day: d, time: "", kind: l.kind, label: kindLabel(l), name: l.title || t("untitled"), topic: role === "student" ? COURSES[c.subject].short : groupShort(p.group), href: href, status: "plan" });
     });
     return out;
   }
@@ -802,7 +890,8 @@
         { who: "Мария Иванова", text: "Добрый вечер! Начнём через пару минут." },
         { who: "Дмитрий К.", text: "Здравствуйте!" }
       ],
-      courses: seedCourses(),
+      courses: seedCourses().concat([seedCourse2()]),
+      plan: seedPlan(),
       folders: [],
       bank: seedBank(),
       bankProgress: { q1: { status: "right", answer: "0,6", tries: 1, date: iso(day(-3)) }, q2: { status: "wrong", answer: "1", tries: 1, date: iso(day(-3)) }, q14: { status: "right", answer: "went", tries: 1, date: iso(day(-2)) }, q24: { status: "wrong", answer: "siamo andato", tries: 2, date: iso(day(-1)) } },
@@ -833,6 +922,8 @@
   /* данные, сохранённые до конструктора курсов: материалы и тесты заменены демо-курсами, пройденное сохраняется (те же id) */
   if (!state.courses) { state.courses = seedCourses(); delete state.materials; delete state.tests; }
   if (!state.folders) state.folders = [];
+  if (!find(state.courses, "c-math2")) state.courses.push(seedCourse2());
+  if (!state.plan) state.plan = seedPlan();
   if (!state.bank) { state.bank = seedBank(); state.bankProgress = {}; state.bankFav = []; state.bankReports = []; }
   let role = "student";
   let page = "dashboard";
@@ -880,7 +971,7 @@
     const own = state.personal.filter(function (e) { return e.date === key && e.role === role; }).map(function (e) {
       return { id: e.id, date: key, day: d, time: e.time, name: e.title, short: e.title, topic: "", status: "personal", done: !!e.done };
     });
-    return lessonsOn(d).concat(own).sort(function (a, b) { return a.time.localeCompare(b.time); });
+    return lessonsOn(d).concat(planItemsOn(d), own).sort(function (a, b) { return a.time.localeCompare(b.time); });
   }
   function attendance(days) {
     let attended = 0, total = 0;
@@ -937,7 +1028,7 @@
   /* ---------- оценки и прогресс ---------- */
   const KINDS = ["hw", "exam", "mock"];
   function kindOf(h) { return KINDS.indexOf(h.kind) >= 0 ? h.kind : "hw"; }
-  function myHw() { return state.homework.filter(function (h) { return h.student === "me"; }).concat(role === "student" ? examsOf(studentCourses()) : []); }
+  function myHw() { return state.homework.filter(function (h) { return h.student === "me"; }).concat(role === "student" ? examsOf(studentCourses()).concat(plannedExams()) : []); }
   function queue() { return state.homework.filter(function (h) { return h.status === "review"; }).concat(role === "teacher" ? examsOf(teacherCourses()).filter(function (h) { return h.status === "review"; }) : []); }
   function progress() {
     let done = 0, total = 0;
@@ -1029,7 +1120,7 @@
   }
   function lessonMeta(l) {
     if (l.kind === "webinar") return t("c_webinar") + " · " + shortDate(parse(l.date || iso(day(0)))) + ", " + esc(l.time || "") + " · " + esc(l.dur || 45) + " " + t("min");
-    if (l.kind === "exam") return t("kind_" + (KINDS.indexOf(l.hwKind) >= 0 ? l.hwKind : "hw")) + " · " + t("due") + ": " + dueLabel(l.due || iso(day(0))) + " · " + blocksOf(l).filter(function (bl) { return TASK_TYPES.indexOf(bl.type) >= 0; }).length + " " + t("tasks_n");
+    if (l.kind === "exam") return t("kind_" + (KINDS.indexOf(l.hwKind) >= 0 ? l.hwKind : "hw")) + " · " + t("due") + ": " + dueLabel(examDue(l)) + " · " + blocksOf(l).filter(function (bl) { return TASK_TYPES.indexOf(bl.type) >= 0; }).length + " " + t("tasks_n");
     const tasks = blocksOf(l).filter(function (bl) { return TASK_TYPES.indexOf(bl.type) >= 0; }).length;
     const video = blocksOf(l).filter(function (bl) { return bl.type === "video" && bl.dur; })[0];
     return t(KIND_ICON[l.kind] || "c_lesson") + (video ? " · " + Math.round(video.dur / 60) + " " + t("min") : "") + (tasks ? " · " + tasks + " " + t("tasks_n") : "") + (l.pages.length > 1 ? " · " + l.pages.length + " " + t("pages_n") : "");
@@ -1043,6 +1134,8 @@
       const tag = r && r.total ? "<span class=\"tag tag--good\">" + r.score + "/" + r.total + "</span>" : "<span class=\"tag" + (isDone(l.id) ? " tag--done" : "") + "\">" + t(isDone(l.id) ? "st_done" : "st_new_lesson") + "</span>";
       let tg = tag;
       if (l.kind === "exam") { const e = examEntry(c, l); tg = e.status === "graded" ? "<span class=\"tag tag--good\">" + e.grade + "</span>" : e.status === "review" ? "<span class=\"tag\">" + t("hw_review") + "</span>" : "<span class=\"tag tag--todo\">" + t("due") + ": " + dueLabel(e.due) + "</span>"; }
+      const lock = lockedUntil(c, l);
+      if (lock) tg = "<span class=\"tag\">" + t("lib_locked") + " " + shortDate(parse(lock)) + "</span>";
       if (l.kind === "webinar") { const ws = webinarState(l); tg = ws === "past" ? "<span class=\"tag" + (isDone(l.id) ? " tag--done" : "") + "\">" + t(isDone(l.id) ? "st_done" : "w_past") + "</span>" : "<span class=\"tag tag--todo\">" + (ws === "upcoming" ? shortDate(parse(l.date)) + ", " + esc(l.time) : t(ws === "live" ? "w_live" : "w_today")) + "</span>"; }
       return mrow(go("learn", l.id), kindIco(l), l.title || t("untitled"), lessonMeta(l), tg).replace("class=\"mrow-ico\"", "class=\"mrow-ico mrow-ico--" + l.kind + "\"");
     });
@@ -1079,6 +1172,8 @@
       "<p class=\"muted small\">" + t("video_demo") + "</p>";
   }
   function norm(s) { return String(s == null ? "" : s).toLowerCase().replace(/ё/g, "е").replace(/,/g, ".").replace(/\s+/g, ""); }
+  /* пояснение преподавателя к заданию урока: ученик видит его только после ответа, как в банке заданий (23 ноября 2026) */
+  function explainHtml(bl) { return String(bl.explain || "").trim() ? "<div class=\"bt-solution lexplain\"><b>" + t("bank_explain") + "</b>" + paragraphs(bl.explain) + "</div>" : ""; }
   function blockView(bl, ctx) {
     const r = ctx.result, ans = r && r.answers ? r.answers[bl.id] : undefined;
     if (bl.type === "text") return bl.text ? "<div class=\"note-text lblock\">" + paragraphs(bl.text) + "</div>" : "";
@@ -1101,7 +1196,7 @@
           const picked = chosen.indexOf(j) >= 0, right = bl.correct.indexOf(j) >= 0;
           const cls = bl.correct.length ? (right ? " is-right" : picked ? " is-wrong" : "") : "";
           return "<li class=\"" + cls + (picked ? " is-picked" : "") + "\">" + (picked ? "● " : "○ ") + esc(o) + "</li>";
-        }).join("") + "</ul>" + (bl.correct.length ? "" : "<p class=\"muted small\">" + t("poll") + "</p>") + "</div>";
+        }).join("") + "</ul>" + (bl.correct.length ? "" : "<p class=\"muted small\">" + t("poll") + "</p>") + explainHtml(bl) + "</div>";
       }
       return "<fieldset class=\"q lblock\">" + qh + (multi ? "<p class=\"muted small\">" + t("pick_all") + "</p>" : "") + bl.options.map(function (o, j) {
         return "<label><input type=\"" + (multi ? "checkbox" : "radio") + "\" name=\"" + bl.id + (multi ? "_" + j : "") + "\" value=\"" + j + "\">" + esc(o) + "</label>";
@@ -1110,12 +1205,12 @@
     if (bl.type === "input") {
       if (r) {
         const ok = (String(bl.answer || "").split(";").map(norm).filter(Boolean)).indexOf(norm(ans)) >= 0;
-        return "<div class=\"q lblock\">" + qh + "<p class=\"" + (ok ? "right" : "wrong") + "\">" + t("your_answer") + ": " + esc(ans || t("no_answer")) + "</p>" + (ok ? "" : "<p>" + t("correct_answer") + ": " + esc(String(bl.answer).split(";")[0].trim()) + "</p>") + "</div>";
+        return "<div class=\"q lblock\">" + qh + "<p class=\"" + (ok ? "right" : "wrong") + "\">" + t("your_answer") + ": " + esc(ans || t("no_answer")) + "</p>" + (ok ? "" : "<p>" + t("correct_answer") + ": " + esc(String(bl.answer).split(";")[0].trim()) + "</p>") + explainHtml(bl) + "</div>";
       }
       return "<div class=\"q lblock\">" + qh + "<input type=\"text\" name=\"" + bl.id + "\" aria-label=\"" + esc(bl.q || t("ph_q")) + "\" autocomplete=\"off\"></div>";
     }
     if (bl.type === "open") {
-      if (r) return "<div class=\"q lblock\">" + qh + "<p class=\"open-answer\">" + esc(ans || t("no_answer")) + "</p><p class=\"muted small\">" + t("open_saved") + "</p></div>";
+      if (r) return "<div class=\"q lblock\">" + qh + "<p class=\"open-answer\">" + esc(ans || t("no_answer")) + "</p><p class=\"muted small\">" + t("open_saved") + "</p>" + explainHtml(bl) + "</div>";
       return "<div class=\"q lblock\">" + qh + "<textarea name=\"" + bl.id + "\" aria-label=\"" + esc(bl.q || t("ph_q")) + "\"></textarea></div>";
     }
     return "";
@@ -1127,7 +1222,7 @@
     const backHref = preview ? go("build", l.id) : go("course", hit.course.id);
     const top = "<a class=\"back\" href=\"" + backHref + "\">" + (preview ? t("back_editor") : t("back")) + "</a>" + (preview ? "<p class=\"preview-note\">" + t("preview_note") + "</p>" : "") +
       "<div class=\"phead-text\"><span class=\"kind-badge kind-badge--" + l.kind + "\">" + t(l.kind === "exam" ? "kind_" + (KINDS.indexOf(l.hwKind) >= 0 ? l.hwKind : "hw") : KIND_ICON[l.kind] || "c_lesson") + "</span><h1 class=\"title\">" + esc(l.title || t("untitled")) + "</h1>" + (l.desc ? "<p class=\"phead-sub\">" + esc(l.desc) + "</p>" : "") +
-      (l.kind === "exam" ? "<p class=\"muted small\">" + t("ex_due") + ": " + dueLabel(l.due || iso(day(0))) + " · " + t("ex_pass") + ": " + esc(l.pass || 0) + "%</p>" : "") + "</div>";
+      (l.kind === "exam" ? "<p class=\"muted small\">" + t("ex_due") + ": " + dueLabel(examDue(l)) + " · " + t("ex_pass") + ": " + esc(l.pass || 0) + "%</p>" : "") + "</div>";
     const graded = gradedBlocks(l).length;
     const hasTasks = blocksOf(l).some(function (bl) { return TASK_TYPES.indexOf(bl.type) >= 0; });
     const ctx = { result: r };
@@ -1167,7 +1262,10 @@
   }
   function viewLearn() {
     const hit = findLesson(param);
-    if (!hit || studentCourses().indexOf(hit.course) < 0) { param = ""; return viewCourses(); }
+    if (!hit || !canOpen(hit)) { param = ""; return viewCourses(); }
+    const lock = lockedUntil(hit.course, hit.lesson);
+    if (lock) return "<a class=\"back\" href=\"" + go("course", hit.course.id) + "\">" + t("back") + "</a><div class=\"phead-text\"><span class=\"kind-badge\">" + t("c_lesson") + "</span><h1 class=\"title\">" + esc(hit.lesson.title || t("untitled")) + "</h1></div>" +
+      "<section class=\"card lresult\"><h2>" + t("lib_locked_t") + "</h2><p>" + t("lib_locked_s").replace("{d}", date(parse(lock), { weekday: "long", day: "numeric", month: "long" })) + "</p></section>";
     return lessonPlayer(hit, false);
   }
 
@@ -1334,6 +1432,12 @@
     state.homework.forEach(function (h) { if (h.due >= from) seen[h.course + "|" + h.title] = true; });
     return Object.keys(seen).length;
   }
+  /* плитка на главной преподавателя: число групп вместо числа учеников (23 ноября 2026) */
+  function groupsWord(n) {
+    if (state.lang !== "ru") return t(n === 1 ? "groups_one" : "groups_many");
+    const a = n % 10, b = n % 100;
+    return t(a === 1 && b !== 11 ? "groups_one" : a >= 2 && a <= 4 && (b < 12 || b > 14) ? "groups_few" : "groups_many");
+  }
   function groupShort(id) { return GROUPS[id].name.split("· ")[1]; }
   function homeTeacher() {
     const today = lessonsOn(day(0));
@@ -1356,7 +1460,7 @@
       return "<tr><td><a href=\"" + go("progress", id) + "\"><b>" + esc(groupShort(id)) + "</b></a></td><td class=\"nowrap\">" + list.length + "</td><td class=\"td-bar\">" + mini("", hwPct) + "</td><td class=\"nowrap\">" + nextDate + "</td></tr>";
     }).join("");
     return head(t("good_day") + ", " + esc(me().name.split(" ")[0]) + "!", t("home_sub_teacher"), "<a class=\"btn btn--red\" href=\"" + go("content") + "\">" + icon("plus") + t("create_task") + "</a>") +
-      stats([stat("users", "wine", ROSTER.length, t("students_cap"), go("progress")), stat("schedule", "accent", today.length, t("lessons_today_lc"), go("schedule")),
+      stats([stat("users", "wine", Object.keys(GROUPS).length, groupsWord(Object.keys(GROUPS).length), go("progress")), stat("schedule", "accent", today.length, t("lessons_today_lc"), go("schedule")),
         stat("review", "gold", q.length, t("to_review"), go("review")), stat("homework", "good", openTasks(), t("open_tasks"), go("content"))]) +
       "<section class=\"card\"><h2>" + t("my_month") + "</h2><div class=\"month\">" + cell(m.held, t("conducted")) + cell(num(m.hours), t("hours_n")) + cell(m.planned, t("planned")) + cell(m.speed ? num(m.speed) : "–", t("review_speed")) + "</div></section>" +
       "<div class=\"grid cols-2\"><section class=\"card\">" + cardHead(t("schedule_today"), go("schedule")) + "<ul class=\"list\">" + today.map(lessonRow).join("") + "</ul></section>" +
@@ -1536,6 +1640,7 @@
       }).join("") + "</ul><div class=\"row\"><button class=\"btn btn--line btn--sm\" type=\"button\" data-act=\"addOption\" data-id=\"" + path + "\">" + icon("plus") + t("add_option") + "</button></div><p class=\"muted small\">" + t("test_hint") + "</p>";
     } else if (bl.type === "input") body = fld("q", t("ph_q"), bl.q) + fld("answer", t("ph_answer"), bl.answer) + "<p class=\"muted small\">" + t("input_hint") + "</p>";
     else if (bl.type === "open") body = fld("q", t("ph_q"), bl.q, "textarea") + "<p class=\"muted small\">" + t("open_hint") + "</p>";
+    if (TASK_TYPES.indexOf(bl.type) >= 0) body += "<textarea class=\"bexplain\" rows=\"2\" placeholder=\"" + esc(t("explain_ph")) + "\" aria-label=\"" + esc(t("explain_ph")) + "\" data-change=\"blk\" data-id=\"" + path + "\" data-field=\"explain\">" + esc(bl.explain || "") + "</textarea>";
     const tool = function (act, extra, ico, label) { return "<button class=\"icon-btn\" type=\"button\" data-act=\"" + act + "\" data-id=\"" + path + extra + "\" aria-label=\"" + t(label) + "\" title=\"" + t(label) + "\">" + icon(ico) + "</button>"; };
     return "<div class=\"bblock\" id=\"blk-" + bl.id + "\"><div class=\"bblock-head\"><span class=\"bblock-name\">" + icon("b_" + bl.type) + t("b_" + bl.type) + "</span><span class=\"otools\">" + tool("moveBlock", "|-1", "up", "move_up") + tool("moveBlock", "|1", "down", "move_down") + tool("delBlock", "", "trash", "del") + "</span></div>" + body + "</div>";
   }
@@ -1586,6 +1691,75 @@
     const hit = findLesson(param);
     if (!hit || hit.course.owner !== "teacher") { param = ""; return viewContent(); }
     return lessonPlayer(hit, true);
+  }
+  /* ---------- база уроков с календариком (23 ноября 2026, ТЗ друга заказчика) ----------
+     Общая для школы: уроки всех курсов по предметам преподавателя (свои черновики и опубликованные курсы коллег).
+     Онлайн-занятия сюда не входят: у них своя дата и время в редакторе. */
+  let libPick = "", libMonth = 0, libDay = "";
+  function libGroup() { return GROUPS[param] ? param : Object.keys(GROUPS)[0]; }
+  function libLessons() {
+    const out = [];
+    state.courses.forEach(function (c) {
+      if (TEACHERS.teacher.subjects.indexOf(c.subject) < 0 || (c.owner !== "teacher" && c.status !== "live")) return;
+      let mod = "";
+      c.items.forEach(function (it) {
+        if (it.type === "module") { mod = it.title; return; }
+        if (it.type === "lesson" && it.kind !== "webinar") out.push({ course: c, lesson: it, module: mod });
+      });
+    });
+    return out;
+  }
+  function placePlan(lessonId, group, key) {
+    if (!lessonId || !key || !findLesson(lessonId)) return;
+    if (!state.plan.some(function (p) { return p.lesson === lessonId && p.group === group && p.date === key; })) state.plan.push({ id: uid("pl"), lesson: lessonId, group: group, date: key });
+    libDay = key;
+    const k = parse(key), now = day(0);
+    libMonth = (k.getFullYear() - now.getFullYear()) * 12 + k.getMonth() - now.getMonth();
+    save();
+  }
+  function lessonPic(x) {
+    const img = blocksOf(x.lesson).filter(function (bl) { return bl.type === "image" && bl.src; })[0];
+    return img ? "<span class=\"ccard-cover\" style=\"background-image:url('" + img.src + "')\"></span>" : coverHtml(x.course);
+  }
+  function viewLibrary() {
+    const g = libGroup(), todayKey = iso(day(0));
+    if (!libDay) libDay = todayKey;
+    const list = libLessons();
+    const tabs = "<div class=\"lib-groups\"><span class=\"muted small\">" + t("lib_for_group") + ":</span>" + chips(Object.keys(GROUPS).map(function (id) { return [id, groupShort(id), null, go("library", id)]; }), g) + "</div>";
+    const tiles = list.map(function (x) {
+      const l = x.lesson, c = x.course;
+      const dates = plansOf(l.id, g).map(function (p) { return shortDate(parse(p.date)); });
+      return "<div class=\"ltile" + (libPick === l.id ? " ltile--picked" : "") + "\" draggable=\"true\" data-libdrag=\"lesson:" + l.id + "\" data-act=\"libPick\" data-id=\"" + l.id + "\" role=\"button\" tabindex=\"0\" aria-pressed=\"" + (libPick === l.id) + "\">" + lessonPic(x) +
+        "<span class=\"ltile-body\"><span class=\"kind-badge kind-badge--" + l.kind + "\">" + esc(kindLabel(l)) + "</span><b>" + esc(l.title || t("untitled")) + "</b>" +
+        "<span class=\"muted small\">" + (x.module ? esc(x.module) + " · " : "") + esc(c.title || t("untitled")) + "</span>" +
+        "<span class=\"muted small\">" + t("lib_author") + ": " + esc(TEACHERS[c.owner] ? TEACHERS[c.owner].name : "") + "</span>" +
+        (dates.length ? "<span class=\"tag tag--good ltile-on\">" + t("lib_on") + ": " + dates.join(", ") + "</span>" : "") + "</span></div>";
+    }).join("");
+    /* календарик на месяц */
+    const now = day(0), first = new Date(now.getFullYear(), now.getMonth() + libMonth, 1);
+    const daysIn = new Date(first.getFullYear(), first.getMonth() + 1, 0).getDate(), lead = (first.getDay() + 6) % 7;
+    let cells = "";
+    for (let i = 0; i < 7; i++) cells += "<span class=\"cal-wd\">" + date(new Date(2024, 0, 1 + i), { weekday: "short" }) + "</span>";
+    for (let i = 0; i < lead; i++) cells += "<span></span>";
+    for (let n = 1; n <= daysIn; n++) {
+      const key = iso(new Date(first.getFullYear(), first.getMonth(), n));
+      const here = state.plan.filter(function (p) { return p.group === g && p.date === key && findLesson(p.lesson); });
+      const dots = here.slice(0, 4).map(function (p) { return "<i class=\"cal-dot cal-dot--" + findLesson(p.lesson).lesson.kind + "\"></i>"; }).join("");
+      cells += "<button class=\"cal-day" + (key === todayKey ? " cal-day--today" : "") + (key === libDay ? " cal-day--on" : "") + (key < todayKey ? " cal-day--past" : "") + "\" type=\"button\" data-cal=\"" + key + "\" data-act=\"calDay\" data-id=\"" + key + "\" aria-label=\"" + date(parse(key), { day: "numeric", month: "long" }) + (here.length ? ", " + here.length : "") + "\"><span>" + n + "</span><span class=\"cal-dots\">" + dots + "</span></button>";
+    }
+    const arrow = function (dir, path) { return "<button class=\"week-arrow\" type=\"button\" data-act=\"calMove\" data-id=\"" + dir + "\" aria-label=\"" + t(dir < 0 ? "prev" : "next") + "\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"" + path + "\"/></svg></button>"; };
+    const items = state.plan.filter(function (p) { return p.group === g && p.date === libDay && findLesson(p.lesson); }).map(function (p) {
+      const l = findLesson(p.lesson).lesson;
+      return "<li class=\"cal-item cal-item--" + l.kind + "\" draggable=\"true\" data-libdrag=\"plan:" + p.id + "\" title=\"" + t("lib_drag") + "\"><span class=\"cal-item-kind\">" + esc(kindLabel(l)) + "</span><b>" + esc(l.title || t("untitled")) + "</b><button class=\"icon-btn\" type=\"button\" data-act=\"unplan\" data-id=\"" + p.id + "\" aria-label=\"" + t("lib_unplan") + "\" title=\"" + t("lib_unplan") + "\">×</button></li>";
+    }).join("");
+    const picked = libPick && findLesson(libPick);
+    const pickBar = picked ? "<form class=\"lib-pick\" data-form=\"libPlace\"><p>" + esc(t("lib_pick_hint")).replace("{t}", "<b>" + esc(picked.lesson.title || t("untitled")) + "</b>") + "</p><div class=\"row\"><input type=\"date\" name=\"date\" value=\"" + libDay + "\" required aria-label=\"" + t("event_date") + "\"><button class=\"btn btn--red btn--sm\" type=\"submit\">" + t("lib_place") + "</button><button class=\"btn btn--line btn--sm\" type=\"button\" data-act=\"libPick\" data-id=\"\">" + t("lib_cancel") + "</button></div></form>" : "";
+    const cal = "<aside class=\"card cal\"><div class=\"cal-head\">" + arrow(-1, "M15 5l-7 7 7 7") + "<h2>" + date(first, { month: "long", year: "numeric" }) + "</h2>" + arrow(1, "M9 5l7 7-7 7") + "</div>" +
+      (libMonth ? "<button class=\"btn btn--line btn--sm cal-today\" type=\"button\" data-act=\"calMove\" data-id=\"0\">" + t("today") + "</button>" : "") +
+      "<div class=\"cal-grid\">" + cells + "</div><div class=\"cal-list\"><h3>" + date(parse(libDay), { weekday: "long", day: "numeric", month: "long" }) + " · " + esc(groupShort(g)) + "</h3>" +
+      (items ? "<ul>" + items + "</ul>" : "<p class=\"muted small\">" + t("lib_day_empty") + "</p>") + "</div><p class=\"muted small\">" + t("lib_rule") + "</p></aside>";
+    return head(t("nav_library"), t("lib_sub")) + tabs + pickBar +
+      "<div class=\"lib\"><div class=\"lib-main\">" + (tiles ? "<div class=\"ltiles\">" + tiles + "</div>" : "<section class=\"card\"><p class=\"empty\">" + t("lib_empty") + "</p></section>") + "</div>" + cal + "</div>";
   }
   function moveIn(list, id, dir) {
     const i = list.findIndex(function (x) { return x.id === id; }), j = i + Number(dir);
@@ -1829,6 +2003,10 @@
         "<span class=\"wl-time\">" + e.time + "</span><span class=\"wl-name\">" + esc(e.name) + "</span>" +
         "<button class=\"wl-check\" type=\"button\" data-act=\"checkEvent\" data-id=\"" + e.id + "\" aria-pressed=\"" + e.done + "\" aria-label=\"" + t(e.done ? "undo_done" : "mark_done") + "\" title=\"" + t(e.done ? "undo_done" : "mark_done") + "\">" + CHECK + "</button></div>";
     }
+    if (e.plan) {
+      const tag = e.href ? "a" : "div";
+      return "<" + tag + " class=\"wl wl--plan wl--plan-" + e.kind + "\"" + (e.href ? " href=\"" + e.href + "\"" : "") + "><span class=\"wl-time\">" + esc(e.label) + "</span><span class=\"wl-name\">" + esc(e.name) + "</span><span class=\"wl-topic\">" + esc(e.topic) + "</span></" + tag + ">";
+    }
     const label = e.status === "done" || e.status === "missed" ? "<span class=\"wl-state\">" + t("st_" + e.status) + "</span>" : "";
     const join = e.status === "today" ? joinBtn(e) : "";
     return "<div class=\"wl wl--" + e.status + "\"><span class=\"wl-time\">" + e.time + "</span><span class=\"wl-name\">" + esc(e.name) + "</span>" +
@@ -1987,9 +2165,9 @@
     courses: viewCourses, course: viewCourse, learn: viewLearn,
     homework: viewHomework, grades: viewGrades, report: viewReport,
     diag: viewDiag, plans: viewPlans, pay: viewPay,
-    content: viewContent, bank: function () { return role === "teacher" ? viewTBank() : viewSBank(); }, review: viewReview, progress: viewProgress, tcourse: viewTCourse, build: viewBuild, preview: viewPreview
+    content: viewContent, bank: function () { return role === "teacher" ? viewTBank() : viewSBank(); }, review: viewReview, progress: viewProgress, tcourse: viewTCourse, build: viewBuild, preview: viewPreview, library: viewLibrary
   };
-  const ROLE_PAGES = { student: ["courses", "course", "learn", "homework", "grades", "report", "diag", "plans", "pay"], teacher: ["content", "review", "progress", "tcourse", "build", "preview"] };
+  const ROLE_PAGES = { student: ["courses", "course", "learn", "homework", "grades", "report", "diag", "plans", "pay"], teacher: ["content", "review", "progress", "tcourse", "build", "preview", "library"] };
   const ACTIVE = { course: "courses", learn: "courses", tcourse: "content", build: "content", preview: "content", report: "grades", diag: "dashboard", plans: "dashboard", pay: "dashboard" };
   /* Новый ученик до оплаты видит только диагностику, выбор пакета и настройки */
   const NEW_NAV = [["dashboard", "nav_home"], ["settings", "nav_settings"]];
@@ -2106,6 +2284,13 @@
       if (card) { card.scrollIntoView({ block: "center", behavior: "smooth" }); document.getElementById("ev-title").focus({ preventScroll: true }); }
     },
     cancelEdit: function () { editingEvent = ""; render(); },
+    libPick: function (id) { libPick = id && libPick !== id ? id : ""; render(); },
+    calDay: function (id) {
+      if (libPick) { placePlan(libPick, libGroup(), id); libPick = ""; } else libDay = id;
+      render();
+    },
+    calMove: function (id) { libMonth = Number(id) ? libMonth + Number(id) : 0; render(); },
+    unplan: function (id) { state.plan = state.plan.filter(function (p) { return p.id !== id; }); save(); render(); },
     toggleDone: function (id) {
       const i = state.done.indexOf(id);
       if (i >= 0) state.done.splice(i, 1); else state.done.push(id);
@@ -2497,6 +2682,13 @@
       retakeId = null;
       save(); render(); window.scrollTo(0, 0);
     },
+    libPlace: function (form, data) {
+      const key = String(data.get("date") || "");
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(key)) return;
+      placePlan(libPick, libGroup(), key);
+      libPick = "";
+      render();
+    },
     diag: function (form, data) {
       const s = CATALOG.subject(form.dataset.id);
       const answers = s.questions.map(function (q, i) { return data.get("q" + i) === null ? null : Number(data.get("q" + i)); });
@@ -2555,6 +2747,16 @@
   });
   /* свои дела в расписании: перетаскивание на другой день */
   document.addEventListener("dragstart", function (event) {
+    /* база уроков: урок или уже поставленный урок перетаскивается на день календарика */
+    const lib = event.target.closest && event.target.closest("[data-libdrag]");
+    if (lib) {
+      event.dataTransfer.effectAllowed = "move";
+      event.dataTransfer.setData("text/plain", lib.dataset.libdrag);
+      lib.classList.add("lib-dragging");
+      const calNode = document.querySelector(".cal");
+      if (calNode) calNode.classList.add("cal--dragging");
+      return;
+    }
     const item = event.target.closest && event.target.closest("[data-drag]");
     if (!item) return;
     event.dataTransfer.effectAllowed = "move";
@@ -2563,9 +2765,17 @@
     document.querySelector(".week").classList.add("week--dragging");
   });
   document.addEventListener("dragend", function () {
-    document.querySelectorAll(".wl--dragging, .week--dragging, .wday--drop").forEach(function (n) { n.classList.remove("wl--dragging", "week--dragging", "wday--drop"); });
+    document.querySelectorAll(".wl--dragging, .week--dragging, .wday--drop, .lib-dragging, .cal--dragging, .cal-day--drop").forEach(function (n) { n.classList.remove("wl--dragging", "week--dragging", "wday--drop", "lib-dragging", "cal--dragging", "cal-day--drop"); });
   });
   document.addEventListener("dragover", function (event) {
+    const calDay = event.target.closest && event.target.closest(".cal-day[data-cal]");
+    if (calDay && document.querySelector(".lib-dragging")) {
+      event.preventDefault();
+      event.dataTransfer.dropEffect = "move";
+      document.querySelectorAll(".cal-day--drop").forEach(function (n) { if (n !== calDay) n.classList.remove("cal-day--drop"); });
+      calDay.classList.add("cal-day--drop");
+      return;
+    }
     const dayNode = event.target.closest && event.target.closest(".wday[data-date]");
     if (!dayNode || !document.querySelector(".wl--dragging")) return;
     event.preventDefault();
@@ -2574,6 +2784,15 @@
     dayNode.classList.add("wday--drop");
   });
   document.addEventListener("drop", function (event) {
+    const calDay = event.target.closest && event.target.closest(".cal-day[data-cal]");
+    if (calDay) {
+      event.preventDefault();
+      const v = String(event.dataTransfer.getData("text/plain")).split(":"), key = calDay.dataset.cal;
+      if (v[0] === "lesson") { placePlan(v[1], libGroup(), key); libPick = ""; }
+      if (v[0] === "plan") { const p = find(state.plan, v[1]); if (p) { p.date = key; libDay = key; save(); } }
+      render();
+      return;
+    }
     const dayNode = event.target.closest && event.target.closest(".wday[data-date]");
     if (!dayNode) return;
     event.preventDefault();
@@ -2595,6 +2814,6 @@
   document.addEventListener("input", function (event) { if (event.target.matches && event.target.matches("textarea.ghost")) fitArea(event.target); });
   document.addEventListener("keydown", function (event) { if (event.key === "Enter" && event.target.matches && event.target.matches("[data-oneline]")) { event.preventDefault(); event.target.blur(); } });
   document.addEventListener("pointerdown", pickPage);
-  window.addEventListener("hashchange", function () { bankReportOpen = ""; if (!/\/bank/.test(location.hash)) bankEdit = ""; editingEvent = ""; picker = ""; previewResult = null; retakeId = null; coursePanel = ""; render(true); window.scrollTo(0, 0); });
+  window.addEventListener("hashchange", function () { libPick = ""; bankReportOpen = ""; if (!/\/bank/.test(location.hash)) bankEdit = ""; editingEvent = ""; picker = ""; previewResult = null; retakeId = null; coursePanel = ""; render(true); window.scrollTo(0, 0); });
   render(true);
 })();

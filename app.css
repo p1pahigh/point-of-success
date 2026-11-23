@@ -1132,3 +1132,59 @@ a.hrow:hover .hrow-main b { color: var(--wine); text-decoration: underline; text
 }
 @media print { .rail { display: none !important; } .shell--rail { padding-left: 0; } }
 .rail-out { justify-content: flex-start; text-align: left; }
+
+/* ---------- база уроков с календариком (23 ноября 2026) ---------- */
+.lib-groups { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem; }
+.lib { display: grid; grid-template-columns: minmax(0, 1fr) minmax(19rem, 23rem); gap: 1.25rem; align-items: start; }
+.ltiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(13.5rem, 1fr)); gap: 1rem; }
+.ltile { display: grid; grid-template-rows: auto 1fr; overflow: hidden; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; cursor: grab; box-shadow: 0 16px 36px -32px rgba(23, 43, 74, .55); transition: transform .25s var(--ease), border-color .2s ease, box-shadow .2s ease, opacity .2s ease; }
+.ltile .ccard-cover { aspect-ratio: 16 / 6; }
+.ltile .ccard-cover i { font-size: 2.4rem; }
+.ltile-body { display: grid; align-content: start; gap: .4rem; padding: .85rem 1rem 1rem; }
+.ltile-body b { font: 500 1.02rem/1.3 var(--font-display); color: var(--wine); overflow-wrap: anywhere; }
+.ltile-body .kind-badge { padding: .25rem .55rem; font-size: .62rem; }
+.ltile-on { justify-self: start; }
+.ltile:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.ltile--picked { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
+.lib-dragging { opacity: .4; }
+@media (hover: hover) { .ltile:hover { transform: translateY(-2px); border-color: var(--gold); } }
+.lib-pick { display: grid; gap: .6rem; padding: .9rem 1.1rem; border: 1px solid var(--accent); border-radius: 10px; background: var(--surface); }
+.lib-pick p { margin: 0; }
+.lib-pick input[type="date"] { width: auto; }
+.cal { position: sticky; top: 1rem; display: grid; gap: .8rem; }
+.cal-head { display: flex; align-items: center; gap: .5rem; }
+.cal-head h2 { flex: 1; margin: 0; font-size: 1.15rem; }
+.cal-head h2::first-letter { text-transform: uppercase; }
+.cal-head .week-arrow { width: 2.1rem; height: 2.1rem; }
+.cal-today { justify-self: start; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 3px; }
+.cal-wd { padding-bottom: .2rem; text-align: center; font-size: .66rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+.cal-day { display: grid; justify-items: center; align-content: start; gap: 2px; min-height: 2.6rem; padding: .3rem 0 .25rem; border: 1px solid transparent; border-radius: 8px; background: var(--bg); color: var(--fg); font: inherit; font-size: .8rem; font-variant-numeric: tabular-nums; cursor: pointer; transition: border-color .15s ease, background .15s ease; }
+.cal-day--past { color: var(--muted); }
+.cal-day--today > span:first-child { display: grid; place-items: center; width: 1.45rem; height: 1.45rem; border-radius: 50%; background: var(--accent); color: var(--on-accent); font-weight: 600; }
+.cal-day--on { border-color: var(--wine); }
+.cal--dragging .cal-day { border-style: dashed; border-color: var(--line); }
+.cal-day--drop, .cal--dragging .cal-day--drop { border-style: solid; border-color: var(--accent); background: var(--mark); }
+@media (hover: hover) { .cal-day:hover { border-color: var(--gold); } }
+.cal-dots { display: flex; gap: 2px; min-height: 5px; }
+.cal-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--wine); }
+.cal-dot--exam { background: var(--accent); }
+.cal-list h3 { margin: 0 0 .5rem; font-size: .85rem; font-weight: 600; }
+.cal-list h3::first-letter { text-transform: uppercase; }
+.cal-list ul { display: grid; gap: .4rem; margin: 0; padding: 0; list-style: none; }
+.cal-item { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 0 .4rem; padding: .45rem .4rem .45rem .7rem; border-radius: 8px; background: var(--bg); border-left: 3px solid var(--wine); font-size: .8125rem; cursor: grab; }
+.cal-item--exam { border-left-color: var(--accent); }
+.cal-item-kind { grid-column: 1; font-size: .62rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.cal-item b { grid-column: 1; font-weight: 500; overflow-wrap: anywhere; }
+.cal-item .icon-btn { grid-column: 2; grid-row: 1 / 3; }
+.wl--plan { border-left-color: var(--wine); color: inherit; text-decoration: none; background: var(--band); box-shadow: none; }
+.wl--plan .wl-time { font-size: .62rem; letter-spacing: .08em; text-transform: uppercase; }
+.wl--plan-exam { border-left-color: var(--accent); }
+.wl--plan-exam .wl-time { color: var(--accent); }
+a.wl--plan:hover { border-left-width: 5px; }
+.bblock textarea.bexplain { min-height: 0; font-size: .875rem; border-style: dashed; }
+.lexplain { margin-top: .6rem; }
+@media (max-width: 1020px) {
+  .lib { grid-template-columns: 1fr; }
+  .cal { position: static; order: -1; }
+}
