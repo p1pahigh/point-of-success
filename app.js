@@ -114,6 +114,8 @@
     today_plan: ["Ближайшие занятия", "Upcoming lessons", "Prossime lezioni"],
     cal_prev_month: ["Предыдущий месяц", "Previous month", "Mese precedente"],
     cal_next_month: ["Следующий месяц", "Next month", "Mese successivo"],
+    cal_prev_week: ["Предыдущая неделя", "Previous week", "Settimana precedente"],
+    cal_next_week: ["Следующая неделя", "Next week", "Settimana successiva"],
     cal_lessons_on: ["{date} · занятий: {count}", "{date} · lessons: {count}", "{date} · lezioni: {count}"],
     deadlines: ["Дедлайны", "Deadlines", "Scadenze"],
     no_deadlines: ["Все домашние работы сданы.", "All homework is handed in.", "Tutti i compiti sono consegnati."],
@@ -1110,25 +1112,26 @@
     const now = day(0);
     return new Date(now.getFullYear(), now.getMonth() + shift, 1);
   }
-  function calendarArrow(action, direction) {
+  function calendarArrow(action, direction, unit) {
     const path = direction < 0 ? "M15 5l-7 7 7 7" : "M9 5l7 7-7 7";
-    return "<button class=\"week-arrow\" type=\"button\" data-act=\"" + action + "\" data-id=\"" + direction + "\" aria-label=\"" + t(direction < 0 ? "cal_prev_month" : "cal_next_month") + "\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"" + path + "\"/></svg></button>";
+    const label = t((direction < 0 ? "cal_prev_" : "cal_next_") + unit);
+    return "<button class=\"week-arrow\" type=\"button\" data-act=\"" + action + "\" data-id=\"" + direction + "\" aria-label=\"" + label + "\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"" + path + "\"/></svg></button>";
   }
-  function calendarCells(first, selected, action, markers, dropTarget) {
+  function calendarCells(first, dayCount, selected, action, markers, dropTarget) {
     const year = first.getFullYear(), month = first.getMonth(), today = iso(day(0));
-    const daysInMonth = new Date(year, month + 1, 0).getDate(), lead = (first.getDay() + 6) % 7;
+    const lead = (first.getDay() + 6) % 7;
     let html = "";
     for (let i = 0; i < 7; i++) html += "<span class=\"cal-wd\">" + date(new Date(2024, 0, 1 + i), { weekday: "short" }) + "</span>";
     html += "<span aria-hidden=\"true\"></span>".repeat(lead);
-    for (let n = 1; n <= daysInMonth; n++) {
-      const d = new Date(year, month, n), key = iso(d), kinds = markers(d);
+    for (let i = 0; i < dayCount; i++) {
+      const d = new Date(year, month, first.getDate() + i), key = iso(d), kinds = markers(d);
       const dateLabel = date(d, { weekday: "long", day: "numeric", month: "long" });
       const label = t("cal_lessons_on").replace("{date}", dateLabel).replace("{count}", kinds.length);
       const dots = kinds.slice(0, 4).map(function (kind) { return "<i class=\"cal-dot cal-dot--" + kind + "\"></i>"; }).join("");
       html += "<button class=\"cal-day" + (key === today ? " cal-day--today" : "") + (key === selected ? " cal-day--on" : "") +
         (key < today ? " cal-day--past" : "") + "\" type=\"button\"" + (dropTarget ? " data-cal=\"" + key + "\"" : "") +
         " data-act=\"" + action + "\" data-id=\"" + key + "\" aria-label=\"" + esc(label) + "\" aria-pressed=\"" + (key === selected) + "\"" +
-        (key === today ? " aria-current=\"date\"" : "") + "><span>" + n + "</span><span class=\"cal-dots\" aria-hidden=\"true\">" + dots + "</span></button>";
+        (key === today ? " aria-current=\"date\"" : "") + "><span>" + d.getDate() + "</span><span class=\"cal-dots\" aria-hidden=\"true\">" + dots + "</span></button>";
     }
     return html;
   }
@@ -1227,8 +1230,10 @@
   /* ---------- экраны: ученик ---------- */
   let homeCalShift = 0, homeCalDate = "";
   function homeLessonCalendar() {
-    const first = calendarMonth(homeCalShift), today = iso(day(0)), selected = homeCalDate || today;
-    const cells = calendarCells(first, selected, "homeCalDay", function (d) {
+    const mon = weekStart(homeCalShift), sun = new Date(mon);
+    sun.setDate(mon.getDate() + 6);
+    const today = iso(day(0)), selected = homeCalDate || today;
+    const cells = calendarCells(mon, 7, selected, "homeCalDay", function (d) {
       return lessonsOn(d).map(function (l) { return l.webinar ? "webinar" : "lesson"; });
     });
     const selectedDay = parse(selected);
@@ -1239,12 +1244,12 @@
         "</b><p class=\"muted small\">" + esc(l.topic) + "</p></div>" + (action ? "<div class=\"home-cal-action\">" + action + "</div>" : "") + "</li>";
     }).join("");
     return "<section class=\"card home-calendar\">" + cardHead(t("today_plan"), go("schedule")) +
-      "<div class=\"home-cal-layout\"><div class=\"home-cal-month\"><div class=\"cal-head\">" + calendarArrow("homeCalMove", -1) +
-      "<p class=\"home-cal-month-label\">" + date(first, { month: "long", year: "numeric" }) + "</p>" + calendarArrow("homeCalMove", 1) + "</div>" +
+      "<div class=\"home-cal-week\"><div class=\"cal-head\">" + calendarArrow("homeCalMove", -1, "week") +
+      "<p class=\"home-cal-week-label\">" + weekTitle(mon, sun) + "</p>" + calendarArrow("homeCalMove", 1, "week") + "</div>" +
       "<div class=\"cal-grid\">" + cells + "</div></div>" +
       "<div class=\"home-cal-detail\"><div class=\"home-cal-detail-head\"><h3>" + date(selectedDay, { weekday: "long", day: "numeric", month: "long" }) + "</h3>" +
-      (selected !== today ? "<button class=\"btn btn--line btn--sm\" type=\"button\" data-act=\"homeCalMove\" data-id=\"0\">" + t("today") + "</button>" : "") + "</div>" +
-      (details ? "<ul>" + details + "</ul>" : "<p class=\"muted small\">" + t("no_events") + "</p>") + "</div></div></section>";
+      (selected !== today ? "<button class=\"btn btn--line btn--sm\" type=\"button\" data-act=\"homeCalMove\" data-id=\"0\">" + t(homeCalShift ? "this_week" : "today") + "</button>" : "") + "</div>" +
+      (details ? "<ul>" + details + "</ul>" : "<p class=\"muted small\">" + t("no_events") + "</p>") + "</div></section>";
   }
   function homeStudent() {
     const todo = myHw().filter(function (h) { return h.status === "todo"; }).sort(function (a, b) { return a.due.localeCompare(b.due); });
@@ -2118,7 +2123,8 @@
         (dates.length ? "<span class=\"tag tag--good ltile-on\">" + t("lib_on") + ": " + dates.join(", ") + "</span>" : "") + "</span></div>";
     }).join("");
     const first = calendarMonth(libMonth);
-    const cells = calendarCells(first, libDay, "calDay", function (d) {
+    const daysInMonth = new Date(first.getFullYear(), first.getMonth() + 1, 0).getDate();
+    const cells = calendarCells(first, daysInMonth, libDay, "calDay", function (d) {
       const key = iso(d);
       return state.plan.filter(function (p) { return p.group === g && p.date === key && findLesson(p.lesson); })
         .map(function (p) { return findLesson(p.lesson).lesson.kind; });
@@ -2129,7 +2135,7 @@
     }).join("");
     const picked = libPick && findLesson(libPick);
     const pickBar = picked ? "<form class=\"lib-pick\" data-form=\"libPlace\"><p>" + esc(t("lib_pick_hint")).replace("{t}", "<b>" + esc(picked.lesson.title || t("untitled")) + "</b>") + "</p><div class=\"row\"><input type=\"date\" name=\"date\" value=\"" + libDay + "\" required aria-label=\"" + t("event_date") + "\"><button class=\"btn btn--red btn--sm\" type=\"submit\">" + t("lib_place") + "</button><button class=\"btn btn--line btn--sm\" type=\"button\" data-act=\"libPick\" data-id=\"\">" + t("lib_cancel") + "</button></div></form>" : "";
-    const cal = "<aside class=\"card cal\"><div class=\"cal-head\">" + calendarArrow("calMove", -1) + "<h2>" + date(first, { month: "long", year: "numeric" }) + "</h2>" + calendarArrow("calMove", 1) + "</div>" +
+    const cal = "<aside class=\"card cal\"><div class=\"cal-head\">" + calendarArrow("calMove", -1, "month") + "<h2>" + date(first, { month: "long", year: "numeric" }) + "</h2>" + calendarArrow("calMove", 1, "month") + "</div>" +
       (libMonth ? "<button class=\"btn btn--line btn--sm cal-today\" type=\"button\" data-act=\"calMove\" data-id=\"0\">" + t("today") + "</button>" : "") +
       "<div class=\"cal-grid\">" + cells + "</div><div class=\"cal-list\"><h3>" + date(parse(libDay), { weekday: "long", day: "numeric", month: "long" }) + " · " + esc(groupShort(g)) + "</h3>" +
       (items ? "<ul>" + items + "</ul>" : "<p class=\"muted small\">" + t("lib_day_empty") + "</p>") + "</div><p class=\"muted small\">" + t("lib_rule") + "</p></aside>";
@@ -2680,7 +2686,7 @@
     },
     homeCalMove: function (id) {
       homeCalShift = Number(id) ? homeCalShift + Number(id) : 0;
-      homeCalDate = homeCalShift ? iso(calendarMonth(homeCalShift)) : "";
+      homeCalDate = homeCalShift ? iso(weekStart(homeCalShift)) : "";
       render();
       const focus = Number(id) ? "[data-act='homeCalMove'][data-id='" + id + "']" : "[aria-current='date']";
       document.querySelector(".home-calendar " + focus)?.focus?.({ preventScroll: true });

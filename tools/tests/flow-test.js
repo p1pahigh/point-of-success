@@ -374,14 +374,29 @@ function homeDateKey(d) {
 function calendarPanel() {
   return hc.html().split('<section class="card home-calendar">')[1].split("</section>")[0];
 }
+function homeCalendarDates() {
+  return Array.from(calendarPanel().matchAll(/data-act="homeCalDay" data-id="([^"]+)"/g), function (m) { return m[1]; });
+}
+var monday = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - (currentDate.getDay() + 6) % 7);
+var expectedWeek = Array.from({ length: 7 }, function (_, i) {
+  return homeDateKey(new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + i));
+});
+ok(homeCalendarDates().join() === expectedWeek.join(), "мини-календарь показывает ровно семь дней с понедельника по воскресенье");
 ok(calendarPanel().indexOf('aria-pressed="true" aria-current="date"') >= 0 && calendarPanel().indexOf('#student/lesson') >= 0, "в мини-календаре выбран сегодняшний день и можно войти на занятие");
 var nextDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 1);
-if (nextDate.getMonth() !== currentDate.getMonth()) hc.click("homeCalMove", "1");
+if (nextDate.getDay() === 1) hc.click("homeCalMove", "1");
 hc.click("homeCalDay", homeDateKey(nextDate));
 ok(calendarPanel().indexOf('#student/learn/w1') >= 0 && calendarPanel().indexOf('#student/lesson') < 0, "другой день показывает детали вебинара без преждевременного входа");
-hc.click("homeCalMove", "1");
-ok(calendarPanel().indexOf('aria-current="date"') < 0 && calendarPanel().indexOf('data-act="homeCalMove" data-id="0"') >= 0, "можно пролистать месяц");
 hc.click("homeCalMove", "0");
-ok(calendarPanel().indexOf('aria-pressed="true" aria-current="date"') >= 0, "кнопка «Сегодня» возвращает к текущей дате");
+hc.click("homeCalMove", "1");
+var nextMonday = new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + 7);
+ok(homeCalendarDates().length === 7 && homeCalendarDates()[0] === homeDateKey(nextMonday), "стрелка вправо переключает ровно на неделю вперёд");
+hc.click("homeCalMove", "-1");
+ok(homeCalendarDates().join() === expectedWeek.join() && calendarPanel().indexOf('aria-pressed="true" aria-current="date"') >= 0, "стрелка влево возвращает к исходной неделе и сегодняшнему дню");
+hc.click("homeCalMove", "-1");
+var prevMonday = new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() - 7);
+ok(homeCalendarDates()[0] === homeDateKey(prevMonday) && calendarPanel().indexOf("Эта неделя") >= 0, "можно открыть предыдущую неделю");
+hc.click("homeCalMove", "0");
+ok(homeCalendarDates().join() === expectedWeek.join() && calendarPanel().indexOf('aria-pressed="true" aria-current="date"') >= 0, "кнопка «Эта неделя» возвращает к текущей дате");
 
 print(fails ? fails + " FAILED" : "ALL PASSED");
