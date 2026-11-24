@@ -302,6 +302,20 @@
     course_empty: ["В курсе ещё нет уроков. Создайте первый урок!", "No lessons yet. Create the first one!", "Ancora nessuna lezione. Create la prima!"],
     back_courses: ["Все курсы", "All courses", "Tutti i corsi"],
     back_course: ["Вернуться в курс", "Back to course", "Torna al corso"],
+    choose_course: ["Выбрать курс", "Explore courses", "Scegli un corso"],
+    catalog_sub: ["Познакомьтесь с курсами и попробуйте урок перед началом обучения.", "Explore the courses and try a lesson before enrolling.", "Scopri i corsi e prova una lezione prima di iscriverti."],
+    no_catalog_courses: ["Здесь появятся опубликованные курсы.", "Published courses will appear here.", "Qui appariranno i corsi pubblicati."],
+    no_courses_yet: ["Ваши курсы появятся здесь после оформления обучения.", "Your courses will appear here once you enroll.", "I tuoi corsi appariranno qui dopo l’iscrizione."],
+    course_info: ["О курсе", "About the course", "Informazioni sul corso"],
+    course_info_and_sample: ["О курсе и пробный урок", "Course details and trial lesson", "Dettagli e lezione di prova"],
+    course_unavailable: ["Курс недоступен", "Course unavailable", "Corso non disponibile"],
+    sample_lesson: ["Пробный урок", "Trial lesson", "Lezione di prova"],
+    start_sample: ["Открыть пробный урок", "Open trial lesson", "Apri la lezione di prova"],
+    sample_missing: ["Пробный урок пока не добавлен.", "A trial lesson has not been added yet.", "La lezione di prova non è ancora disponibile."],
+    sample_note: ["Результат пробного урока не влияет на оценки и прогресс.", "This trial lesson does not affect your grades or progress.", "Questa lezione di prova non influisce sui voti o sui progressi."],
+    sample_none: ["Без пробного урока", "No trial lesson", "Nessuna lezione di prova"],
+    sample_builtin: ["Демонстрационный урок", "Demo lesson", "Lezione dimostrativa"],
+    sample_settings: ["Выбранный урок смогут открыть все ученики из каталога после публикации курса.", "Once the course is published, any student can open the selected lesson from the catalog.", "Dopo la pubblicazione, tutti gli studenti potranno aprire la lezione selezionata dal catalogo."],
     p_students: ["Ученики", "Students", "Studenti"],
     p_progress: ["Прогресс", "Progress", "Progressi"],
     p_settings: ["Настройки", "Settings", "Impostazioni"],
@@ -738,7 +752,67 @@
     ];
   }
 
+  const DEMO_LESSONS = {
+    "c-math": {
+      title: "Логарифмы на ЕГЭ: от определения к уравнению",
+      desc: "Переведём логарифм в степень и проверим, подходит ли найденный ответ.",
+      theory: "Логарифм logₐ b показывает, в какую степень нужно возвести основание a, чтобы получить b. Например, log₂ 8 = 3, потому что 2³ = 8. Основание должно быть положительным и отличаться от 1, а аргумент должен быть положительным.\n\nПри решении уравнения сначала запишите условие на аргумент, затем переходите к степени. В конце подставьте найденное значение в исходное выражение.",
+      example: "Решим log₃(x − 1) = 2. При x > 1 получаем x − 1 = 3² = 9, то есть x = 10. Проверка: log₃(10 − 1) = log₃ 9 = 2.",
+      tasks: [
+        ["Чему равен log₂ 32?", ["4", "5", "8"], 1, "2⁵ = 32, поэтому логарифм равен 5."],
+        ["Решите log₂(x + 3) = 4.", ["1", "13", "16"], 1, "x + 3 = 2⁴ = 16, значит x = 13. Аргумент 16 положительный."]
+      ]
+    },
+    "c-eng": {
+      title: "Present Perfect или Past Simple?",
+      desc: "Научимся выбирать время по контексту и разберём типичную ловушку ЕГЭ.",
+      theory: "Past Simple описывает событие в завершённом периоде: yesterday, last year, in 2022. Present Perfect связывает событие с настоящим: важен текущий результат, жизненный опыт или период, который ещё продолжается. Формула Present Perfect: have/has + третья форма глагола.\n\nСначала решите, о каком периоде говорится. Затем проверьте, изменился ли смысл со сменой времени.",
+      example: "I lost my key yesterday — указан завершённый период. I’ve lost my key — важен результат: сейчас ключа нет.",
+      tasks: [
+        ["She ___ the email yesterday.", ["has sent", "sent", "have sent"], 1, "Yesterday указывает на завершённый период, поэтому здесь Past Simple: sent."],
+        ["I ___ this film twice, and I’d watch it again.", ["has seen", "see", "have seen"], 2, "Это опыт без указания завершённого периода. Для I используем have + seen."]
+      ]
+    },
+    "c-it": {
+      title: "Первый заказ в итальянском кафе",
+      desc: "Поздороваемся, сделаем заказ и попросим счёт на итальянском.",
+      theory: "Buongiorno — вежливое приветствие днём. Для заказа используйте Vorrei… — «Я хотел(а) бы…», затем назовите напиток или блюдо и добавьте per favore — «пожалуйста». Un caffè в итальянском кафе обычно означает эспрессо.\n\nЕсли вас спросят Altro? («Что-нибудь ещё?»), можно ответить No, grazie («Нет, спасибо»). Чтобы попросить счёт, скажите Il conto, per favore.",
+      example: "— Buongiorno! Vorrei un cappuccino e un cornetto, per favore.\n— Certo. Altro?\n— No, grazie.",
+      tasks: [
+        ["Как вежливо заказать кофе?", ["Il conto, per favore.", "Vorrei un caffè, per favore.", "No, grazie."], 1, "Vorrei un caffè, per favore — «Я хотел(а) бы кофе, пожалуйста»."],
+        ["Что сказать, чтобы попросить счёт?", ["Il conto, per favore.", "Buongiorno!", "Altro?"], 0, "Il conto означает «счёт», а per favore делает просьбу вежливой."]
+      ]
+    },
+    "c-math2": {
+      title: "Как считать вероятность без догадок",
+      desc: "Построим список исходов и решим задачи на монету и кубик.",
+      theory: "При равной возможности всех исходов вероятность равна числу подходящих исходов, делённому на общее число исходов. У честного кубика шесть равновозможных результатов. При двух бросках монеты важно различать порядок: орёл, затем решка — отдельный исход.\n\nВыпишите все исходы или посчитайте их системно. Затем отметьте те, которые подходят по условию.",
+      example: "На честном кубике число больше четырёх выпадает в двух случаях: 5 или 6. Вероятность равна 2/6 = 1/3.",
+      tasks: [
+        ["Какова вероятность ровно одного орла при двух бросках честной монеты?", ["1/4", "1/2", "3/4"], 1, "Подходят ОР и РО. Всего четыре равновозможных исхода, поэтому 2/4 = 1/2."],
+        ["Какова вероятность получить чётное число на честном кубике?", ["1/3", "1/6", "1/2"], 2, "Из шести исходов подходят три: 2, 4 и 6. Получаем 3/6 = 1/2."]
+      ]
+    }
+  };
+
   function lessonsOf(c) { return c.items.filter(function (i) { return i.type === "lesson"; }); }
+  function sampleOf(c) {
+    if (typeof c.sampleLesson === "string") {
+      const lesson = find(c.items, c.sampleLesson);
+      return lesson && lesson.type === "lesson" && lesson.kind === "lesson" ? lesson : null;
+    }
+    const demo = DEMO_LESSONS[c.id];
+    if (!demo) return null;
+    return {
+      id: "sample-" + c.id, type: "lesson", kind: "lesson", demo: true, title: demo.title, desc: demo.desc,
+      pages: [
+        { title: "Теория и разбор", blocks: [{ type: "text", text: demo.theory }, { type: "tip", text: demo.example }] },
+        { title: "Практика", blocks: demo.tasks.map(function (task, i) {
+          return { id: "sample-q" + i, type: "test", q: task[0], options: task[1], correct: [task[2]], explain: task[3] };
+        }) }
+      ]
+    };
+  }
   function findCourse(id) { return find(state.courses, id); }
   function findLesson(id) {
     for (let i = 0; i < state.courses.length; i++) {
@@ -1125,22 +1199,64 @@
   }
   function coverHtml(c) {
     const mark = { math: "∑", eng: "Aa", it: "Ciao" }[c.subject] || "";
-    return "<span class=\"ccard-cover\"" + (c.cover ? " style=\"background-image:url('" + c.cover + "')\"" : "") + ">" + (c.cover ? "" : "<i aria-hidden=\"true\">" + mark + "</i>") + "</span>";
+    return "<span class=\"ccard-cover" + (c.cover ? "" : " ccard-cover--" + esc(c.subject)) + "\"" + (c.cover ? " style=\"background-image:url('" + esc(c.cover) + "')\"" : "") + ">" + (c.cover ? "" : "<i aria-hidden=\"true\">" + mark + "</i>") + "</span>";
   }
   function viewCourses() {
-    const list = studentCourses();
+    const catalog = page === "catalog";
+    const mine = account && !account.package ? [] : studentCourses();
+    const list = catalog ? state.courses.filter(function (c) { return c.status === "live"; }).sort(function (a, b) {
+      return Number(mine.includes(a)) - Number(mine.includes(b));
+    }) : mine;
     const subj = COURSES[param] ? param : "";
     const shown = list.filter(function (c) { return !subj || c.subject === subj; });
     const subjects = Object.keys(COURSES).filter(function (k) { return list.some(function (c) { return c.subject === k; }); });
-    const tabs = subjects.length > 1 ? chips([["", t("all"), list.length, go("courses")]].concat(subjects.map(function (k) {
-      return [k, COURSES[k].short, list.filter(function (c) { return c.subject === k; }).length, go("courses", k)];
+    const route = catalog ? "catalog" : "courses";
+    const tabs = "<nav class=\"course-tabs\" aria-label=\"" + t("my_courses") + "\">" +
+      "<a href=\"" + go("courses") + "\"" + (catalog ? "" : " aria-current=\"page\"") + ">" + t("my_courses") + "</a>" +
+      "<a href=\"" + go("catalog") + "\"" + (catalog ? " aria-current=\"page\"" : "") + ">" + t("choose_course") + "</a></nav>";
+    const filters = subjects.length > 1 || subj ? chips([["", t("all"), list.length, go(route)]].concat(subjects.map(function (k) {
+      return [k, COURSES[k].short, list.filter(function (c) { return c.subject === k; }).length, go(route, k)];
     })), subj) : "";
     const cards = shown.map(function (c) {
-      const p = courseProgress(c);
-      return "<a class=\"ccard\" href=\"" + go("course", c.id) + "\">" + coverHtml(c) + "<span class=\"ccard-body\"><span class=\"tag\">" + esc(COURSES[c.subject].short) + "</span><b>" + esc(c.title || t("untitled")) + "</b><span class=\"muted small\">" + t("teacher_of") + ": " + esc(TEACHERS[c.owner] ? TEACHERS[c.owner].name : "") + "</span>" +
-        "<span class=\"ccard-progress\"><span>" + p.done + " " + t("of") + " " + lessonsWord(p.total) + "</span><b>" + p.pct + "%</b></span>" + bar(p.pct) + "</span></a>";
+      let detail;
+      if (catalog) {
+        detail = (c.desc ? "<span class=\"ccard-summary\">" + esc(c.desc) + "</span>" : "") +
+          "<span class=\"ccard-action\">" + t(sampleOf(c) ? "course_info_and_sample" : "course_info") + icon("chevron") + "</span>";
+      } else {
+        const p = courseProgress(c);
+        detail = "<span class=\"ccard-progress\"><span>" + p.done + " " + t("of") + " " + lessonsWord(p.total) + "</span><b>" + p.pct + "%</b></span>" + bar(p.pct);
+      }
+      return "<a class=\"ccard" + (catalog ? " ccard--catalog" : "") + "\" href=\"" + go(catalog ? "course-info" : "course", c.id) + "\">" + coverHtml(c) + "<span class=\"ccard-body\"><span class=\"tag\">" + esc(COURSES[c.subject].short) + "</span><b>" + esc(c.title || t("untitled")) + "</b><span class=\"muted small\">" + esc(authorName(c.owner)) + "</span>" + detail + "</span></a>";
     }).join("");
-    return head(t("my_courses"), t("courses_sub")) + tabs + (cards ? "<div class=\"cgrid\">" + cards + "</div>" : "<section class=\"card\"><p class=\"empty\">" + t("no_student_courses") + "</p></section>");
+    const empty = catalog ? "no_catalog_courses" : account && !account.package ? "no_courses_yet" : "no_student_courses";
+    return "<h1 class=\"sr-only\">" + t(catalog ? "choose_course" : "my_courses") + "</h1>" + tabs +
+      "<p class=\"phead-sub\">" + t(catalog ? "catalog_sub" : "courses_sub") + "</p>" + filters +
+      (cards ? "<div class=\"cgrid\">" + cards + "</div>" : "<section class=\"card\"><p class=\"empty\">" + t(empty) + "</p></section>");
+  }
+  function studentCourseHero(c, action) {
+    return "<section class=\"chero chero--student\">" + coverHtml(c) + "<div class=\"chero-text\"><span class=\"tag\">" + esc(COURSES[c.subject].name) + "</span><h1 class=\"title\">" + esc(c.title || t("untitled")) + "</h1>" +
+      (c.desc ? "<p class=\"phead-sub\">" + esc(c.desc) + "</p>" : "") + "<p class=\"muted small\">" + t("teacher_of") + ": " + esc(authorName(c.owner)) + "</p>" + action + "</div></section>";
+  }
+  function publishedCourse() {
+    const c = findCourse(param);
+    return c && c.status === "live" ? c : null;
+  }
+  function viewCourseInfo() {
+    const c = publishedCourse();
+    if (!c) return head(t("course_unavailable"), "") + "<div><a class=\"btn btn--line\" href=\"" + go("catalog") + "\">" + t("choose_course") + "</a></div>";
+    const sample = sampleOf(c);
+    const enrolled = (!account || account.package) && studentCourses().includes(c);
+    const button = enrolled ? "<div><a class=\"btn btn--line btn--sm\" href=\"" + go("course", c.id) + "\">" + t("back_course") + "</a></div>" : "";
+    const trial = sample ? "<h3>" + esc(sample.title || t("untitled")) + "</h3>" + (sample.desc ? "<p>" + esc(sample.desc) + "</p>" : "") +
+      "<p class=\"muted small\">" + (sample.demo ? t("sample_builtin") + " · " : "") + lessonMeta(sample) + "</p><div><a class=\"btn btn--red\" href=\"" + go("sample", c.id) + "\">" + t("start_sample") + "</a></div>" : "<p class=\"muted\">" + t("sample_missing") + "</p>";
+    return "<a class=\"back\" href=\"" + go("catalog") + "\">" + t("choose_course") + "</a>" + studentCourseHero(c, button) +
+      "<section class=\"card course-sample\"><h2>" + t("sample_lesson") + "</h2>" + trial + "</section>";
+  }
+  function viewSample() {
+    const course = publishedCourse();
+    const lesson = course && sampleOf(course);
+    if (!lesson) return viewCourseInfo();
+    return lessonPlayer({ course: course, lesson: lesson }, "sample");
   }
   function outlineRows(c, rowFn) {
     let html = "", open = false;
@@ -1178,7 +1294,7 @@
       return mrow(go("learn", l.id), kindIco(l), l.title || t("untitled"), lessonMeta(l), tg).replace("class=\"mrow-ico\"", "class=\"mrow-ico mrow-ico--" + l.kind + "\"");
     });
     return "<a class=\"back\" href=\"" + go("courses") + "\">" + t("back") + "</a>" +
-      "<section class=\"chero chero--student\">" + coverHtml(c) + "<div class=\"chero-text\"><span class=\"tag\">" + esc(COURSES[c.subject].name) + "</span><h1 class=\"title\">" + esc(c.title || t("untitled")) + "</h1>" + (c.desc ? "<p class=\"phead-sub\">" + esc(c.desc) + "</p>" : "") + "<p class=\"muted small\">" + t("teacher_of") + ": " + esc(TEACHERS[c.owner] ? TEACHERS[c.owner].name : "") + "</p></div></section>" +
+      studentCourseHero(c, "<div><a class=\"btn btn--line btn--sm\" href=\"" + go("course-info", c.id) + "\">" + t("course_info") + "</a></div>") +
       "<section class=\"card\"><div class=\"course-top\"><div><h2>" + t("c_course") + "</h2><p class=\"muted small\">" + p.done + " " + t("of") + " " + p.total + " " + t("materials_done") + "</p></div><div class=\"course-pct\"><b>" + p.pct + "%</b>" + bar(p.pct) + "</div></div>" + (rows || "<p class=\"empty\">" + t("course_empty") + "</p>") + "</section>";
   }
 
@@ -1253,13 +1369,15 @@
     }
     return "";
   }
-  function lessonPlayer(hit, preview) {
+  function lessonPlayer(hit, mode) {
     const l = hit.lesson;
+    const preview = mode === "preview", sample = mode === "sample";
     if (l.kind === "webinar") return webinarView(hit, preview);
-    const r = preview ? previewResult : (retakeId === l.id ? null : state.results[l.id]);
-    const backHref = preview ? go("build", l.id) : go("course", hit.course.id);
+    const r = mode ? previewResult : (retakeId === l.id ? null : state.results[l.id]);
+    const backHref = preview ? go("build", l.id) : sample ? go("course-info", hit.course.id) : go("course", hit.course.id);
     const top = "<a class=\"back\" href=\"" + backHref + "\">" + (preview ? t("back_editor") : t("back")) + "</a>" + (preview ? "<p class=\"preview-note\">" + t("preview_note") + "</p>" : "") +
-      "<div class=\"phead-text\"><span class=\"kind-badge kind-badge--" + l.kind + "\">" + t(l.kind === "exam" ? "kind_" + (KINDS.indexOf(l.hwKind) >= 0 ? l.hwKind : "hw") : KIND_ICON[l.kind] || "c_lesson") + "</span><h1 class=\"title\">" + esc(l.title || t("untitled")) + "</h1>" + (l.desc ? "<p class=\"phead-sub\">" + esc(l.desc) + "</p>" : "") +
+      "<div class=\"phead-text\"><span class=\"kind-badge kind-badge--" + l.kind + "\">" + t(sample ? "sample_lesson" : l.kind === "exam" ? "kind_" + (KINDS.indexOf(l.hwKind) >= 0 ? l.hwKind : "hw") : KIND_ICON[l.kind] || "c_lesson") + "</span><h1 class=\"title\">" + esc(l.title || t("untitled")) + "</h1>" + (l.desc ? "<p class=\"phead-sub\">" + esc(l.desc) + "</p>" : "") +
+      (sample ? "<p class=\"muted small\">" + t("teacher_of") + ": " + esc(authorName(hit.course.owner)) + " · " + t("sample_note") + "</p>" : "") +
       (l.kind === "exam" ? "<p class=\"muted small\">" + t("ex_due") + ": " + dueLabel(examDue(l)) + " · " + t("ex_pass") + ": " + esc(l.pass || 0) + "%</p>" : "") + "</div>";
     const graded = gradedBlocks(l).length;
     const hasTasks = blocksOf(l).some(function (bl) { return TASK_TYPES.indexOf(bl.type) >= 0; });
@@ -1270,7 +1388,7 @@
       const exam = l.kind === "exam", pct = r.total ? Math.round(r.score / r.total * 100) : 0, passed = pct >= Number(l.pass || 0);
       const examInfo = exam ? (r.total ? "<p class=\"ex-verdict ex-verdict--" + (passed ? "ok" : "no") + "\">" + t(passed ? "ex_passed" : "ex_failed") + ": " + pct + "% (" + t("ex_need") + " " + esc(l.pass || 0) + "%)</p>" : "") +
         (r.teacherGrade ? "<p>" + t("ex_final") + ": <span class=\"cell\">" + r.teacherGrade + "</span> " + esc(r.comment || "") + "</p>" : r.open ? "<p class=\"muted small\">" + t("ex_review") + "</p>" : "") : "";
-      return top + "<section class=\"card lresult\"><h2>" + t("lesson_done") + "</h2>" + (r.total ? "<span class=\"big\">" + r.score + " " + t("of") + " " + r.total + "</span>" : "") + examInfo + "<div class=\"row\">" + (exam && !preview ? "" : "<button class=\"btn btn--line btn--sm\" type=\"button\" data-act=\"retake\" data-id=\"" + l.id + "\">" + t("retake") + "</button>") + (next && !preview ? "<a class=\"btn btn--red btn--sm\" href=\"" + go("learn", next.id) + "\">" + t("next_lesson") + "</a>" : "") + "</div></section>" + pages;
+      return top + "<section class=\"card lresult\"><h2>" + t("lesson_done") + "</h2>" + (r.total ? "<span class=\"big\">" + r.score + " " + t("of") + " " + r.total + "</span>" : "") + examInfo + "<div class=\"row\">" + (exam && !preview ? "" : "<button class=\"btn btn--line btn--sm\" type=\"button\" data-act=\"retake\" data-id=\"" + l.id + "\">" + t("retake") + "</button>") + (next && !mode ? "<a class=\"btn btn--red btn--sm\" href=\"" + go("learn", next.id) + "\">" + t("next_lesson") + "</a>" : "") + "</div></section>" + pages;
     }
     const many = l.pages.length > 1;
     const pages = l.pages.map(function (p, i) {
@@ -1279,10 +1397,10 @@
       const body = p.blocks.map(function (bl) { return blockView(bl, ctx); }).join("");
       return "<section class=\"card lpage\" data-step=\"" + i + "\"" + (i ? " hidden" : "") + ">" + (many ? "<p class=\"lstep muted small\">" + t("page_of") + " " + (i + 1) + " " + t("of") + " " + l.pages.length + "</p>" : "") + (p.title ? "<h2>" + esc(p.title) + "</h2>" : "") + (body || "<p class=\"empty\">" + t("page_empty_st") + "</p>") + nav + "</section>";
     }).join("");
-    const finish = hasTasks || preview
+    const finish = hasTasks || mode
       ? "<p class=\"auth-error\" id=\"lesson-error\" role=\"alert\" hidden></p><button class=\"btn btn--red\" type=\"submit\">" + t(graded ? "check_answers" : "finish_lesson") + "</button>"
       : doneButton(l.id);
-    return top + "<form class=\"lform\" data-form=\"lesson\" data-id=\"" + l.id + "\"" + (preview ? " data-preview=\"1\"" : "") + ">" + pages + "<div class=\"lfinish\"" + (many ? " hidden" : "") + ">" + finish + "</div></form>";
+    return top + "<form class=\"lform\" data-form=\"lesson\" data-id=\"" + l.id + "\">" + pages + "<div class=\"lfinish\"" + (many ? " hidden" : "") + ">" + finish + "</div></form>";
   }
 
   function webinarView(hit, preview) {
@@ -1304,7 +1422,7 @@
     const lock = lockedUntil(hit.course, hit.lesson);
     if (lock) return "<a class=\"back\" href=\"" + go("course", hit.course.id) + "\">" + t("back") + "</a><div class=\"phead-text\"><span class=\"kind-badge\">" + t("c_lesson") + "</span><h1 class=\"title\">" + esc(hit.lesson.title || t("untitled")) + "</h1></div>" +
       "<section class=\"card lresult\"><h2>" + t("lib_locked_t") + "</h2><p>" + t("lib_locked_s").replace("{d}", date(parse(lock), { weekday: "long", day: "numeric", month: "long" })) + "</p></section>";
-    return lessonPlayer(hit, false);
+    return lessonPlayer(hit);
   }
 
   function doneButton(id) {
@@ -1694,8 +1812,13 @@
     if (coursePanel === "settings") {
       const subjects = TEACHERS.teacher.subjects.map(function (k) { return "<option value=\"" + k + "\"" + (k === c.subject ? " selected" : "") + ">" + esc(COURSES[k].name) + "</option>"; }).join("");
       const folders = "<option value=\"\">" + t("no_folder") + "</option>" + state.folders.map(function (f) { return "<option value=\"" + f.id + "\"" + (f.id === c.folder ? " selected" : "") + ">" + esc(f.name || t("untitled")) + "</option>"; }).join("");
+      const demoOption = DEMO_LESSONS[c.id] ? "<option value=\"__demo\"" + (c.sampleLesson === undefined ? " selected" : "") + ">" + t("sample_builtin") + "</option>" : "";
+      const sampleOptions = lessonsOf(c).filter(function (l) { return l.kind === "lesson"; }).map(function (l) {
+        return "<option value=\"" + esc(l.id) + "\"" + (l.id === c.sampleLesson ? " selected" : "") + ">" + esc(l.title || t("untitled")) + "</option>";
+      }).join("");
       return "<section class=\"card cpanel\"><div class=\"card-head\"><h2>" + t("p_settings") + "</h2>" + closePanel() + "</div><div class=\"form form--cols\"><div class=\"field\"><label for=\"cs-subject\">" + t("subject") + "</label><select id=\"cs-subject\" data-change=\"courseField\" data-id=\"" + c.id + "\" data-field=\"subject\">" + subjects + "</select></div>" +
         "<div class=\"field\"><label for=\"cs-folder\">" + t("folder") + "</label><select id=\"cs-folder\" data-change=\"courseField\" data-id=\"" + c.id + "\" data-field=\"folder\">" + folders + "</select></div></div>" +
+        "<div class=\"field\"><label for=\"cs-sample\">" + t("sample_lesson") + "</label><select id=\"cs-sample\" data-change=\"courseField\" data-id=\"" + c.id + "\" data-field=\"sampleLesson\" aria-describedby=\"cs-sample-note\"><option value=\"\">" + t("sample_none") + "</option>" + demoOption + sampleOptions + "</select><p id=\"cs-sample-note\" class=\"muted small\">" + t("sample_settings") + "</p></div>" +
         "<div class=\"row\">" + (c.cover ? "<button class=\"btn btn--line btn--sm\" type=\"button\" data-act=\"delCover\" data-id=\"" + c.id + "\">" + t("del") + ": " + t("add_cover").split(" ").pop() + "</button>" : "") + "<button class=\"btn btn--line btn--sm btn--danger\" type=\"button\" data-act=\"delCourse\" data-id=\"" + c.id + "\">" + icon("trash") + t("del_course") + "</button></div></section>";
     }
     return "";
@@ -1817,7 +1940,7 @@
   function viewPreview() {
     const hit = findLesson(param);
     if (!hit || hit.course.owner !== "teacher") { param = ""; return viewContent(); }
-    return lessonPlayer(hit, true);
+    return lessonPlayer(hit, "preview");
   }
   /* ---------- база уроков с календариком (23 ноября 2026, ТЗ друга заказчика) ----------
      Общая для школы: уроки всех курсов по предметам преподавателя (свои черновики и опубликованные курсы коллег).
@@ -2289,16 +2412,16 @@
   const VIEWS = {
     dashboard: function () { return role === "teacher" ? homeTeacher() : account && !account.package ? homeNew() : homeStudent(); },
     schedule: viewSchedule, lesson: viewLesson, settings: viewSettings,
-    courses: viewCourses, course: viewCourse, learn: viewLearn,
+    courses: viewCourses, catalog: viewCourses, "course-info": viewCourseInfo, sample: viewSample, course: viewCourse, learn: viewLearn,
     homework: viewHomework, grades: viewGrades, report: viewReport,
     diag: viewDiag, plans: viewPlans, pay: viewPay,
     content: viewContent, bank: function () { return role === "teacher" ? viewTBank() : viewSBank(); }, review: viewReview, progress: viewProgress, tcourse: viewTCourse, build: viewBuild, preview: viewPreview, library: viewLibrary
   };
-  const ROLE_PAGES = { student: ["courses", "course", "learn", "homework", "grades", "report", "diag", "plans", "pay"], teacher: ["content", "review", "progress", "tcourse", "build", "preview", "library"] };
-  const ACTIVE = { course: "courses", learn: "courses", tcourse: "content", build: "content", preview: "content", report: "grades", diag: "dashboard", plans: "dashboard", pay: "dashboard" };
-  /* Новый ученик до оплаты видит только диагностику, выбор пакета и настройки */
-  const NEW_NAV = [["dashboard", "nav_home"], ["settings", "nav_settings"]];
-  const NEW_PAGES = ["dashboard", "diag", "plans", "pay", "settings"];
+  const ROLE_PAGES = { student: ["courses", "catalog", "course-info", "sample", "course", "learn", "homework", "grades", "report", "diag", "plans", "pay"], teacher: ["content", "review", "progress", "tcourse", "build", "preview", "library"] };
+  const ACTIVE = { catalog: "courses", "course-info": "courses", sample: "courses", course: "courses", learn: "courses", tcourse: "content", build: "content", preview: "content", report: "grades", diag: "dashboard", plans: "dashboard", pay: "dashboard" };
+  /* До оплаты доступны только запись, знакомство с курсами и настройки */
+  const NEW_NAV = [["dashboard", "nav_home"], ["courses", "nav_courses"], ["settings", "nav_settings"]];
+  const NEW_PAGES = ["dashboard", "diag", "plans", "pay", "settings", "courses", "catalog", "course-info", "sample"];
   const SETUP_PAGES = ["diag", "plans", "pay"];
 
 
@@ -2523,6 +2646,7 @@
       const p = id.split("|"), c = findCourse(p[0]), it = find(c.items, p[1]);
       if (it.type === "lesson" && !ask(t("del_lesson_q"))) return;
       c.items = c.items.filter(function (x) { return x.id !== p[1]; });
+      if (c.sampleLesson === p[1]) c.sampleLesson = "";
       save(); render();
     },
     newLesson: function (kind) {
@@ -2646,7 +2770,8 @@
     folderName: function (node) { find(state.folders, node.dataset.id).name = node.value.trim(); save(); },
     courseField: function (node) {
       const c = findCourse(node.dataset.id), field = node.dataset.field;
-      c[field] = field === "title" || field === "desc" ? node.value.trim() : node.value;
+      if (field === "sampleLesson" && node.value === "__demo") delete c.sampleLesson;
+      else c[field] = field === "title" || field === "desc" ? node.value.trim() : node.value;
       save();
       if (field === "status" || field === "subject" || field === "folder") render();
     },
@@ -2781,9 +2906,14 @@
       param = set.id;
       if (location.hash === go("bank", set.id)) render(); else location.hash = go("bank", set.id);
     },
-    /* урок: проверка ответов. Пустые ответы не принимаются; у преподавателя в просмотре ничего не сохраняется */
+    /* Проверка ответов. Пробный урок и предпросмотр не меняют учебный прогресс. */
     lesson: function (form, data) {
-      const l = findLesson(form.dataset.id).lesson;
+      const course = page === "sample" && publishedCourse();
+      const hit = (page === "preview" || page === "learn") && findLesson(param);
+      let l;
+      if (course) l = sampleOf(course);
+      else if (hit && (page === "preview" ? hit.course.owner === "teacher" : canOpen(hit) && !lockedUntil(hit.course, hit.lesson))) l = hit.lesson;
+      if (!l || l.id !== form.dataset.id) return;
       const answers = {};
       let score = 0, total = 0, missing = -1;
       l.pages.forEach(function (p, pi) {
@@ -2816,7 +2946,7 @@
         return;
       }
       const r = { score: score, total: total, answers: answers, date: iso(day(0)), open: blocksOf(l).filter(function (bl) { return bl.type === "open"; }).length };
-      if (form.dataset.preview) { previewResult = r; render(); window.scrollTo(0, 0); return; }
+      if (page !== "learn") { previewResult = r; render(); window.scrollTo(0, 0); return; }
       state.results[l.id] = r;
       if (!isDone(l.id)) state.done.push(l.id);
       retakeId = null;
