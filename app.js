@@ -42,7 +42,7 @@
     grades_no_answers: ["Пока нет ответов", "No answers yet", "Ancora nessuna risposta"],
     grades_latest_accuracy: ["Профильная математика · по последнему ответу на каждое задание", "Advanced maths · latest answer per question", "Matematica avanzata · ultima risposta per esercizio"],
     grades_course_progress: ["Прогресс по курсам", "Course progress", "Progressi nei corsi"],
-    grades_bank_accuracy: ["Верно в банке заданий", "Correct in the question bank", "Risposte esatte nella banca esercizi"],
+    grades_bank_accuracy: ["Точность в банке", "Bank accuracy", "Precisione negli esercizi"],
     grades_month: ["{month} в цифрах", "{month} in numbers", "{month} in cifre"],
     grades_lessons_done: ["Пройдено уроков", "Lessons completed", "Lezioni completate"],
     grades_works_sent: ["Сдано работ", "Assignments submitted", "Compiti consegnati"],
@@ -1505,12 +1505,14 @@
     }).join("") + "</tbody></table></div>";
   }
   function gradesRadar(metrics) {
-    const directions = ["↑", "→", "↓", "←"];
+    const directions = ["top", "right", "bottom", "left"];
     const [top, right, bottom, left] = metrics.map(function (m) { return (m[1] || 0) / 2; });
     const shape = "50% " + (50 - top) + "%," + (50 + right) + "% 50%,50% " + (50 + bottom) + "%," + (50 - left) + "% 50%";
     return "<section class=\"card grades-radar-card\"><h2>" + t("grades_overview") + "</h2>" +
-      "<div class=\"grades-radar\" aria-hidden=\"true\"><i style=\"clip-path:polygon(" + shape + ")\"></i></div><dl class=\"grades-legend\">" +
-      metrics.map(function (m, i) { return "<div><dt><span aria-hidden=\"true\">" + directions[i] + "</span>" + m[0] + "</dt><dd>" + (m[1] === null ? "–" : m[1] + "%") + "</dd></div>"; }).join("") + "</dl></section>";
+      "<div class=\"grades-radar-grid\"><div class=\"grades-radar\" aria-hidden=\"true\"><i style=\"clip-path:polygon(" + shape + ")\"></i></div>" +
+      metrics.map(function (m, i) {
+        return "<div class=\"grades-axis grades-axis--" + directions[i] + "\"><span>" + m[0] + "</span><b>" + (m[1] === null ? "–" : m[1] + "%") + "</b></div>";
+      }).join("") + "</div></section>";
   }
   function gradesAccuracy(part, tasks) {
     const count = bankCount(tasks.filter(function (q) { return Number(q.part) === part; }));
