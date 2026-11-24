@@ -365,4 +365,23 @@ gs["tpos.demo.v3"] = JSON.stringify(gsData);
 sg = boot(gs, "#student/grades");
 ok(sg.html().indexOf("Общий прогресс") >= 0 && sg.html().indexOf("Пройдено уроков") >= 0, "сводка открывается со старыми данными без дат прохождения");
 
+// Мини-календарь ближайших занятий
+var hc = boot({ "tpos.session": JSON.stringify({ role: "student" }) }, "#student/dashboard");
+var currentDate = new Date();
+function homeDateKey(d) {
+  return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+}
+function calendarPanel() {
+  return hc.html().split('<section class="card home-calendar">')[1].split("</section>")[0];
+}
+ok(calendarPanel().indexOf('aria-pressed="true" aria-current="date"') >= 0 && calendarPanel().indexOf('#student/lesson') >= 0, "в мини-календаре выбран сегодняшний день и можно войти на занятие");
+var nextDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 1);
+if (nextDate.getMonth() !== currentDate.getMonth()) hc.click("homeCalMove", "1");
+hc.click("homeCalDay", homeDateKey(nextDate));
+ok(calendarPanel().indexOf('#student/learn/w1') >= 0 && calendarPanel().indexOf('#student/lesson') < 0, "другой день показывает детали вебинара без преждевременного входа");
+hc.click("homeCalMove", "1");
+ok(calendarPanel().indexOf('aria-current="date"') < 0 && calendarPanel().indexOf('data-act="homeCalMove" data-id="0"') >= 0, "можно пролистать месяц");
+hc.click("homeCalMove", "0");
+ok(calendarPanel().indexOf('aria-pressed="true" aria-current="date"') >= 0, "кнопка «Сегодня» возвращает к текущей дате");
+
 print(fails ? fails + " FAILED" : "ALL PASSED");
