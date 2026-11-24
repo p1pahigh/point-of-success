@@ -341,4 +341,28 @@ ok(tc.html().indexOf("data-act=\"studentCard\" data-id=\"s4\"") >= 0, "карт�
 tc.go("#teacher/review/hw6");
 ok(tc.html().indexOf("data-act=\"studentCard\" data-id=\"s2\"") >= 0, "карточка открывается из проверки работ");
 
+// Сводка успеваемости: периоды, отсутствие ответов и даты активности
+var gs = { "tpos.session": JSON.stringify({ role: "student" }) };
+var sg = boot(gs, "#student/learn/v1");
+sg.click("toggleDone", "v1");
+sg.click("toggleDone", "v1");
+sg.go("#student/homework/hw1");
+sg.submit({ dataset: { form: "submitHw", id: "hw1" }, data: { file: { name: "решение.pdf", type: "application/pdf" } } });
+var gsData = JSON.parse(gs["tpos.demo.v3"]);
+var todayKey = gsData.doneAt.v1;
+ok(todayKey && gsData.homework[0].submittedAt === todayKey && gsData.homework[0].status === "review", "для сводки записываются даты прохождения и сдачи");
+gsData.bankProgress.q1.date = todayKey;
+gsData.bankProgress.q2.date = "2020-01-01";
+gsData.bankProgress.q7 = { status: "right", date: "2020-01-01" };
+gs["tpos.demo.v3"] = JSON.stringify(gsData);
+sg = boot(gs, "#student/grades");
+ok(sg.html().indexOf("Верных ответов: 1 из 2") >= 0 && sg.html().indexOf("Верных ответов: 1 из 1") >= 0, "точность за всё время рассчитана отдельно по частям");
+ok(sg.html().indexOf("Динамика оценок") >= 0 && sg.html().indexOf("class=\"gchart\"") >= 0 && sg.html().indexOf("#student/report") >= 0, "график числовых оценок и отчёт доступны");
+sg.go("#student/grades/month");
+ok(sg.html().indexOf("Верных ответов: 1 из 1") >= 0 && sg.html().indexOf("Пока нет ответов") >= 0 && sg.html().indexOf("Верных ответов: 1 из 2") < 0, "за месяц учитываются только последние ответы в текущем месяце");
+delete gsData.doneAt;
+gs["tpos.demo.v3"] = JSON.stringify(gsData);
+sg = boot(gs, "#student/grades");
+ok(sg.html().indexOf("Общий прогресс") >= 0 && sg.html().indexOf("Пройдено уроков") >= 0, "сводка открывается со старыми данными без дат прохождения");
+
 print(fails ? fails + " FAILED" : "ALL PASSED");

@@ -34,7 +34,24 @@
     all: ["Все", "All", "Tutti"],
     hw_sub: ["Сдавайте работы и смотрите оценки с комментариями", "Hand in work and see grades with comments", "Consegna i compiti e vedi voti e commenti"],
     grades_sub: ["Оценки, посещаемость и прогресс по предметам", "Grades, attendance and progress by subject", "Voti, presenze e progressi per materia"],
-    attendance_30: ["посещаемость за 30 дней", "attendance, 30 days", "presenze, 30 giorni"],
+    grades_overview: ["Общий прогресс", "Progress overview", "Panoramica dei progressi"],
+    grades_accuracy: ["Точность в банке заданий", "Question bank accuracy", "Precisione nella banca esercizi"],
+    grades_all_time: ["За всё время", "All time", "Dall’inizio"],
+    grades_this_month: ["За этот месяц", "This month", "Questo mese"],
+    grades_accuracy_count: ["Верных ответов: {right} из {total}", "Correct answers: {right} of {total}", "Risposte corrette: {right} di {total}"],
+    grades_no_answers: ["Пока нет ответов", "No answers yet", "Ancora nessuna risposta"],
+    grades_latest_accuracy: ["Профильная математика · по последнему ответу на каждое задание", "Advanced maths · latest answer per question", "Matematica avanzata · ultima risposta per esercizio"],
+    grades_course_progress: ["Прогресс по курсам", "Course progress", "Progressi nei corsi"],
+    grades_bank_accuracy: ["Верно в банке заданий", "Correct in the question bank", "Risposte esatte nella banca esercizi"],
+    grades_month: ["{month} в цифрах", "{month} in numbers", "{month} in cifre"],
+    grades_lessons_done: ["Пройдено уроков", "Lessons completed", "Lezioni completate"],
+    grades_works_sent: ["Сдано работ", "Assignments submitted", "Compiti consegnati"],
+    grades_bank_done: ["Решено задач в банке", "Bank questions solved", "Esercizi risolti nella banca"],
+    grades_received: ["Получено оценок", "Grades received", "Voti ricevuti"],
+    grades_trend: ["Динамика оценок", "Grade trend", "Andamento dei voti"],
+    grades_numeric_empty: ["Здесь появится график, когда у вас будут оценки по пятибалльной шкале.", "Your chart will appear when you receive grades on the five-point scale.", "Il grafico apparirà quando riceverai voti su una scala di cinque punti."],
+    grades_point_count: ["Последние оценки по пятибалльной шкале", "Recent grades on the five-point scale", "Ultimi voti su una scala di cinque punti"],
+    attendance_30: ["Посещаемость за 30 дней", "Attendance, 30 days", "Presenze, 30 giorni"],
     hw_handed: ["ДЗ сдано", "homework handed in", "compiti consegnati"],
     avg_lc: ["средний балл", "average grade", "media"],
     grades_n: ["оценок всего", "grades in total", "voti in totale"],
@@ -833,6 +850,11 @@
   function blocksOf(l) { return l.pages.reduce(function (acc, p) { return acc.concat(p.blocks); }, []); }
   function gradedBlocks(l) { return blocksOf(l).filter(function (bl) { return (bl.type === "test" && bl.correct.length) || (bl.type === "input" && String(bl.answer || "").trim()); }); }
   function isDone(id) { return state.done.indexOf(id) >= 0; }
+  function completeLesson(id) {
+    if (isDone(id)) return;
+    state.done.push(id);
+    state.doneAt[id] = iso(day(0));
+  }
   function courseProgress(c) {
     const list = lessonsOf(c);
     const done = list.filter(function (l) { return isDone(l.id); }).length;
@@ -864,6 +886,7 @@
     e.grade = r.teacherGrade || autoGrade(pct);
     e.comment = r.comment || (r.total ? t(pct >= Number(l.pass || 0) ? "ex_passed" : "ex_failed") + ": " + r.score + " " + t("of") + " " + r.total + " (" + pct + "%)" : "");
     e.gradedAt = r.gradedAt || r.date;
+    e.submittedAt = r.date;
     return e;
   }
   function examsOf(list) {
@@ -996,6 +1019,7 @@
       tg: { h1: true, m15: true, h24: true, grade: true },
       personal: [],
       done: ["v1", "n1", "v2", "v5", "n5", "v8", "n8"],
+      doneAt: { v1: iso(day(-12)), n1: iso(day(-12)), v2: iso(day(-8)), v5: iso(day(-9)), n5: iso(day(-9)), v8: iso(day(-6)), n8: iso(day(-5)) },
       notes: {},
       results: {},
       chat: [
@@ -1012,9 +1036,9 @@
       homework: [
         { id: "hw1", student: "me", name: PEOPLE.student.name, course: "math", title: "Логарифмические уравнения", due: iso(day(1)), status: "todo" },
         { id: "hw2", student: "me", name: PEOPLE.student.name, course: "it", title: "Lettera a un amico: расскажите о выходных", due: iso(day(3)), status: "todo" },
-        { id: "hw3", student: "me", name: PEOPLE.student.name, course: "eng", title: "Essay: Technology in education", due: iso(day(-1)), status: "review", file: { name: "essay.docx" } },
-        { id: "hw4", student: "me", name: PEOPLE.student.name, course: "math", title: "Тригонометрия: подборка задач", due: iso(day(-6)), status: "graded", grade: 5, comment: "Отличное оформление, все шаги на месте.", gradedAt: iso(day(-4)), file: { name: "trig.jpg" } },
-        { id: "hw5", student: "me", name: PEOPLE.student.name, course: "math", title: "Производная: исследование функции", due: iso(day(-13)), status: "graded", grade: 4, comment: "Проверь знак производной на втором промежутке.", gradedAt: iso(day(-11)), file: { name: "derivative.pdf" } },
+        { id: "hw3", student: "me", name: PEOPLE.student.name, course: "eng", title: "Essay: Technology in education", due: iso(day(-1)), status: "review", submittedAt: iso(day(-1)), file: { name: "essay.docx" } },
+        { id: "hw4", student: "me", name: PEOPLE.student.name, course: "math", title: "Тригонометрия: подборка задач", due: iso(day(-6)), status: "graded", grade: 5, comment: "Отличное оформление, все шаги на месте.", submittedAt: iso(day(-6)), gradedAt: iso(day(-4)), file: { name: "trig.jpg" } },
+        { id: "hw5", student: "me", name: PEOPLE.student.name, course: "math", title: "Производная: исследование функции", due: iso(day(-13)), status: "graded", grade: 4, comment: "Проверь знак производной на втором промежутке.", submittedAt: iso(day(-13)), gradedAt: iso(day(-11)), file: { name: "derivative.pdf" } },
         { id: "hw6", student: "d", name: "Дмитрий К.", course: "math", title: "Логарифмические уравнения", due: iso(day(1)), status: "review", file: { name: "reshenie.jpg" } },
         { id: "hw7", student: "s", name: "София Л.", course: "math", title: "Логарифмические уравнения", due: iso(day(1)), status: "review", file: { name: "dz_logarifmy.pdf" } },
         { id: "hw8", student: "a", name: "Артём В.", course: "math", title: "Тригонометрия: подборка задач", due: iso(day(-6)), status: "review", file: { name: "trig_artem.jpg" } },
@@ -1036,6 +1060,7 @@
   if (!state.folders) state.folders = [];
   if (!find(state.courses, "c-math2")) state.courses.push(seedCourse2());
   if (!state.plan) state.plan = seedPlan();
+  if (!state.doneAt) state.doneAt = {}; // у старых отметок дата могла не сохраняться
   if (!state.bank) { state.bank = seedBank(); state.bankProgress = {}; state.bankFav = []; state.bankReports = []; }
   let role = "student";
   let page = "dashboard";
@@ -1479,16 +1504,66 @@
       return "<tr><td class=\"nowrap\">" + shortDate(parse(r.date)) + "</td><td class=\"nowrap\">" + esc(COURSES[r.course].short) + "</td><td>" + esc(r.title) + "</td><td class=\"nowrap\"><b>" + esc(r.grade) + "</b></td><td>" + esc(r.comment) + "</td></tr>";
     }).join("") + "</tbody></table></div>";
   }
+  function gradesRadar(metrics) {
+    const directions = ["↑", "→", "↓", "←"];
+    const [top, right, bottom, left] = metrics.map(function (m) { return (m[1] || 0) / 2; });
+    const shape = "50% " + (50 - top) + "%," + (50 + right) + "% 50%,50% " + (50 + bottom) + "%," + (50 - left) + "% 50%";
+    return "<section class=\"card grades-radar-card\"><h2>" + t("grades_overview") + "</h2>" +
+      "<div class=\"grades-radar\" aria-hidden=\"true\"><i style=\"clip-path:polygon(" + shape + ")\"></i></div><dl class=\"grades-legend\">" +
+      metrics.map(function (m, i) { return "<div><dt><span aria-hidden=\"true\">" + directions[i] + "</span>" + m[0] + "</dt><dd>" + (m[1] === null ? "–" : m[1] + "%") + "</dd></div>"; }).join("") + "</dl></section>";
+  }
+  function gradesAccuracy(part, tasks) {
+    const count = bankCount(tasks.filter(function (q) { return Number(q.part) === part; }));
+    const pct = pctOf(count.right, count.tried);
+    const subtitle = count.tried ? t("grades_accuracy_count").replace("{right}", count.right).replace("{total}", count.tried) : t("grades_no_answers");
+    return "<section class=\"card grades-accuracy grades-accuracy--" + part + "\"><h3>" + t("bank_part") + " " + part + "</h3>" +
+      "<div class=\"grades-ring\" style=\"--grade-pct:" + pct + "%\"><b>" + (count.tried ? pct + "%" : "–") + "</b></div><p class=\"muted small\">" + subtitle + "</p></section>";
+  }
+  function gradesMonth(hw, numeric, bank, today, inMonth) {
+    const done = state.done.filter(function (id) {
+      const hit = findLesson(id);
+      if (!hit || hit.lesson.kind !== "lesson" || !canOpen(hit)) return false;
+      const result = state.results[id];
+      return inMonth(state.doneAt[id] || (result && result.date));
+    }).length;
+    const submitted = hw.filter(function (h) { return h.status !== "todo" && inMonth(h.submittedAt); }).length;
+    const solved = bankCount(bank).right;
+    const grades = numeric.filter(function (r) { return inMonth(r.date); }).length;
+    const month = date(today, { month: "long" });
+    const title = t("grades_month").replace("{month}", month.charAt(0).toLocaleUpperCase(LOCALES[state.lang]) + month.slice(1));
+    return "<section class=\"card grades-month\"><h2>" + esc(title) + "</h2>" +
+      stats([stat("courses", "wine", done, t("grades_lessons_done"), go("courses")), stat("homework", "accent", submitted, t("grades_works_sent"), go("homework")),
+        stat("bank", "good", solved, t("grades_bank_done"), go("bank")), stat("grades", "gold", grades, t("grades_received"))]) + "</section>";
+  }
   function viewGrades() {
     const rows = gradeRows();
+    const numeric = rows.filter(function (r) { return typeof r.grade === "number"; });
     const hw = myHw();
-    const handed = hw.length ? Math.round(hw.filter(function (h) { return h.status !== "todo"; }).length / hw.length * 100) : 0;
+    const today = day(0), todayKey = iso(today), monthKey = todayKey.slice(0, 7);
+    const inMonth = function (key) { return !!key && key.startsWith(monthKey + "-") && key <= todayKey; };
+    const monthTasks = state.bank.filter(function (q) { const p = state.bankProgress[q.id]; return p && inMonth(p.date); });
+    const bank = bankCount(state.bank), materials = progress();
+    const isMonth = param === "month";
+    const profile = (isMonth ? monthTasks : state.bank).filter(function (q) { return q.set === "math-pro"; });
+    const metrics = [
+      [t("grades_course_progress"), materials.total ? pctOf(materials.done, materials.total) : null],
+      [t("hw_handed"), hw.length ? pctOf(hw.filter(function (h) { return h.status !== "todo"; }).length, hw.length) : null],
+      [t("attendance_30"), attendance(30)],
+      [t("grades_bank_accuracy"), bank.tried ? pctOf(bank.right, bank.tried) : null]
+    ];
+    const periods = chips([["", t("grades_all_time"), null, go("grades")], ["month", t("grades_this_month"), null, go("grades", "month")]], isMonth ? "month" : "");
+    const trend = numeric.length ? "<p class=\"muted small\">" + t("grades_point_count") + "</p>" + gradeChart(numeric.slice(0, 10)) : "<p class=\"muted\">" + t("grades_numeric_empty") + "</p>";
     const subjects = Object.keys(COURSES).map(function (k) {
       const mine = rows.filter(function (r) { return r.course === k; });
       return "<li><span class=\"sub-name\"><b>" + esc(COURSES[k].name) + "</b><span>" + t("grades_list") + ": " + mine.length + "</span></span><span class=\"sub-avg\">" + average(mine) + "</span>" + mini(t("hw_short"), hwProgress(k).percent) + "</li>";
     }).join("");
     return head(t("nav_grades"), t("grades_sub"), "<a class=\"btn btn--red\" href=\"" + go("report") + "\">" + t("make_report") + "</a>") +
-      stats([stat("star", "wine", average(rows), t("avg_lc")), stat("schedule", "accent", attendance(30) + "%", t("attendance_30")), stat("homework", "gold", handed + "%", t("hw_handed")), stat("grades", "good", rows.length, t("grades_n"))]) +
+      "<div class=\"grades-overview\">" + gradesRadar(metrics) +
+      "<section class=\"card grades-bank\"><div class=\"grades-section-head\"><div><h2>" + t("grades_accuracy") + "</h2><p class=\"muted small\">" + t("grades_latest_accuracy") + "</p></div>" + periods +
+      "</div><div class=\"grades-rings\">" + gradesAccuracy(1, profile) + gradesAccuracy(2, profile) + "</div></section></div>" +
+      gradesMonth(hw, numeric, monthTasks, today, inMonth) +
+      "<section class=\"card grades-trend\"><div class=\"grades-section-head\"><h2>" + t("grades_trend") + "</h2>" +
+      (numeric.length ? "<span class=\"tag\">" + t("avg") + " · " + average(numeric) + "</span>" : "") + "</div>" + trend + "</section>" +
       "<div class=\"grid side-main\"><section class=\"card\"><h2>" + t("by_subject") + "</h2><ul class=\"subs\">" + subjects + "</ul></section>" +
       "<section class=\"card\"><h2>" + t("grades_list") + "</h2>" + gradesTable(rows) + "</section></div>";
   }
@@ -1689,13 +1764,17 @@
   /* оценки по времени: одна линия, ось 2–5, подписи текстом, подсказка у каждой точки */
   function gradeChart(history) {
     const pts = history.slice().reverse(), W = 560, H = 170, L = 34, R = 14, T = 14, B = 26;
-    const x = function (k) { return L + (pts.length > 1 ? k * (W - L - R) / (pts.length - 1) : 0); };
+    const dates = pts.map(function (p) { return parse(p.date); });
+    const first = dates[0], last = dates[dates.length - 1], span = last - first;
+    const x = function (k) { return span ? L + (dates[k] - first) * (W - L - R) / span : (L + W - R) / 2; };
     const y = function (v) { return T + (5 - v) * (H - T - B) / 3; };
     let grid = "";
     [2, 3, 4, 5].forEach(function (v) { grid += "<line x1=\"" + L + "\" x2=\"" + (W - R) + "\" y1=\"" + y(v) + "\" y2=\"" + y(v) + "\" class=\"gc-grid\"/><text x=\"" + (L - 10) + "\" y=\"" + (y(v) + 4) + "\" class=\"gc-axis\" text-anchor=\"end\">" + v + "</text>"; });
-    const line = pts.map(function (p, k) { return (k ? "L" : "M") + x(k).toFixed(1) + " " + y(p[2]).toFixed(1); }).join(" ");
-    const dots = pts.map(function (p, k) { return "<g class=\"gc-pt\"><circle cx=\"" + x(k) + "\" cy=\"" + y(p[2]) + "\" r=\"14\" class=\"gc-hit\"/><circle cx=\"" + x(k) + "\" cy=\"" + y(p[2]) + "\" r=\"4.5\" class=\"gc-dot\"/><title>" + esc(shortDate(day(-p[0])) + " · " + p[1] + ": " + p[2]) + "</title></g>"; }).join("");
-    const labels = [0, pts.length - 1].map(function (k) { return "<text x=\"" + x(k) + "\" y=\"" + (H - 6) + "\" class=\"gc-axis\" text-anchor=\"" + (k ? "end" : "start") + "\">" + shortDate(day(-pts[k][0])) + "</text>"; }).join("");
+    const line = pts.map(function (p, k) { return (k ? "L" : "M") + x(k).toFixed(1) + " " + y(p.grade).toFixed(1); }).join(" ");
+    const dots = pts.map(function (p, k) { return "<g class=\"gc-pt\"><circle cx=\"" + x(k) + "\" cy=\"" + y(p.grade) + "\" r=\"14\" class=\"gc-hit\"/><circle cx=\"" + x(k) + "\" cy=\"" + y(p.grade) + "\" r=\"4.5\" class=\"gc-dot\"/><title>" + esc(shortDate(dates[k]) + " · " + p.title + ": " + p.grade) + "</title></g>"; }).join("");
+    const labels = (span ? [0, pts.length - 1] : [0]).map(function (k) {
+      return "<text x=\"" + x(k) + "\" y=\"" + (H - 6) + "\" class=\"gc-axis\" text-anchor=\"" + (span ? k ? "end" : "start" : "middle") + "\">" + shortDate(dates[k]) + "</text>";
+    }).join("");
     return "<svg class=\"gchart\" viewBox=\"0 0 " + W + " " + H + "\" role=\"img\" aria-label=\"" + esc(t("sc_trend")) + "\">" + grid + "<path d=\"" + line + "\" class=\"gc-line\"/>" + dots + labels + "</svg>";
   }
   function studentCard() {
@@ -1721,7 +1800,9 @@
       "<div class=\"row scard-actions no-print\"><a class=\"btn btn--red btn--sm\" href=\"https://t.me/" + esc(pr.tg.slice(1)) + "\" target=\"_blank\" rel=\"noopener\">" + t("sc_write") + "</a><a class=\"btn btn--line btn--sm\" href=\"tel:" + pr.phone.replace(/[^+\d]/g, "") + "\">" + t("sc_call") + "</a><a class=\"btn btn--line btn--sm\" href=\"https://t.me/" + esc(pr.parent.tg.slice(1)) + "\" target=\"_blank\" rel=\"noopener\">" + t("sc_write_parent") + "</a><button class=\"btn btn--line btn--sm\" type=\"button\" data-act=\"printCard\">" + t("sc_report") + "</button></div>" +
       stats([stat("schedule", "accent", st.att + "%", t("attendance").toLowerCase()), stat("homework", "gold", st.hwDone + "/" + st.hwTotal, t("hw_handed")), stat("star", "wine", num1(st.avg), t("avg_lc")), stat("grades", "good", st.last, t("sc_last"))]) +
       "<div class=\"scard-grid\">" +
-      "<section class=\"card sc-trend\"><h2>" + t("sc_trend") + "</h2>" + gradeChart(pr.history) + "<p class=\"muted small no-print\">" + t("sc_trend_note") + "</p></section>" +
+      "<section class=\"card sc-trend\"><h2>" + t("sc_trend") + "</h2>" + gradeChart(pr.history.map(function (r) {
+        return { date: iso(day(-r[0])), title: r[1], grade: r[2] };
+      })) + "<p class=\"muted small no-print\">" + t("sc_trend_note") + "</p></section>" +
       "<section class=\"card\"><h2>" + t("sc_contacts") + "</h2>" + row(t("sc_phone"), esc(pr.phone)) + row(t("sc_email"), "<a href=\"mailto:" + esc(pr.email) + "\">" + esc(pr.email) + "</a>") + row("Telegram", tgLink(pr.tg)) +
         "<h3>" + t("sc_parent") + "</h3>" + row(t("sc_name"), esc(pr.parent.name)) + row(t("sc_phone"), esc(pr.parent.phone)) + row("Telegram", tgLink(pr.parent.tg)) + "</section>" +
       "<section class=\"card\"><h2>" + t("sc_progress") + "</h2><h3>" + t("sc_courses") + "</h3>" + (courses ? "<ul class=\"sc-list\">" + courses + "</ul>" : "<p class=\"muted small\">–</p>") +
@@ -2556,7 +2637,10 @@
     unplan: function (id) { state.plan = state.plan.filter(function (p) { return p.id !== id; }); save(); render(); },
     toggleDone: function (id) {
       const i = state.done.indexOf(id);
-      if (i >= 0) state.done.splice(i, 1); else state.done.push(id);
+      if (i >= 0) {
+        state.done.splice(i, 1);
+        delete state.doneAt[id];
+      } else completeLesson(id);
       save(); render();
     },
     retake: function (id) { retakeId = id; previewResult = null; render(); window.scrollTo(0, 0); },
@@ -2948,7 +3032,7 @@
       const r = { score: score, total: total, answers: answers, date: iso(day(0)), open: blocksOf(l).filter(function (bl) { return bl.type === "open"; }).length };
       if (page !== "learn") { previewResult = r; render(); window.scrollTo(0, 0); return; }
       state.results[l.id] = r;
-      if (!isDone(l.id)) state.done.push(l.id);
+      completeLesson(l.id);
       retakeId = null;
       save(); render(); window.scrollTo(0, 0);
     },
@@ -2980,6 +3064,7 @@
         h.file = { name: file.name, fresh: true };
         if (result) h.file.data = result;
         h.status = "review";
+        h.submittedAt = iso(day(0));
         save(); render();
       });
     },
@@ -3091,6 +3176,16 @@
   document.addEventListener("input", function (event) { if (event.target.matches && event.target.matches("textarea.ghost")) fitArea(event.target); });
   document.addEventListener("keydown", function (event) { if (event.key === "Enter" && event.target.matches && event.target.matches("[data-oneline]")) { event.preventDefault(); event.target.blur(); } });
   document.addEventListener("pointerdown", pickPage);
-  window.addEventListener("hashchange", function () { libPick = ""; cardStudent = ""; bankReportOpen = ""; if (!/\/bank/.test(location.hash)) bankEdit = ""; editingEvent = ""; picker = ""; previewResult = null; retakeId = null; coursePanel = ""; render(true); window.scrollTo(0, 0); });
+  window.addEventListener("hashchange", function () {
+    const gradesPeriodChanged = page === "grades" && /^#student\/grades(?:\/month)?$/.test(location.hash);
+    libPick = ""; cardStudent = ""; bankReportOpen = "";
+    if (!/\/bank/.test(location.hash)) bankEdit = "";
+    editingEvent = ""; picker = ""; previewResult = null; retakeId = null; coursePanel = "";
+    render(!gradesPeriodChanged);
+    if (gradesPeriodChanged) {
+      const selected = document.querySelector(".grades-bank [aria-current='page']");
+      if (selected && selected.focus) selected.focus({ preventScroll: true });
+    } else window.scrollTo(0, 0);
+  });
   render(true);
 })();

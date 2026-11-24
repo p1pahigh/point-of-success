@@ -553,6 +553,46 @@ a.stat:hover { transform: translateY(-2px); border-color: var(--wine); }
 .stat-body b { font: 500 1.75rem/1.1 var(--font-display); font-variant-numeric: lining-nums tabular-nums; color: var(--wine); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .stat-body span { font-size: .8125rem; color: var(--muted); }
 
+.grades-overview { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.85fr); gap: 1.1rem; }
+.grades-section-head { display: flex; flex-wrap: wrap; align-items: start; justify-content: space-between; gap: .65rem 1rem; }
+.grades-section-head h2 + p { margin-top: .25rem; }
+.grades-section-head .chips { margin: 0; }
+.grades-radar-card { align-content: space-between; }
+.grades-radar {
+  position: relative; width: min(75%, 10rem); aspect-ratio: 1; margin: .45rem auto; border: 1px solid var(--line); border-radius: 50%;
+  background: linear-gradient(var(--line), var(--line)) center / 100% 1px no-repeat,
+    linear-gradient(var(--line), var(--line)) center / 1px 100% no-repeat,
+    repeating-radial-gradient(circle closest-side, transparent 0 calc(25% - 1px), var(--line) calc(25% - 1px) 25%);
+}
+.grades-radar i { position: absolute; inset: 0; background: color-mix(in srgb, var(--accent) 56%, transparent); }
+.grades-legend { display: grid; gap: .35rem; margin: 0; font-size: .8125rem; }
+.grades-legend > div { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .35rem .65rem; padding-block: .25rem; border-top: 1px solid var(--line); }
+.grades-legend dt { display: flex; gap: .35rem; color: var(--muted); }
+.grades-legend dt span { color: var(--wine); }
+.grades-legend dd { margin: 0; color: var(--wine); font-weight: 600; font-variant-numeric: tabular-nums; }
+.grades-rings { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; gap: .85rem; }
+.grades-accuracy.card { align-content: start; justify-items: center; gap: .7rem; padding: .95rem .7rem; background: var(--band); text-align: center; }
+.grades-accuracy h3 { font: 600 .875rem/1.35 var(--font-body); color: var(--wine); }
+.grades-ring { --ring-color: var(--accent); display: grid; width: min(100%, 7.4rem); aspect-ratio: 1; place-items: center; border-radius: 50%; background: conic-gradient(var(--ring-color) var(--grade-pct), var(--line) 0); }
+.grades-accuracy--2 .grades-ring { --ring-color: var(--good); }
+.grades-ring b { display: grid; width: 82%; aspect-ratio: 1; place-items: center; border-radius: 50%; background: var(--band); color: var(--wine); font: 500 clamp(1.1rem, .9rem + 1.15vw, 1.8rem)/1 var(--font-display); font-variant-numeric: lining-nums tabular-nums; }
+.grades-month { background: var(--band); }
+.grades-month .stats { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .75rem; }
+.grades-month .stat { padding: .75rem; gap: .65rem; }
+.grades-trend .gchart { width: 100%; max-width: 60rem; justify-self: center; }
+@media (max-width: 1050px) {
+  .grades-month .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .grades-overview { grid-template-columns: minmax(0, 1fr); }
+  .grades-radar-card { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); align-items: center; }
+  .grades-radar-card h2 { grid-column: 1 / -1; }
+  .grades-radar { width: min(95%, 8.5rem); }
+}
+@media (max-width: 430px) {
+  .grades-month .stat { display: grid; gap: .35rem; }
+}
+
 .card-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
 .more { display: inline-flex; align-items: center; gap: .2rem; font-size: .8125rem; font-weight: 500; color: var(--muted); text-decoration: none; }
 .more svg { width: .9rem; height: .9rem; }
