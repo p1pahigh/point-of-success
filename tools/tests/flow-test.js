@@ -105,6 +105,10 @@ var after = app.html();
 ok(after.indexOf("#student/courses") >= 0 && after.indexOf("#student/homework") >= 0, "после оплаты открыт весь кабинет");
 ok(after.indexOf("Бесплатная диагностика") < 0, "главная после оплаты обычная");
 ok(JSON.parse(store["tpos.accounts"])[email].package.id === "practice", "пакет сохранён");
+app.go("#student/grades");
+var enrolledProgress = app.html().split('<ul class="grades-courses">')[1]?.split("</ul>")[0] || "";
+ok(enrolledProgress.indexOf("#student/course/c-math") >= 0 && enrolledProgress.indexOf("#student/course/c-it") >= 0 &&
+  enrolledProgress.indexOf("#student/course/c-eng") < 0, "прогресс показывает только курсы по выбранным предметам");
 app.go("#student/settings");
 ok(app.html().indexOf("Пакет обучения: Практика") >= 0 && app.html().indexOf("ivan@test.ru") >= 0, "в настройках видны почта и пакет");
 app.go("#student/plans");
@@ -356,6 +360,10 @@ gsData.bankProgress.q2.date = "2020-01-01";
 gsData.bankProgress.q7 = { status: "right", date: "2020-01-01" };
 gs["tpos.demo.v3"] = JSON.stringify(gsData);
 sg = boot(gs, "#student/grades");
+var demoProgress = sg.html().split('<ul class="grades-courses">')[1]?.split("</ul>")[0] || "";
+ok(demoProgress.indexOf("#student/course/c-eng") >= 0 && demoProgress.indexOf("#student/course/c-math2") < 0 &&
+  demoProgress.indexOf("Пройдено уроков: 3 из 8") >= 0 && demoProgress.indexOf('aria-valuenow="38"') >= 0,
+  "прогресс демо-ученицы берётся из пройденных уроков курсов её группы");
 ok(sg.html().indexOf("Верных ответов: 1 из 2") >= 0 && sg.html().indexOf("Верных ответов: 1 из 1") >= 0, "точность за всё время рассчитана отдельно по частям");
 ok(sg.html().indexOf("Динамика оценок") >= 0 && sg.html().indexOf("class=\"gchart\"") >= 0 && sg.html().indexOf("#student/report") >= 0, "график числовых оценок и отчёт доступны");
 sg.go("#student/grades/month");

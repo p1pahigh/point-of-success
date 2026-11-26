@@ -1190,9 +1190,10 @@
   function cardHead(title, href) {
     return "<div class=\"card-head\"><h2>" + title + "</h2>" + (href ? "<a class=\"more\" href=\"" + href + "\">" + t("all_link") + icon("chevron") + "</a>" : "") + "</div>";
   }
-  function bar(pct) {
+  function bar(pct, label) {
     const level = pct < 40 ? " bar--low" : pct < 75 ? " bar--mid" : "";
-    return "<span class=\"bar" + level + "\" role=\"progressbar\" aria-valuemin=\"0\" aria-valuemax=\"100\" aria-valuenow=\"" + pct + "\"><i style=\"width:" + pct + "%\"></i></span>";
+    const name = label ? ' aria-label="' + esc(label) + '"' : "";
+    return "<span class=\"bar" + level + "\" role=\"progressbar\"" + name + " aria-valuemin=\"0\" aria-valuemax=\"100\" aria-valuenow=\"" + pct + "\"><i style=\"width:" + pct + "%\"></i></span>";
   }
   function mini(label, pct) { return "<span class=\"mini\"><span class=\"mini-top\"><span>" + label + "</span><b>" + pct + "%</b></span>" + bar(pct) + "</span>"; }
   function initials(name) { return name.split(" ").map(function (w) { return w.charAt(0); }).join("").slice(0, 2).toUpperCase(); }
@@ -1204,9 +1205,9 @@
   function kindOf(h) { return KINDS.indexOf(h.kind) >= 0 ? h.kind : "hw"; }
   function myHw() { return state.homework.filter(function (h) { return h.student === "me"; }).concat(role === "student" ? examsOf(studentCourses()).concat(plannedExams()) : []); }
   function queue() { return state.homework.filter(function (h) { return h.status === "review"; }).concat(role === "teacher" ? examsOf(teacherCourses()).filter(function (h) { return h.status === "review"; }) : []); }
-  function progress() {
+  function progress(courses) {
     let done = 0, total = 0;
-    studentCourses().forEach(function (c) { const p = courseProgress(c); done += p.done; total += p.total; });
+    courses.forEach(function (c) { const p = courseProgress(c); done += p.done; total += p.total; });
     return { done: done, total: total };
   }
   function strip(done, total) {
@@ -1609,6 +1610,20 @@
       stats([stat("courses", "wine", done, t("grades_lessons_done"), go("courses")), stat("homework", "accent", submitted, t("grades_works_sent"), go("homework")),
         stat("bank", "good", solved, t("grades_bank_done"), go("bank")), stat("grades", "gold", grades, t("grades_received"))]) + "</section>";
   }
+  function gradesCourseProgress(courses) {
+    const cards = courses.map(function (c) {
+      const p = courseProgress(c), title = c.title || t("untitled");
+      const count = t("grades_lessons_done") + ": " + p.done + " " + t("of") + " " + p.total;
+      return '<li><a class="grades-course" href="' + go("course", c.id) + '">' +
+        '<span class="grades-course-subject muted small">' + esc(COURSES[c.subject].short) + icon("chevron") + '</span>' +
+        '<b class="grades-course-title">' + esc(title) + '</b>' +
+        '<span class="grades-course-count"><span class="muted small">' + count + '</span><b>' + p.pct + '%</b></span>' +
+        bar(p.pct, title) + '</a></li>';
+    }).join("");
+    return '<section class="card"><h2>' + t("grades_course_progress") + '</h2>' +
+      (cards ? '<ul class="grades-courses">' + cards + '</ul>' : '<p class="empty">' + t("no_student_courses") + '</p>') + '</section>';
+  }
+
   function viewGrades() {
     const rows = gradeRows();
     const numeric = rows.filter(function (r) { return typeof r.grade === "number"; });
@@ -1616,7 +1631,10 @@
     const today = day(0), todayKey = iso(today), monthKey = todayKey.slice(0, 7);
     const inMonth = function (key) { return !!key && key.startsWith(monthKey + "-") && key <= todayKey; };
     const monthTasks = state.bank.filter(function (q) { const p = state.bankProgress[q.id]; return p && inMonth(p.date); });
-    const bank = bankCount(state.bank), materials = progress();
+    const subjectKeys = { "ege-math-pro": "math", "ege-math-base": "math", "ege-eng": "eng", "lang-it": "it" };
+    const selectedSubjects = account ? new Set(mySubjects().map(function (id) { return subjectKeys[id]; })) : null;
+    const courses = studentCourses().filter(function (c) { return !selectedSubjects || selectedSubjects.has(c.subject); });
+    const bank = bankCount(state.bank), materials = progress(courses);
     const isMonth = param === "month";
     const profile = (isMonth ? monthTasks : state.bank).filter(function (q) { return q.set === "math-pro"; });
     const metrics = [
@@ -1632,6 +1650,7 @@
       return "<li><span class=\"sub-name\"><b>" + esc(COURSES[k].name) + "</b><span>" + t("grades_list") + ": " + mine.length + "</span></span><span class=\"sub-avg\">" + average(mine) + "</span>" + mini(t("hw_short"), hwProgress(k).percent) + "</li>";
     }).join("");
     return head(t("nav_grades"), t("grades_sub"), "<a class=\"btn btn--red\" href=\"" + go("report") + "\">" + t("make_report") + "</a>") +
+      gradesCourseProgress(courses) +
       "<div class=\"grades-overview\">" + gradesRadar(metrics) +
       "<section class=\"card grades-bank\"><div class=\"grades-section-head\"><div><h2>" + t("grades_accuracy") + "</h2><p class=\"muted small\">" + t("grades_latest_accuracy") + "</p></div>" + periods +
       "</div><div class=\"grades-rings\">" + gradesAccuracy(1, profile) + gradesAccuracy(2, profile) + "</div></section></div>" +

@@ -515,7 +515,7 @@ input[type="file"] { width: 100%; }
 /* ---------- кабинет: каркас как в образце (18 ноября 2026) ---------- */
 .side-label { margin: .4rem .75rem -.2rem; font-size: .625rem; font-weight: 600; letter-spacing: .1em; white-space: nowrap; text-transform: uppercase; color: var(--muted); }
 .menu-ico { display: inline-grid; place-items: center; flex: none; width: 1.25rem; height: 1.25rem; }
-.menu-ico svg, .icon-btn svg, .stat-icon svg, .mrow-ico svg, .mrow-go svg, .more svg, .btn svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.menu-ico svg, .icon-btn svg, .stat-icon svg, .mrow-ico svg, .mrow-go svg, .more svg, .btn svg, .grades-course-subject svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .menu-label { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .avatar { display: inline-grid; place-items: center; flex: none; width: 2.5rem; height: 2.5rem; border-radius: 50%; background: var(--surface); border: 1px solid var(--line); color: var(--wine); font: 600 .8125rem/1 var(--font-body); letter-spacing: .02em; }
 .avatar--sm { width: 2.1rem; height: 2.1rem; font-size: .75rem; }
@@ -555,6 +555,19 @@ a.stat[aria-current="page"] { border-color: var(--wine); box-shadow: inset 0 0 0
 .stat-body b { font: 500 1.75rem/1.1 var(--font-display); font-variant-numeric: lining-nums tabular-nums; color: var(--wine); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .stat-body span { font-size: .8125rem; color: var(--muted); }
 
+.grades-courses { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: .75rem; }
+.grades-course {
+  display: grid; gap: .35rem; grid-template-rows: auto 1fr auto auto; height: 100%; padding: .9rem 1rem;
+  border: 1px solid var(--line); border-radius: 10px; background: var(--band); color: var(--fg); text-decoration: none;
+  transition: border-color .2s ease;
+}
+.grades-course:hover { border-color: var(--wine); }
+.grades-course-subject, .grades-course-count { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+.grades-course-subject svg { flex: none; width: .9rem; height: .9rem; }
+.grades-course-title { color: var(--wine); line-height: 1.35; overflow-wrap: anywhere; }
+.grades-course-count { margin-top: .25rem; }
+.grades-course-count b { font-variant-numeric: tabular-nums; }
+.grades-course .bar { background: var(--line); }
 .grades-overview { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.85fr); gap: 1.1rem; }
 .grades-section-head { display: flex; flex-wrap: wrap; align-items: start; justify-content: space-between; gap: .65rem 1rem; }
 .grades-section-head h2 + p { margin-top: .25rem; }
