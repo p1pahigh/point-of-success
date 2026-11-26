@@ -154,29 +154,30 @@ input[type="file"] { max-width: 100%; font: 400 .875rem var(--font-body); color:
 .strip i.on { background: var(--wine); border-color: var(--wine); }
 
 /* расписание на неделю */
-.week-card { gap: 1.1rem; }
-.week-head { display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; }
-.week-head h2 { margin-right: auto; order: -1; font-size: clamp(1.25rem, 1.1rem + .5vw, 1.5rem); }
+.week-card { gap: .7rem; padding: .85rem 1rem; }
+.week-head { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+.week-head h2 { margin-right: auto; order: -1; font-size: clamp(1.15rem, 1rem + .42vw, 1.35rem); }
 .week-head h2::first-letter { text-transform: uppercase; }
 .week-arrow { display: inline-grid; place-items: center; width: 2.5rem; height: 2.5rem; padding: 0; border: 1px solid var(--line); border-radius: 50%; background: var(--surface); color: var(--wine); cursor: pointer; transition: border-color .2s ease, transform .2s var(--ease); }
 .week-arrow svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .week-arrow:active { transform: scale(.92); }
-.week { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: .5rem; }
-.wday { display: grid; grid-template-rows: auto 1fr; gap: .6rem; min-width: 0; padding: .65rem .5rem .75rem; border-radius: 12px; background: var(--bg); }
+.week-head .week-arrow { width: 2.2rem; height: 2.2rem; }
+.week { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: .4rem; }
+.wday { display: grid; grid-template-rows: auto 1fr; gap: .35rem; min-width: 0; padding: .4rem; border-radius: 9px; background: var(--bg); }
 .wday--today { background: color-mix(in srgb, var(--accent) 9%, var(--bg)); }
-.wday-head { display: grid; justify-items: center; gap: 2px; padding-bottom: .55rem; border-bottom: 1px solid var(--line); }
-.wday-head span { font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
-.wday-head b { display: grid; place-items: center; width: 2.1rem; height: 2.1rem; border-radius: 50%; font: 500 1.25rem/1 var(--font-display); font-variant-numeric: lining-nums; color: var(--wine); }
+.wday-head { display: flex; align-items: center; justify-content: center; gap: .3rem; padding-bottom: .3rem; border-bottom: 1px solid var(--line); }
+.wday-head span { font-size: .7rem; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+.wday-head b { display: grid; place-items: center; flex: none; width: 1.65rem; height: 1.65rem; border-radius: 50%; font: 500 1.05rem/1 var(--font-display); font-variant-numeric: lining-nums; color: var(--wine); }
 .wday--today .wday-head b { background: var(--accent); color: #fff; }
 .wday--past .wday-head b { color: var(--muted); }
-.wday-list { display: flex; flex-direction: column; gap: .45rem; min-width: 0; }
+.wday-list { display: flex; flex-direction: column; gap: .3rem; min-width: 0; }
 .wday-empty { padding-top: .25rem; text-align: center; font-size: .75rem; color: var(--muted); opacity: .7; }
-.wl { position: relative; display: grid; gap: 2px; min-width: 0; padding: .5rem .55rem .55rem .7rem; border-radius: 8px; background: var(--surface); border-left: 3px solid var(--wine); box-shadow: 0 6px 14px -12px rgba(23, 43, 74, .6); font-size: .8125rem; line-height: 1.3; overflow-wrap: anywhere; }
+.wl { position: relative; display: grid; gap: 1px; min-width: 0; padding: .34rem .42rem .4rem .5rem; border-radius: 7px; background: var(--surface); border-left: 3px solid var(--wine); box-shadow: 0 6px 14px -12px rgba(23, 43, 74, .6); font-size: .78rem; line-height: 1.26; overflow-wrap: anywhere; }
 .wl-time { font-weight: 700; font-variant-numeric: tabular-nums; color: var(--wine); }
 .wl-name { font-weight: 500; }
 .wl-topic { color: var(--muted); font-size: .75rem; }
 .wl-state { margin-top: 2px; font-size: .6875rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
-.wl .btn { justify-self: start; margin-top: .35rem; min-height: 2rem; padding: .2rem .7rem; font-size: .75rem; }
+.wl .btn { justify-self: start; margin-top: .25rem; min-height: 2rem; padding: .2rem .7rem; font-size: .75rem; }
 .wl--today { border-left-color: var(--accent); }
 .wl--done { border-left-color: var(--line); box-shadow: none; opacity: .75; }
 .wl--missed { border-left-color: var(--red); box-shadow: none; }
@@ -229,7 +230,8 @@ input[type="file"] { max-width: 100%; font: 400 .875rem var(--font-body); color:
 @media (max-width: 720px) {
   .week { grid-template-columns: minmax(0, 1fr); }
   .wday { grid-template-columns: 3rem minmax(0, 1fr); grid-template-rows: none; align-items: start; }
-  .wday-head { padding: 0; border-bottom: 0; }
+  .wday-head { flex-direction: column; gap: .12rem; padding: 0; border-bottom: 0; }
+  .week-head .week-arrow { width: 2.5rem; height: 2.5rem; }
   .wday-empty { text-align: left; padding-top: .55rem; }
   .add-event-row { grid-template-columns: minmax(0, 1fr); }
 }
