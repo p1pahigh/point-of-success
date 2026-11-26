@@ -399,4 +399,19 @@ ok(homeCalendarDates()[0] === homeDateKey(prevMonday) && calendarPanel().indexOf
 hc.click("homeCalMove", "0");
 ok(homeCalendarDates().join() === expectedWeek.join() && calendarPanel().indexOf('aria-pressed="true" aria-current="date"') >= 0, "кнопка «Эта неделя» возвращает к текущей дате");
 
+var hf = boot({ "tpos.session": JSON.stringify({ role: "student" }) }, "#student/homework");
+ok(["todo", "review", "graded"].every(function (status) {
+  return hf.html().includes('class="stat" href="#student/homework/all/' + status + '"');
+}), "все три карточки статуса ведут к своим работам");
+hf.go("#student/homework/all/todo");
+ok(hf.html().includes("Логарифмические уравнения") && !hf.html().includes("Essay: Technology in education") && !hf.html().includes("Тригонометрия: подборка задач"), "«Нужно сдать» показывает только несданные");
+hf.go("#student/homework/all/review");
+ok(hf.html().includes("Essay: Technology in education") && !hf.html().includes("Логарифмические уравнения") && !hf.html().includes("Тригонометрия: подборка задач"), "«На проверке» показывает только отправленные работы");
+hf.go("#student/homework/all/graded");
+ok(hf.html().includes("Тригонометрия: подборка задач") && !hf.html().includes("Essay: Technology in education") && !hf.html().includes("Логарифмические уравнения"), "«Проверено» показывает только работы с оценкой");
+hf.go("#student/homework/eng/graded");
+ok(hf.html().includes("Работ с таким статусом пока нет.") && hf.html().includes('href="#student/homework/eng">Все статусы'), "фильтр по предмету сочетается со статусом, сброс сохраняет предмет");
+hf.go("#student/homework/hw1");
+ok(hf.html().includes('hrow--focus" open') && hf.html().includes('data-form="submitHw" data-id="hw1"'), "прямая ссылка из дедлайнов открывает форму нужной работы");
+
 print(fails ? fails + " FAILED" : "ALL PASSED");

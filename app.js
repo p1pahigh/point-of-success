@@ -105,6 +105,8 @@
     choose_subject: ["Выберите предмет", "Choose a subject", "Scegli una materia"],
     hw_on_course: ["ДЗ на курсе", "Homework in the course", "Compiti del corso"],
     no_hw: ["По этому предмету пока нет заданий.", "No assignments for this subject yet.", "Nessun compito per questa materia."],
+    hw_all_statuses: ["Все статусы", "All statuses", "Tutti gli stati"],
+    hw_no_status: ["Работ с таким статусом пока нет.", "No assignments with this status yet.", "Ancora nessun compito con questo stato."],
     tab_hw: ["Домашка", "Homework", "Compiti"],
     tab_review: ["Проверка", "Review", "Correzione"],
     more: ["Ещё", "More", "Altro"],
@@ -1172,9 +1174,9 @@
   function head(title, sub, action) {
     return "<div class=\"phead\"><div class=\"phead-text\"><h1 class=\"title\">" + title + "</h1>" + (sub ? "<p class=\"phead-sub\">" + sub + "</p>" : "") + "</div>" + (action || "") + "</div>";
   }
-  function stat(name, tone, value, label, href) {
+  function stat(name, tone, value, label, href, current) {
     const tag = href ? "a" : "div";
-    return "<" + tag + " class=\"stat\"" + (href ? " href=\"" + href + "\"" : "") + "><span class=\"stat-icon stat-icon--" + tone + "\">" + icon(name) + "</span><span class=\"stat-body\"><b>" + value + "</b><span>" + label + "</span></span></" + tag + ">";
+    return "<" + tag + " class=\"stat\"" + (href ? " href=\"" + href + "\"" : "") + (current ? " aria-current=\"page\"" : "") + "><span class=\"stat-icon stat-icon--" + tone + "\">" + icon(name) + "</span><span class=\"stat-body\"><b>" + value + "</b><span>" + label + "</span></span></" + tag + ">";
   }
   function stats(items) { return "<div class=\"stats\">" + items.join("") + "</div>"; }
   function chips(items, current) {
@@ -1527,13 +1529,22 @@
   }
   function viewHomework() {
     const all = myHw();
-    const focus = find(all, param);
-    const filter = focus ? focus.course : COURSES[param] ? param : "";
+    const [selection, requestedStatus] = param.split("/");
+    const focus = find(all, selection);
+    const subject = focus ? focus.course : Object.keys(COURSES).includes(selection) ? selection : "";
     const order = { todo: 0, review: 1, graded: 2 };
-    const count = function (st) { return all.filter(function (h) { return h.status === st; }).length; };
-    const todoIn = function (k) { return all.filter(function (h) { return (!k || h.course === k) && h.status === "todo"; }).length; };
-    const tabs = chips([["", t("all"), todoIn(""), go("homework")]].concat(Object.keys(COURSES).map(function (k) { return [k, COURSES[k].short, todoIn(k), go("homework", k)]; })), filter);
-    const items = all.filter(function (h) { return !filter || h.course === filter; }).sort(function (a, b) { return order[a.status] - order[b.status] || a.due.localeCompare(b.due); });
+    const status = !focus && Object.keys(order).includes(requestedStatus) ? requestedStatus : "";
+    const hwLink = function (k, st) { return go("homework", st ? (k || "all") + "/" + st : k); };
+    const count = function (k, st) { return all.filter(function (h) { return (!k || h.course === k) && h.status === st; }).length; };
+    const filters = [["todo", "homework", "gold"], ["review", "clock", "accent"], ["graded", "review", "good"]].map(function ([st, ico, tone]) {
+      return stat(ico, tone, count(subject, st), t("hw_" + st).toLowerCase(), hwLink(subject, st), status === st);
+    });
+    const subjects = [["", t("all"), count("", status || "todo"), hwLink("", status)]].concat(Object.keys(COURSES).map(function (k) {
+      return [k, COURSES[k].short, count(k, status || "todo"), hwLink(k, status)];
+    }));
+    const reset = status ? "<a class=\"btn btn--line btn--sm\" href=\"" + hwLink(subject, "") + "\">" + t("hw_all_statuses") + "</a>" : "";
+    const items = all.filter(function (h) { return (!subject || h.course === subject) && (!status || h.status === status); })
+      .sort(function (a, b) { return order[a.status] - order[b.status] || a.due.localeCompare(b.due); });
     const rows = items.map(function (h) {
       const main = "<span class=\"hrow-main\"><b>" + esc(h.title) + "</b><span>" + esc(COURSES[h.course].short) + (kindOf(h) !== "hw" ? " · " + t("kind_" + kindOf(h)) : "") + " · " + t("due") + ": " + dueLabel(h.due) + "</span></span>";
       if (h.status === "todo" && h.lesson) {
@@ -1549,8 +1560,8 @@
       return "<li><div class=\"hrow hrow--graded\">" + main + "<span class=\"hrow-comment hand\">" + esc(h.comment) + "</span><span class=\"cell\">" + esc(h.grade) + "</span></div></li>";
     }).join("");
     return head(t("nav_hw"), t("hw_sub")) +
-      stats([stat("homework", "gold", count("todo"), t("hw_todo").toLowerCase()), stat("clock", "accent", count("review"), t("hw_review").toLowerCase()), stat("review", "good", count("graded"), t("hw_graded").toLowerCase())]) +
-      tabs + "<section class=\"card\">" + (rows ? "<ul class=\"hlist\">" + rows + "</ul>" : "<p class=\"empty\">" + t("no_hw") + "</p>") + "</section>";
+      stats(filters) + "<div class=\"hw-filters\">" + chips(subjects, subject) + reset + "</div>" +
+      "<section class=\"card\">" + (rows ? "<ul class=\"hlist\">" + rows + "</ul>" : "<p class=\"empty\">" + t(status ? "hw_no_status" : "no_hw") + "</p>") + "</section>";
   }
 
   function gradesTable(rows) {
@@ -2589,7 +2600,7 @@
     }
     const fresh = !!(account && !account.package);
     if (fresh ? NEW_PAGES.indexOf(page) < 0 : SETUP_PAGES.indexOf(page) >= 0) page = "dashboard";
-    param = parts[2] || "";
+    param = page === "homework" ? parts.slice(2, 4).join("/") : parts[2] || "";
     const current = ACTIVE[page] || page;
     const nav = fresh ? NEW_NAV : NAV[role];
     const tabList = fresh ? ["dashboard"] : TABS[role];
