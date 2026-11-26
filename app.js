@@ -42,7 +42,7 @@
     grades_no_answers: ["Пока нет ответов", "No answers yet", "Ancora nessuna risposta"],
     grades_latest_accuracy: ["Профильная математика · по последнему ответу на каждое задание", "Advanced maths · latest answer per question", "Matematica avanzata · ultima risposta per esercizio"],
     grades_course_progress: ["Прогресс по курсам", "Course progress", "Progressi nei corsi"],
-    grades_bank_accuracy: ["Точность в банке", "Bank accuracy", "Precisione negli esercizi"],
+    grades_bank_accuracy: ["Верные ответы", "Correct answers", "Risposte corrette"],
     grades_month: ["{month} в цифрах", "{month} in numbers", "{month} in cifre"],
     grades_lessons_done: ["Пройдено уроков", "Lessons completed", "Lezioni completate"],
     grades_works_sent: ["Сдано работ", "Assignments submitted", "Compiti consegnati"],
