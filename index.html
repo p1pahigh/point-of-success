@@ -10,11 +10,19 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marck+Script&family=Montserrat:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap">
-<link rel="stylesheet" href="site.css?v=20261119-1">
+<link rel="stylesheet" href="site.css?v=20261126-1">
 
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<svg class="site-symbols" width="0" height="0" aria-hidden="true">
   <!-- логотип: шапочка выпускника, круг со звездой, кисточка (id и класс «crown» остались от прежней короны) -->
   <symbol id="crown" viewBox="-3 -1 106 96"><g fill="none" stroke="currentColor" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M26.5 30 1.5 20.5 50 2.5 98.5 20.5 73.5 30"/><path pathLength="1" d="M34.5 41.5Q26.5 41.5 26.5 35V24Q50 12 73.5 24V35Q73.5 41.5 65.5 41.5"/><path pathLength="1" d="M50 36a24 24 0 1 1 0 48a24 24 0 1 1 0-48"/><path pathLength="1" d="M23 60H77"/><path pathLength="1" d="M94 21V40.5"/><circle cx="94" cy="44" r="3.2"/></g><path class="pop" fill="currentColor" d="M50 27C52 49 56 56 75 60C56 64 52 71 50 91C48 71 44 64 25 60C44 56 48 49 50 27Z"/><path class="pop" fill="currentColor" d="M91 48h6l1.8 15.5q.3 2.5-2.3 2.5h-5q-2.6 0-2.3-2.5z"/><circle fill="currentColor" cx="92" cy="17" r="3.6"/></symbol>
+  <symbol id="sk-arrow" viewBox="0 0 88 38"><path d="M85 6C68 4 53 10 54 20c1 9 17 7 16-3C68 3 52 12 44 19c-10 9-21 15-39 12m7-6-8 5 6 7"/></symbol>
+  <symbol id="sk-note" viewBox="0 0 68 78"><path class="notebook-paper" d="M10 5h51v66H10z"/><path d="M61 7h3v67H12v-3M16 6v64M20 20h35m-35 9h35m-35 9h35m-35 9h35m-35 9h35" opacity=".55"/><path d="M14 15H6c-4 0-4-5 0-5h5m3 14H6c-4 0-4-5 0-5h5m3 14H6c-4 0-4-5 0-5h5m3 14H6c-4 0-4-5 0-5h5m3 14H6c-4 0-4-5 0-5h5m3 14H6c-4 0-4-5 0-5h5m3 14H6c-4 0-4-5 0-5h5"/></symbol>
+  <symbol id="sk-graph" viewBox="0 0 110 65"><path d="M14 11v49M30 11v49M46 11v49M62 11v49M78 11v49M94 11v49M6 19h100M6 30h100M6 41h100M6 52h100" class="graph-grid"/><path d="M14 50h81m-6-3 6 3-6 3M27 57V12m-3 5 3-5 3 5"/><path class="sk-accent" d="M29 15c13 39 41 48 56 1"/></symbol>
+  <symbol id="sk-arch" viewBox="0 0 116 64"><path d="M8 55h100M15 54V28l43-15 43 15v26M13 29h90M22 54V42c0-12 13-12 13 0v12m9 0V42c0-12 13-12 13 0v12m9 0V42c0-12 13-12 13 0v12m9 0V42c0-10 8-10 8 0v12"/></symbol>
+  <symbol id="sk-book" viewBox="0 0 80 61"><path d="M39 16C27 9 14 7 5 10v37c13-5 25-3 34 6 9-9 22-11 36-6V10c-11-3-24-1-36 6v37M11 19c7-1 15 0 23 5m-23 3c7-1 15 0 23 5m11-8c8-5 17-6 24-5m-24 13c8-5 17-6 24-5"/></symbol>
+  <symbol id="sk-chat" viewBox="0 0 80 62"><path d="M7 8h47a5 5 0 0 1 5 5v22a5 5 0 0 1-5 5H25L13 49v-9H7a5 5 0 0 1-5-5V13a5 5 0 0 1 5-5Zm53 12h10a5 5 0 0 1 5 5v19a5 5 0 0 1-5 5h-4v10l-12-10H35a5 5 0 0 1-5-5M11 17h36m-36 8h27"/></symbol>
+  <symbol id="sk-triangle" viewBox="0 0 88 62"><path d="M8 53 34 6l47 48ZM34 6l-5 48M13 43c5 0 10 4 11 10m7-36 8 1"/></symbol>
+  <symbol id="sk-spark" viewBox="0 0 32 32"><path d="M16 3c1 9 4 12 13 13-9 1-12 4-13 13C15 20 12 17 3 16 12 15 15 12 16 3Z"/></symbol>
 </svg>
 
 <header class="header">
@@ -41,11 +49,12 @@
   <section class="hero">
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <p class="slogan">Больше, чем просто обучение</p>
-        <h1>Готовим к ЕГЭ и учим итальянскому <em>онлайн</em></h1>
-        <p>Живые уроки с преподавателем, домашние работы с разбором ошибок и понятный прогресс в одном личном кабинете.</p>
+        <p class="eyebrow">Онлайн-школа</p>
+        <h1><span>Готовим к ЕГЭ.</span> <span>Учим итальянскому.</span></h1>
+        <p class="hero-intro">Живые уроки с преподавателем, домашние работы с разбором ошибок и понятный прогресс в одном личном кабинете.</p>
         <div class="hero-actions">
-          <a class="btn btn--red" href="#how-view">Как проходит обучение</a>
+          <a class="btn btn--peach" href="start.html">Бесплатная диагностика <span aria-hidden="true">↗</span></a>
+          <a class="hero-link" href="#how-view">Как проходит обучение</a>
         </div>
         <ul class="hero-facts">
           <li><span class="spark"></span>Единая платформа</li>
@@ -54,47 +63,43 @@
         </ul>
       </div>
 
-      <div class="emblem" id="emblem">
-        <svg class="crown crown-draw" viewBox="-3 -1 106 96" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M26.5 30 1.5 20.5 50 2.5 98.5 20.5 73.5 30"/><path pathLength="1" d="M34.5 41.5Q26.5 41.5 26.5 35V24Q50 12 73.5 24V35Q73.5 41.5 65.5 41.5"/><path pathLength="1" d="M50 36a24 24 0 1 1 0 48a24 24 0 1 1 0-48"/><path pathLength="1" d="M23 60H77"/><path pathLength="1" d="M94 21V40.5"/><circle cx="94" cy="44" r="3.2"/></g><path class="pop" fill="currentColor" d="M50 27C52 49 56 56 75 60C56 64 52 71 50 91C48 71 44 64 25 60C44 56 48 49 50 27Z"/><path class="pop" fill="currentColor" d="M91 48h6l1.8 15.5q.3 2.5-2.3 2.5h-5q-2.6 0-2.3-2.5z"/><circle fill="currentColor" cx="92" cy="17" r="3.6"/></svg>
-        <p class="emblem-name">The Point<br>of Success</p>
-        <div class="rule"><span class="spark"></span></div>
-        <p class="emblem-tag">Education · Growth · Future</p>
+      <div class="hero-art" aria-hidden="true">
+        <svg class="doodle hero-notebook" viewBox="0 0 158 84"><use class="sk-accent" href="#sk-arrow" x="1" y="43" width="69" height="31"/><g transform="rotate(-8 113 40)"><use href="#sk-note" x="90" y="10" width="53" height="67"/><text x="118" y="63">f(x)</text></g></svg>
+        <div class="emblem" id="emblem">
+          <span class="emblem-tape"></span>
+          <svg class="crown crown-draw" viewBox="-3 -1 106 96" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M26.5 30 1.5 20.5 50 2.5 98.5 20.5 73.5 30"/><path pathLength="1" d="M34.5 41.5Q26.5 41.5 26.5 35V24Q50 12 73.5 24V35Q73.5 41.5 65.5 41.5"/><path pathLength="1" d="M50 36a24 24 0 1 1 0 48a24 24 0 1 1 0-48"/><path pathLength="1" d="M23 60H77"/><path pathLength="1" d="M94 21V40.5"/><circle cx="94" cy="44" r="3.2"/></g><path class="pop" fill="currentColor" d="M50 27C52 49 56 56 75 60C56 64 52 71 50 91C48 71 44 64 25 60C44 56 48 49 50 27Z"/><path class="pop" fill="currentColor" d="M91 48h6l1.8 15.5q.3 2.5-2.3 2.5h-5q-2.6 0-2.3-2.5z"/><circle fill="currentColor" cx="92" cy="17" r="3.6"/></svg>
+        </div>
       </div>
     </div>
   </section>
 
-  <div class="ribbon" aria-hidden="true">
-    <div class="ribbon-track" id="ribbon">
-      <div class="ribbon-group"><span>ЕГЭ по математике</span><i class="spark"></i><span>Профиль и база</span><i class="spark"></i><span>ЕГЭ по английскому</span><i class="spark"></i><span>Итальянский для всех</span><i class="spark"></i></div>
-    </div>
-  </div>
-
   <section class="section" id="courses">
     <div class="wrap">
-      <div class="section-head" id="courses-view">
+      <div class="section-head courses-head" id="courses-view">
         <h2>Направления</h2>
+        <svg class="doodle notebook courses-doodle" viewBox="0 0 180 86" aria-hidden="true"><use class="sk-accent" href="#sk-arrow" x="1" y="26" width="85" height="39"/><g transform="rotate(-8 129 43)"><use href="#sk-note" x="101" y="3" width="66" height="77"/><text x="137" y="46">Aa</text></g></svg>
         <p>Выберите один предмет или несколько. Бесплатная диагностика в кабинете покажет ваш уровень.</p>
       </div>
       <ul class="dirs">
-        <li><a class="dir" href="start.html?s=ege-math" data-mark="∑">
-          <span class="dir-num" aria-hidden="true">01</span>
+        <li><a class="dir" href="start.html?s=ege-math">
           <span class="dir-tag">ЕГЭ</span>
           <h3>Математика</h3>
           <p>Готовим к профильному и базовому уровню: от уверенной первой части до задач с развёрнутым ответом.</p>
+          <svg class="doodle dir-art" viewBox="0 0 146 65" aria-hidden="true"><use href="#sk-graph" x="1" width="110" height="65"/><text x="115" y="29">y = f(x)</text></svg>
           <span class="dir-go">Хочу на курс <i aria-hidden="true">→</i></span>
         </a></li>
-        <li><a class="dir" href="start.html?s=ege-eng" data-mark="Aa">
-          <span class="dir-num" aria-hidden="true">02</span>
+        <li><a class="dir" href="start.html?s=ege-eng">
           <span class="dir-tag">ЕГЭ</span>
           <h3>Английский язык</h3>
           <p>Разбираем все разделы экзамена: грамматику и лексику, письмо, аудирование и устную часть.</p>
+          <svg class="doodle dir-art dir-art--english" viewBox="0 0 146 65" aria-hidden="true"><text x="49" y="27">If I were you…</text><path d="M26 33c10 3 22 3 36 0m29 18c-16 4-25-1-31-11m0 7-1-8 8 1"/><text x="107" y="57">were!</text></svg>
           <span class="dir-go">Хочу на курс <i aria-hidden="true">→</i></span>
         </a></li>
-        <li><a class="dir" href="start.html?s=lang-it" data-mark="Ciao">
-          <span class="dir-num" aria-hidden="true">03</span>
+        <li><a class="dir" href="start.html?s=lang-it">
           <span class="dir-tag">Для всех</span>
           <h3>Итальянский язык</h3>
           <p>Для всех, кто хочет заговорить по-итальянски: с нуля или с вашего уровня, для учёбы, работы и путешествий.</p>
+          <svg class="doodle dir-art" viewBox="0 0 146 65" aria-hidden="true"><use href="#sk-arch" x="8" width="116" height="64"/><text x="117" y="13">Ciao!</text></svg>
           <span class="dir-go">Хочу на курс <i aria-hidden="true">→</i></span>
         </a></li>
       </ul>
@@ -104,6 +109,7 @@
   <!-- О нас: тексты заказчика (12 ноября 2026) в прежнем шаблоне. Заглушки .ph: первая фраза (блок 1 не прислан), имя, фото и текст основательницы -->
   <section class="section section--band" id="about">
     <div class="wrap">
+      <svg class="doodle section-doodle paired-doodle" viewBox="0 0 290 88" aria-hidden="true"><path class="doodle-link" d="M77 56c54 26 85-24 128-22"/><use href="#sk-arch" x="3" y="24" width="92" height="54" transform="rotate(-9 49 51)"/><use href="#sk-spark" x="147" y="8" width="23" height="23"/><use href="#sk-book" x="200" y="22" width="86" height="57" transform="rotate(8 243 50)"/></svg>
       <div class="section-head">
         <h2>О нас</h2>
         <p><span class="ph">Одна фраза о школе: кто мы и для кого</span></p>
@@ -140,6 +146,7 @@
 
   <section class="section" id="how">
     <div class="wrap">
+      <svg class="doodle section-doodle notebook" viewBox="0 0 180 86" aria-hidden="true"><use class="sk-accent" href="#sk-arrow" x="1" y="26" width="85" height="39"/><g transform="rotate(-8 129 43)"><use href="#sk-note" x="101" y="3" width="66" height="77"/><text x="137" y="46">π</text></g></svg>
       <div class="section-head" id="how-view">
         <h2>Как проходит обучение</h2>
       </div>
@@ -152,8 +159,9 @@
     </div>
   </section>
 
-  <section class="section section--follow" id="week">
+  <section class="section section--band" id="week">
     <div class="wrap">
+      <svg class="doodle section-doodle paired-doodle section-doodle--bottom" viewBox="0 0 290 88" aria-hidden="true"><path class="doodle-link" d="M77 56c54 26 85-24 128-22"/><use href="#sk-book" x="3" y="24" width="92" height="54" transform="rotate(-9 49 51)"/><use href="#sk-spark" x="147" y="8" width="23" height="23"/><use href="#sk-chat" x="200" y="22" width="86" height="57" transform="rotate(8 243 50)"/></svg>
       <div class="section-head">
         <h2>Как устроена неделя</h2>
         <p>Теория, живая практика и домашние работы идут в одном ритме, чтобы знания не успевали забыться.</p>
@@ -169,8 +177,9 @@
     </div>
   </section>
 
-  <section class="section section--band" id="platform">
+  <section class="section section--ink" id="platform">
     <div class="wrap">
+      <svg class="doodle section-doodle paired-doodle" viewBox="0 0 290 88" aria-hidden="true"><path class="doodle-link" d="M77 56c54 26 85-24 128-22"/><use href="#sk-graph" x="3" y="24" width="92" height="54" transform="rotate(-9 49 51)"/><use href="#sk-spark" x="147" y="8" width="23" height="23"/><use href="#sk-arch" x="200" y="22" width="86" height="57" transform="rotate(8 243 50)"/></svg>
       <div class="section-head" id="platform-view">
         <h2>Всё обучение в одном кабинете</h2>
         <p>Уроки, домашние работы, оценки и расписание лежат в одном месте.</p>
@@ -216,6 +225,7 @@
 
   <section class="section" id="team">
     <div class="wrap">
+      <svg class="doodle section-doodle notebook" viewBox="0 0 180 86" aria-hidden="true"><use class="sk-accent" href="#sk-arrow" x="1" y="26" width="85" height="39"/><g transform="rotate(-8 129 43)"><use href="#sk-note" x="101" y="3" width="66" height="77"/><text x="137" y="46">Ciao!</text></g></svg>
       <div class="section-head">
         <h2>Преподаватели</h2>
       </div>
@@ -229,6 +239,7 @@
 
   <section class="section section--band" id="plans">
     <div class="wrap">
+      <svg class="doodle section-doodle notebook" viewBox="0 0 180 86" aria-hidden="true"><use class="sk-accent" href="#sk-arrow" x="1" y="26" width="85" height="39"/><g transform="rotate(-8 129 43)"><use href="#sk-note" x="101" y="3" width="66" height="77"/><text x="137" y="46">✓</text></g></svg>
       <div class="section-head">
         <h2>Пакеты обучения</h2>
         <p>Сначала бесплатная диагностика по выбранным предметам, затем вы выбираете пакет в кабинете.</p>
@@ -270,6 +281,7 @@
 
   <section class="section" id="reviews">
     <div class="wrap">
+      <svg class="doodle section-doodle paired-doodle" viewBox="0 0 290 88" aria-hidden="true"><path class="doodle-link" d="M77 56c54 26 85-24 128-22"/><use href="#sk-triangle" x="3" y="24" width="92" height="54" transform="rotate(-9 49 51)"/><use href="#sk-spark" x="147" y="8" width="23" height="23"/><use href="#sk-graph" x="200" y="22" width="86" height="57" transform="rotate(8 243 50)"/></svg>
       <div class="section-head">
         <h2>Отзывы и результаты</h2>
       </div>
@@ -281,8 +293,9 @@
     </div>
   </section>
 
-  <section class="section apply" id="apply">
+  <section class="section section--ink apply" id="apply">
     <div class="wrap apply-grid">
+      <svg class="doodle section-doodle notebook" viewBox="0 0 180 86" aria-hidden="true"><use class="sk-accent" href="#sk-arrow" x="1" y="26" width="85" height="39"/><g transform="rotate(-8 129 43)"><use href="#sk-note" x="101" y="3" width="66" height="77"/><text x="137" y="46">✓</text></g></svg>
       <div class="apply-copy">
         <h2>Начните с бесплатной диагностики</h2>
         <p>Выберите предметы и зарегистрируйтесь. Диагностика покажет ваш уровень, а пакет обучения вы выберете уже после неё.</p>
@@ -299,6 +312,7 @@
 
   <section class="section section--band" id="faq">
     <div class="wrap faq-grid">
+      <svg class="doodle section-doodle paired-doodle section-doodle--bottom" viewBox="0 0 290 88" aria-hidden="true"><path class="doodle-link" d="M77 56c54 26 85-24 128-22"/><use href="#sk-graph" x="3" y="24" width="92" height="54" transform="rotate(-9 49 51)"/><use href="#sk-spark" x="147" y="8" width="23" height="23"/><use href="#sk-arch" x="200" y="22" width="86" height="57" transform="rotate(8 243 50)"/></svg>
       <div class="section-head">
         <h2>Частые вопросы</h2>
         <p>Не нашли ответ? Напишите нам, контакты внизу страницы.</p>
@@ -317,6 +331,7 @@
 
 <footer class="footer">
   <div class="wrap footer-grid">
+    <svg class="doodle paired-doodle footer-doodle" viewBox="0 0 290 88" aria-hidden="true"><path class="doodle-link" d="M77 56c54 26 85-24 128-22"/><use href="#sk-chat" x="3" y="24" width="92" height="54" transform="rotate(-9 49 51)"/><use href="#sk-spark" x="147" y="8" width="23" height="23"/><use href="#sk-triangle" x="200" y="22" width="86" height="57" transform="rotate(8 243 50)"/></svg>
     <div>
       <a class="logo" href="#top"><svg class="crown" aria-hidden="true"><use href="#crown"/></svg><span>The Point of Success</span></a>
       <span class="footer-tag">Education · Growth · Future</span>
@@ -342,9 +357,6 @@
   var calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var header = document.querySelector(".header");
   window.addEventListener("scroll", function () { header.classList.toggle("scrolled", window.scrollY > 8); }, { passive: true });
-
-  var ribbon = document.getElementById("ribbon");
-  for (var copy = 0; copy < 3; copy++) ribbon.appendChild(ribbon.firstElementChild.cloneNode(true));
 
   if (!calm && "IntersectionObserver" in window) {
     var observer = new IntersectionObserver(function (entries) {
