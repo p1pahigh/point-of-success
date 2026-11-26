@@ -1162,6 +1162,9 @@
     if (diff === 1) return t("tomorrow");
     return shortDate(parse(s));
   }
+  function deadlineTone(due, today) {
+    return due < today ? " dl-due--late" : due === today ? " dl-due--today" : "";
+  }
   function lessonRow(l) {
     const isToday = l.status === "today";
     const action = isToday
@@ -1528,7 +1531,7 @@
     return "<div class=\"hw-meta\"><span>" + t("hw_on_course") + "</span><b>" + p.percent + "%</b></div><div class=\"bar" + level + "\" role=\"progressbar\" aria-valuemin=\"0\" aria-valuemax=\"100\" aria-valuenow=\"" + p.percent + "\" aria-label=\"" + t("hw_on_course") + "\"><i style=\"width:" + p.percent + "%\"></i></div>";
   }
   function viewHomework() {
-    const all = myHw();
+    const all = myHw(), today = iso(day(0));
     const [selection, requestedStatus] = param.split("/");
     const focus = find(all, selection);
     const subject = focus ? focus.course : Object.keys(COURSES).includes(selection) ? selection : "";
@@ -1546,22 +1549,26 @@
     const items = all.filter(function (h) { return (!subject || h.course === subject) && (!status || h.status === status); })
       .sort(function (a, b) { return order[a.status] - order[b.status] || a.due.localeCompare(b.due); });
     const rows = items.map(function (h) {
-      const main = "<span class=\"hrow-main\"><b>" + esc(h.title) + "</b><span>" + esc(COURSES[h.course].short) + (kindOf(h) !== "hw" ? " · " + t("kind_" + kindOf(h)) : "") + " · " + t("due") + ": " + dueLabel(h.due) + "</span></span>";
+      const kind = kindOf(h);
+      const start = "<li class=\"dl--" + kind + "\">";
+      const due = h.status === "todo" ? "<span class=\"dl-due" + deadlineTone(h.due, today) + "\">" + t("due") + ": " + dueLabel(h.due) + "</span>" : "";
+      const main = "<span class=\"hrow-main\"><b>" + esc(h.title) + "</b><span class=\"hrow-meta\"><span class=\"dl-kind\">" + t("kind_" + kind) + "</span>" +
+        "<span class=\"dl-course\">" + esc(COURSES[h.course].short) + "</span>" + due + "</span></span>";
       if (h.status === "todo" && h.lesson) {
-        return "<li><a class=\"hrow hrow--todo hrow--link" + (focus === h ? " hrow--focus" : "") + "\" href=\"" + go("learn", h.lesson) + "\">" + main + "<span class=\"btn btn--red btn--sm\">" + t("do_task") + "</span></a></li>";
+        return start + "<a class=\"hrow hrow--todo hrow--link" + (focus === h ? " hrow--focus" : "") + "\" href=\"" + go("learn", h.lesson) + "\">" + main + "<span class=\"btn btn--red btn--sm\">" + t("do_task") + "</span></a></li>";
       }
       if (h.status === "todo") {
-        return "<li><details class=\"hrow hrow--todo" + (focus === h ? " hrow--focus\" open" : "\"") + "><summary>" + main + "<span class=\"btn btn--red btn--sm\">" + t("submit_hw") + "</span></summary>" +
+        return start + "<details class=\"hrow hrow--todo" + (focus === h ? " hrow--focus\" open" : "\"") + "><summary>" + main + "<span class=\"btn btn--red btn--sm\">" + t("submit_hw") + "</span></summary>" +
           "<form class=\"form hrow-form\" data-form=\"submitHw\" data-id=\"" + h.id + "\"><div class=\"field\"><label for=\"file-" + h.id + "\">" + t("attach") + "</label><input id=\"file-" + h.id + "\" name=\"file\" type=\"file\" accept=\"image/*,.pdf,.doc,.docx\" required></div><div><button class=\"btn btn--red btn--sm\" type=\"submit\">" + t("submit_hw") + "</button></div></form></details></li>";
       }
       if (h.status === "review") {
-        return "<li><div class=\"hrow\">" + main + "<span class=\"tag\">" + t("hw_review") + "</span><span class=\"muted small hrow-file\">" + esc(h.lesson ? t("answers_sent") : h.file ? h.file.name : "–") + "</span></div></li>";
+        return start + "<div class=\"hrow\">" + main + "<span class=\"hrow-side\"><span class=\"tag hrow-status\">" + t("hw_review") + "</span><span class=\"muted small hrow-file\">" + esc(h.lesson ? t("answers_sent") : h.file ? h.file.name : "–") + "</span></span></div></li>";
       }
-      return "<li><div class=\"hrow hrow--graded\">" + main + "<span class=\"hrow-comment hand\">" + esc(h.comment) + "</span><span class=\"cell\">" + esc(h.grade) + "</span></div></li>";
+      return start + "<div class=\"hrow hrow--graded\">" + main + (h.comment ? "<span class=\"hrow-comment hand\">" + esc(h.comment) + "</span>" : "") + "<span class=\"cell\" aria-label=\"" + esc(t("grade") + " " + h.grade) + "\">" + esc(h.grade) + "</span></div></li>";
     }).join("");
     return head(t("nav_hw"), t("hw_sub")) +
       stats(filters) + "<div class=\"hw-filters\">" + chips(subjects, subject) + reset + "</div>" +
-      "<section class=\"card\">" + (rows ? "<ul class=\"hlist\">" + rows + "</ul>" : "<p class=\"empty\">" + t(status ? "hw_no_status" : "no_hw") + "</p>") + "</section>";
+      (rows ? "<ul class=\"hlist\">" + rows + "</ul>" : "<section class=\"card\"><p class=\"empty\">" + t(status ? "hw_no_status" : "no_hw") + "</p></section>");
   }
 
   function gradesTable(rows) {
@@ -2410,7 +2417,7 @@
     const todo = myHw().filter(function (h) { return h.status === "todo"; }).sort(function (a, b) { return a.due.localeCompare(b.due); });
     const cards = todo.map(function (h) {
       const kind = kindOf(h);
-      const tone = h.due < todayKey ? " dl-due--late" : h.due === todayKey ? " dl-due--today" : "";
+      const tone = deadlineTone(h.due, todayKey);
       return "<a class=\"dl dl--" + kind + "\" href=\"" + (h.lesson ? go("learn", h.lesson) : go("homework", h.id)) + "\"><span class=\"dl-top\"><span class=\"dl-kind\">" + t("kind_" + kind) + "</span><span class=\"dl-due" + tone + "\">" + dueLabel(h.due) + "</span></span>" +
         "<b class=\"dl-title\">" + esc(h.title) + "</b><span class=\"dl-foot\"><span class=\"dl-course\">" + esc(COURSES[h.course].short) + "</span><span class=\"dl-go\">" + t("open_hw") + icon("chevron") + "</span></span></a>";
     }).join("");
